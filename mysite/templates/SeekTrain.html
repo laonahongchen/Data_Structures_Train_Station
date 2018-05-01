@@ -1,0 +1,16 @@
+{% extends 'searchtrain.html' %}
+{% if asked == true %}
+    {% block answer %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">查询结果</h3>
+        </div>
+        <table class="table">
+            <th>车次</th><th>出发地 </th><th>发车时间</th><th>目的地</th><th>到达时间</th><th>一等座余票</th><th>一等座价格</th><th>二等座余票</th><th>二等座价格</th><th>三等座余票</th><th>三等座价格</th>
+            <tr><td>产品 B</td><td>400</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><a href="http://www.baidu.com"> <button type="button" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Buy now
+        </button></a></td> </tr>
+        </table>
+    </div>
+    {% endblock %}
+{% endif %}
