@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<form>
+	<p>adsfa</p>
+    <div id="div">
+        <input type="button"  value="增加" onclick="addText()"/>
+    </div>
+	<p>adsfadfa</p>
+</form>
+
+
+<script type="text/javascript">
+    function addText(){
+        var div = document.getElementById("div");
+        div.innerHTML += "<div><input type='text'> <input type='button' value='删除' onclick='deleteText(this)'></div>";
+    }
+    function deleteText(This){
+        //获取删除按钮的父元素 的 父元素 利用 爷爷元素 删除
+        This.parentNode.parentNode.removeChild(This.parentNode);
+    }
+</script>
+
+{% end block %}
