@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.template import loader
 # Create your views here.
 
-context = {'login_name':'test', 'authority':1}
+context = {'login_name':'test', 'authority':0}
 
 def index(request):
     return render(request, 'index.html', context)
@@ -14,3 +14,6 @@ def about(request):
 
 def login(request):
     return render_to_response('login.html', context)
+
+def login(request):
+    return render_to_response('signup.html', context)
