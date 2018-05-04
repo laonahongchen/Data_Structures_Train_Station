@@ -13,3 +13,6 @@ context = {'login_name':'test', 'authority':1, 'asked': True, 'Trains': answer}
 
 def index(request):
     return render_to_response("SeekTrain.html", context)
+
+def addTrain(request):
+    return render_to_response("add_train.html", context)

@@ -4,9 +4,9 @@ from django.http import HttpResponse
 from django.template import loader
 # Create your views here.
 
-context = {'login_name':'test', 'authority':0}
+context = {'login_name':'test', 'authority':2}
 #need to fix context which send login_name and authority to html
-#authority 0: not login 1: normal user 2:admin 3: super admin
+#authority 0: not login 1: normal user 2:admin
 
 def index(request):
     return render(request, 'index.html', context)
@@ -17,7 +17,7 @@ def about(request):
 def login(request):
     return render_to_response('login.html', context)
     #get id='inputName' with password ='inputPassword'
-    #maybe get remember-me so use cookies
-    
+    #maybe get remember-me so use cookies please
+
 def signup(request):
     return render_to_response('signup.html', context)
