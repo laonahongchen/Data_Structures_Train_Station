@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.template import loader
 # Create your views here.
 
-context = {'login_name':'test', 'authority':2}
+context = {'login_name':'test', 'authority':0}
 #need to fix context which send login_name and authority to html
 #authority 0: not login 1: normal user 2:admin
 

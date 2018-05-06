@@ -1,58 +1,60 @@
 {% extends 'searchtrain.html' %}
 {% if asked == true %}
     {% block answer %}
-    <div class="panel panel-default" style="width: 90%; margin-left : 5%">
-        <div class="panel-heading">
-            <h3 class="panel-title">查询结果</h3>
+    <div class="container">
+    <div class="card">
+        <div class="card-heading">
+            <h3 class="card-title">查询结果</h3>
         </div>
-        <table class="table table-expandable">
-            <thead>
-                <tr>
+        <table class="table">
                     <th>车次</th><th>出发地 </th><th>发车时间</th><th>目的地</th><th>到达时间</th>
                     <!-- <tr><td>产品 B</td><td>400</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><a href="http://www.baidu.com"> <button type="button" class="btn btn-default btn-lg">
           <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Buy now
         </button></a></td> </tr> -->
-                </tr>
-            </thead>
             <!--
             <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             -->
             {% for x in Trains %}
-            <tr><td>{{x.0}}</td><td>{{x.1}}</td><td>{{x.2}}</td><td>{{x.3}}</td><td>{{x.4}}</td></tr>
-            <tr>
-                <td colspan="5">
-                    <p> 一等座剩余：{{x.5}} 一等座票价：{{x.6}}
 
-                        <a href="http://www.baidu.com">
-                        {% if x.5 > 0 %}
-                            <button type="button" class="btn btn-default btn-lg">
-                        {% else %}
-                            <button type="button" class="btn btn-default btn-lg" disabled>
-                        {%endif %}
-              <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Buy now </button></a>
-                    </p>
-                    <p>二等座剩余：{{x.7}} 二等座票价：{{x.8}}
-                        <a href="http://www.baidu.com">
-                            {% if x.7 > 0 %}
+                <tr data-toggle="collapse" data-target="#tickets_info{{x.0}}" class="accordion-toggle"><td>{{x.0}}</td><td>{{x.1}}</td><td>{{x.2}}</td><td>{{x.3}}</td><td>{{x.4}}</td></tr>
+                <tr>
+                    <td colspan="5">
+                <div class="collapse" id="tickets_info{{x.0}}" class="accordion-body">
+                        <p><li> 一等座剩余：{{x.5}} </li><li> 一等座票价：{{x.6}}</li>
+                            <li>
+                            <a href="http://www.baidu.com">
+                            {% if x.5 > 0 %}
                                 <button type="button" class="btn btn-default btn-lg">
                             {% else %}
                                 <button type="button" class="btn btn-default btn-lg" disabled>
                             {%endif %}
-              <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Buy now </button></a>
-                    </p>
-                    <p> 三等座剩余：{{x.9}} 三等座票价：{{x.10}}
-                        <a href="http://www.baidu.com">
-                            {% if x.9 > 0 %}
-                                <button type="button" class="btn btn-default btn-lg">
-                            {% else %}
-                                <button type="button" class="btn btn-default btn-lg" disabled>
-                            {%endif %}
-              <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Buy now
-            </button></a>
-                    </p>
-                </td>
-            </tr>
-            </a>
+                               Buy now </button></a>
+                        </li>
+                        </p>
+                        <p><li> 二等座剩余：{{x.7}} </li><li> 二等座票价：{{x.8}}</li>
+                            <li>
+                            <a href="http://www.baidu.com">
+                                {% if x.7 > 0 %}
+                                    <button type="button" class="btn btn-default btn-lg">
+                                {% else %}
+                                    <button type="button" class="btn btn-default btn-lg" disabled>
+                                {%endif %}
+                   Buy now </button></a>
+                          </li>
+                        </p>
+                        <p> <li> 三等座剩余：{{x.9}} </li><li> 三等座票价：{{x.10}}</li>
+                            <li>
+                            <a href="http://www.baidu.com">
+                                {% if x.9 > 0 %}
+                                    <button type="button" class="btn btn-default btn-lg">
+                                {% else %}
+                                    <button type="button" class="btn btn-default btn-lg" disabled>
+                                {%endif %}
+                   Buy now</button></a></li>
+                        </p>
+                    </td>
+                </tr>
+                </div>
             {% endfor %}
             <!--
             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -61,6 +63,7 @@
         -->
 
         </table>
+    </div>
     </div>
     {% endblock %}
 {% endif %}
