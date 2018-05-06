@@ -2,6 +2,9 @@
 ----在每个页面的context里均需要传入login_name和authority两个值。其中login_name为登录名，authority为权限，权限与作业文档中一致。
 ----没有涉及到的html均不用从py中引出，是html的某些模板。
 
+#具体到app
+----trains应该只有管理员才可以访问
+
 #具体到html
 ##login.html:
 ----用于登录
