@@ -1,10 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="/static/favicon.ico">
@@ -12,10 +10,15 @@
     <title>Train Tickets</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/static/boot4/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    -->
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="/static/bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <!-- <link href="/static/bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
 
     <!-- Custom styles for this template -->
     {% block headcss %}
@@ -23,6 +26,7 @@
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--
     <script src="/static/bootstrap/js/ie-emulation-modes-warning.js"></script>
 
     <script src= "/static/bootstrap/js/vendor/jquery.min.js"></script>
@@ -31,7 +35,7 @@
 
     <script src="/static/bootstrap/js/bootstrap-table-expandable.js"></script>
 
-    </script>
+    </script> -->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -40,49 +44,52 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Train Tickets Selling System</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="/about/">About</a></li>
-          </ul>
-          {% if authority == 0 %}
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login/">login now</a></li>
-                <li><a href="/signup/">sign up now</a></li>
-              </ul>
-          {% else %}
-              <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 用户：{{login_name}} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">更改用户信息</a></li>
-                      <li><a href="#">查询订票记录</a></li>
-                      <li role="separator" class="divider"></li>
-                      {% if authority > 1 %}
-                          <li><a href="/trains/addTrain/">加车次</a></li>
-                          <li><a href="#">One more separated link</a></li>
-                          <li role="separator" class="divider"></li>
-                      {% endif %}
-                      <li><a href='/logout/'>登出</a></li>
-                    </ul>
+      <header>
+          <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/">Train Tickets Selling System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navbarCollapse" class="collapse navbar-collapse">
+              <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/about/">about</a>
                   </li>
               </ul>
-          {% endif %}
-        </div><!-- /.nav-collapse -->
+              <ul class="navbar-nav nav-right">
+                  <form class="form-inline">
+              {% if authority == 0 %}
+                    <li class="nav-item" ><button type="button" name="button" class="btn btn-success"> <a href="/login/" style="color: #FFFFFF">login now</a></button></li>
+                    <li class="nav-item" style="margin-left: 10px;"> <button type="button" name="button" class="btn btn-success"> <a href="/signup/" style="color: #FFFFFF">sign up now</a></button></li>
+              {% else %}
+                    <li class="nav-item">
+                        <button type="button" name="button" class="btn btn-light">
+                      <li class="btn-group dropleft">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: #000000"> 用户：{{login_name}} <span class="caret"></span></a>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#">更改用户信息</a>
+                          <a class="dropdown-item" href="#">查询订票记录</a>
+                          <div class="dropdown-divider"></div>
+                          {% if authority > 1 %}
+                              <a class="dropdown-item" href="/trains/">加车次</a>
+                              <a class="dropdown-item" href="#">One more separated link</a>
+                              <div class="dropdown-divider"></div>
+                          {% endif %}
+                          <a class="dropdown-item" href="/logout/">登出</a>
+                      </div>
+                      </li>
+                  </button>
+                  </li>
 
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
+              {% endif %}
+              </form>
+              </ul>
+            </div><!-- /.nav-collapse -->
+          </nav>
+    </header>
 
 
 	{% block body %}
@@ -91,11 +98,12 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/static/bootstrap/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="/static/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="/static/bootstrap/js/offcanvas.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+    <script>window.jQuery || document.write('<script src="/static/boot4/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="/static/boot4/assets/js/vendor/popper.min.js"></script>
+    <script src="/static/boot4/dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/static/boot4/assets/js/vendor/holder.min.js"></script>
   </body>
 </html>
