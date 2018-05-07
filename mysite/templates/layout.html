@@ -15,6 +15,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
     <link href="/static/bootstrap/css/bootstrap-datepicker3.css" rel="stylesheet">
+
     <!--
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     -->
@@ -72,8 +73,8 @@
 
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: #000000"> 用户：{{login_name}} <span class="caret"></span></a>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#">更改用户信息</a>
-                          <a class="dropdown-item" href="#">查询订票记录</a>
+                          <a class="dropdown-item" href="/change_info/">更改用户信息</a>
+                          <a class="dropdown-item" href="/tickets/buyhistory">查询订票记录</a>
                           <div class="dropdown-divider"></div>
                           {% if authority > 1 %}
                               <a class="dropdown-item" href="/trains/">加车次</a>
@@ -108,9 +109,12 @@
     <script src="/static/bootstrap/js/bootstrap-datepicker.js"></script>
     <script src="/static/bootstrap/locales/bootstrap-datepicker.zh-CN.min.js"></script>
     <script type="text/javascript">
-        $('.datepicker').datepicker({
-            language: 'zh-CN'
-            });
+        $('#sandbox-container input').datepicker({
+            autoclose: true,
+            todayHighlight: true
+            language: "zh-CN";
+        });
+        $('.datepicker').datepicker();
     </script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="/static/boot4/assets/js/vendor/holder.min.js"></script>

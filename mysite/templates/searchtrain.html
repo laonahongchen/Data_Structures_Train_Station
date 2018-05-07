@@ -1,24 +1,55 @@
 {% extends "layout.html" %}
+
 {% block body %}
 <div class="container" style="margin-top: 70px;">
     <div class="card" >
     <div class="card-header text-center" style="font-size:30px;background-color: #ee6a9b">
         <p>查询余票信息</p>
     </div>
-      <div class="row card-body">
+      <div class="card-body">
+      <form method="post">
 
-        <div class="col">
-          <input type="text" placeholder="起始地" class="form-control" name="from" required>
-        </div>
-        <div class="col">
-          <input type="text" placeholder="目的地" class="form-control" name="destination" required>
-        </div>
-        <div class="col">
-          <input data-provide="datepicker" name="dateoftrain" type="text" required>
-        </div>
-        <div class="col"> <button type="submit" class="btn btn-warning" value="zjd">查询直达车次</button></div>
-        <div class="col"> <button type="submit" class="btn btn-warning" value="yzz">查询中转车次</button></div>
 
+      <div class="row">
+        <div class="col">
+          <label for="from" class="sr-only"> 起始地</label>
+          <input type="text" placeholder="起始地" class="form-control" id="from" required autofocus>
+        </div>
+        <div class="col">
+          <label for="from" class="sr-only"> 目的地</label>
+          <input type="text" placeholder="目的地" class="form-control" id="destination" required>
+        </div>
+        <div class="col">
+
+          <label for="dateoftrain" class="sr-only">出发日期</label>
+          <input data-provide="datepicker" id="dateoftrain" type="text" class="form-control" placeholder="出发日期" required>
+        </div>
+    </div>
+        <div class="row">
+            {% for x in catalogs %}
+            <div class="col">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+              <label class="form-check-label" for="inlineRadio1">{{x}}</label>
+            </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="col">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="yzz">
+              <label class="form-check-label" for="defaultCheck1">
+                勾选此选项代表你接受中转最多一次的火车。
+              </label>
+            </div>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-warning">查询</button>
+            </div>
+        </div>
+        </form>
       </div>
     </div><!--/.navbar-collapse -->
 </div>

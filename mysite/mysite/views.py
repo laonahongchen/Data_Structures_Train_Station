@@ -21,3 +21,6 @@ def login(request):
 
 def signup(request):
     return render_to_response('signup.html', context)
+
+def cinfo(request):
+    return render_to_response('signup.html', context)

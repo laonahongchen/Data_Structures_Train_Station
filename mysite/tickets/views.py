@@ -4,10 +4,22 @@ from django.http import HttpResponse
 from django.template import loader
 
 answer = [
-    ['G1', 'PEK', '08:00', 'SHH', '09:00', 3, 500.00, 0, 200.00, 50, 10.00],
-    ['G2', 'PEK', '18:00', 'SHH', '19:00', 3, 500.00, 10, 200.00, 50, 10.00]
+    ['G1', 'PEK', '08:00', 'SHH', '10:00', [["一等座", 3, 500.00], ["二等座", 2, 200.00], ["三等座", 1, 50.00]]],
+    ['G2', 'PEK', '18:00', 'SHH', '19:00', [['一等座', 0, 500.00], ['二等座', 0, 200.00], ['三等座', 1, 50.00]]],
 ]
-context = {'login_name':'test', 'authority':1, 'asked': True, 'Trains': answer}
+
+answer1 = [
+    ['G1', 'PEK', '08:00', 'SHH', '10:00', [["一等座", 3, 500.00], ["二等座", 0, 200.00], ["三等座", 1, 50.00]]],
+    ['G2', 'PEK', '18:00', 'SHH', '19:00', [['一等座', 0, 500.00], ['二等座', 0, 200.00], ['三等座', 0, 50.00]]],
+]
+
+catalogs = {'C-城际铁路', 'G-高铁', 'K-快车'}
+
+context = {'login_name':'test', 'authority':1, 'asked': True, 'Trains': answer, 'catalogs': catalogs}
+context1 = {'login_name':'test', 'authority':1, 'asked': True, 'Historys': answer1, 'catalogs': catalogs}
 # Create your views here.
 def index(request):
     return render_to_response("SeekTrain.html", context)
+
+def buy_history(request):
+    return render_to_response("buyhistory.html", context1)

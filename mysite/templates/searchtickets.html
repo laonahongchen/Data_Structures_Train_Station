@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container" style="margin-top: 70px;">
+    <div class="card" >
+    <div class="card-header text-center" style="font-size:30px;background-color: #ee6a9b">
+        <p>查询订票记录</p>
+    </div>
+      <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <label for="dateoftrain" class="sr-only">出发日期</label>
+          <input data-provide="datepicker" id="dateoftrain" type="text" class="form-control" placeholder="出发日期" required>
+        </div>
+        {% for x in catalogs %}
+        <div class="col">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+          <label class="form-check-label" for="inlineRadio1">{{x}}</label>
+        </div>
+        </div>
+        {% endfor %}
+          <div class="col"> <button type="submit" class="btn btn-warning">查询订票记录</button></div>
+        </div>
+      </div>
+    </div><!--/.navbar-collapse -->
+</div>
+    {% block answer %}
+    {% endblock %}
+{% endblock %}
