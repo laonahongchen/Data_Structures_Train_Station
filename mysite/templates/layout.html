@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="position: relative;min-height: 100%;">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,7 +10,7 @@
     <title>Train Tickets</title>
 
     <!-- Bootstrap core CSS -->
-
+    <link rel="stylesheet" href="/static/boot4/docs/4.1/examples/sticky-footer/sticky-footer.css">
     <link href="/static/boot4/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -46,7 +46,7 @@
     <![endif]-->
   </head>
 
-  <body>
+  <body style="margin-bottom:60px;">
       <header>
           <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="/">Train Tickets Selling System</a>
@@ -97,6 +97,14 @@
 
 	{% block body %}
 	{% endblock %}
+
+    <footer class="footer">
+        <div class="container">
+            <p class="float-right"><a href="#">Back to top</a></p>
+            <p> <a href="/about/">About us</a> </p>
+        </div>
+
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
