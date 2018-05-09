@@ -11,10 +11,9 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="/static/boot4/docs/4.1/examples/sticky-footer/sticky-footer.css">
-    <link href="/static/boot4/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/boot4/dist/css/bootstrap.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="/static/bootstrap/css/bootstrap-datepicker3.css" rel="stylesheet">
 
     <!--
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -78,7 +77,7 @@
                           <div class="dropdown-divider"></div>
                           {% if authority > 1 %}
                               <a class="dropdown-item" href="/trains/">加车次</a>
-                              <a class="dropdown-item" href="#">One more separated link</a>
+                              <a class="dropdown-item" href="/trains/query_train/">查询车次</a>
                               <div class="dropdown-divider"></div>
                           {% endif %}
                           <a class="dropdown-item" href="/logout/">登出</a>
@@ -113,17 +112,7 @@
 
     <script>window.jQuery || document.write('<script src="/static/boot4/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="/static/boot4/assets/js/vendor/popper.min.js"></script>
-    <script src="/static/boot4/dist/js/bootstrap.min.js"></script>
-    <script src="/static/bootstrap/js/bootstrap-datepicker.js"></script>
-    <script src="/static/bootstrap/locales/bootstrap-datepicker.zh-CN.min.js"></script>
-    <script type="text/javascript">
-        $('#sandbox-container input').datepicker({
-            autoclose: true,
-            todayHighlight: true
-            language: "zh-CN";
-        });
-        $('.datepicker').datepicker();
-    </script>
+    <script src="/static/boot4/dist/js/bootstrap.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="/static/boot4/assets/js/vendor/holder.min.js"></script>
   </body>

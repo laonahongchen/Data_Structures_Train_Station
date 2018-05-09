@@ -1,0 +1,84 @@
+{% extends 'query_train.html' %}
+
+{% block ans %}
+    {% if asked == True %}
+        <div class="container">
+            <div class="card-header">
+                查询结果
+            </div>
+            <div class="card-body">
+                {% if has_train == True %}
+                <div class="row">
+                    <div class="col">
+                        车号:{{train_id}}
+                    </div>
+                    <div class="col">
+                        车名:{{train_name}}
+                    </div>
+                    <div class="col">
+                        类型:{{catalogs}}
+                    </div>
+                    <div class="col">
+                        起点站:{{strat_station}}
+                    </div>
+                    <div class="col">
+                        终点站:{{end_station}}
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#info" aria-expanded="false" aria-controls="info">
+                            点击此处按照站点显示详细信息
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse" id="info">
+                    <table class="table">
+                        <th>站名</th><th>车辆进站时间</th><th>发车时间</th><th>停留时间</th>
+                        {% for x in class_train %}
+                            <th>{{x}}价格(￥)</th>
+                        {% endfor %}
+                        {% for x in station %}
+                            <tr>
+                                <td>{{x.0}}</td><td>{{x.1}}</td><td>{{x.2}}</td><td>{{x.3}}</td>
+                                {% for y in x.4 %}
+                                    <td>{{y}}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="row">
+                    <!-- 需要看如何开放、删除、修改 -->
+                    <a href="#"><button type="button" class="btn btn-success">公开车次</button></a>
+                    <a href="#"><button type="button" class="btn btn-warning">修改车次</button></a>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#check_delete">
+                      删除车次
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="check_delete" tabindex="-1" role="dialog" aria-labelledby="check_delete" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">确认删除</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            您真的确认要删除这辆车次吗？
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-danger">删除</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                {% else %}
+                    车次不存在!!!
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+{% endblock %}

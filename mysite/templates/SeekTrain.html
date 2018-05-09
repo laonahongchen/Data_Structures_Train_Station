@@ -1,6 +1,7 @@
 {% extends 'searchtrain.html' %}
-{% if asked == true %}
-    {% block answer %}
+
+{% block answer %}
+    {% if asked == True %}
     <div class="container">
     <div class="card">
         <div class="card-heading">
@@ -49,5 +50,5 @@
         </table>
     </div>
     </div>
-    {% endblock %}
-{% endif %}
+    {% endif %}
+{% endblock %}
