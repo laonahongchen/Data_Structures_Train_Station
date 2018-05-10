@@ -1,0 +1,74 @@
+{% extends 'searchtrain.html' %}
+
+{% block answer %}
+    {% if asked == True %}
+    <div class="container">
+    <div class="card">
+        <div class="card-heading">
+            <h3 class="card-title text-center">查询结果</h3>
+        </div>
+        <table class="table">
+                    <th>车次</th><th><img src="/static/st.png" alt="start" width="20" height="20"> 起始地 </th><th><span class="fa fa-clock-o fa-lg" aria-hidden="true" ></span>发车时间</th><th><img src="/static/ed.png" alt="end" width="20" height="20">目的地</th><th>到达时间</th>
+                    <!-- <tr><td>产品 B</td><td>400</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><a href="http://www.baidu.com"> <button type="button" class="btn btn-default btn-lg">
+          <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Buy now
+        </button></a></td> </tr> -->
+            <!--
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            -->
+            {% for x in Trains %}
+
+                <tr data-toggle="collapse" data-target="#tickets_info{{x.0}}" class="accordion-toggle"><td>{{x.0}}</td><td>{{x.1}}</td><td>{{x.2}}</td><td>{{x.3}}</td><td>{{x.4}}</td></tr>
+                <tr>
+                    <td colspan="5">
+
+                            <div class="collapse" id="tickets_info{{x.0}}" class="accordion-body">
+                                {% for a in x.5 %}
+                                <p><li> {{a.0}}剩余：{{a.1}} </li><li> {{a.0}}票价：￥{{a.2}}</li>
+                                    <li>
+                                    {% if a.1 > 0 %}
+                                        <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#buyn">
+                                    {% else %}
+                                        <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#buyn" disabled>
+                                    {%endif %}
+                                       Buy now </button>
+                                       <form>
+                                       <div class="modal fade" id="buyn" tabindex="-1" role="dialog" aria-labelledby="buyn" aria-hidden="true">
+                                         <div class="modal-dialog modal-dialog-centered" role="document">
+                                           <div class="modal-content">
+                                             <div class="modal-header">
+                                               <h5 class="modal-title">请选择购买数量</h5>
+                                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                 <span aria-hidden="true">&times;</span>
+                                               </button>
+                                             </div>
+                                             <div class="modal-body">
+                                               <input type="number" name="num_buy" class="form-control" autofocus required>
+                                             </div>
+                                             <div class="modal-footer">
+                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                               <button type="submit" class="btn btn-success">提交</button>
+                                             </div>
+                                           </div>
+                                         </div>
+                                     </div>
+                                     </form>
+                                </li>
+                                </p>
+                                {% endfor %}
+                            </div>
+
+                        </td>
+                    </tr>
+
+            {% endfor %}
+            <!--
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Button with data-target
+            </button>
+        -->
+
+        </table>
+    </div>
+    </div>
+    {% endif %}
+{% endblock %}

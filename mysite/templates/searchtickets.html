@@ -10,12 +10,12 @@
       <div class="row">
         <div class="col">
           <label for="dateoftrain" class="sr-only">出发日期</label>
-          <input data-provide="datepicker" id="dateoftrain" type="text" class="form-control" placeholder="出发日期" required>
+          <input id="dateoftrain" type="date" class="form-control" placeholder="出发日期" required>
         </div>
         {% for x in catalogs %}
         <div class="col">
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option{{x}}">
           <label class="form-check-label" for="inlineRadio1">{{x}}</label>
         </div>
         </div>

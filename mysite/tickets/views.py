@@ -15,12 +15,12 @@ answer1 = [
 
 catalogs = {'C-城际铁路', 'G-高铁', 'K-快车'}
 
-context = {'login_name':'test', 'authority':1, 'asked': False, 'Trains': answer, 'catalogs': catalogs}
+context = {'login_name':'test', 'authority':1, 'asked': True, 'Trains': answer, 'catalogs': catalogs}
 context1 = {'login_name':'test', 'authority':1, 'asked': True, 'Historys': answer1, 'catalogs': catalogs}
 
 # Create your views here.
 def index(request):
-    return render_to_response("SeekTrain.html", context)
+    return render_to_response("SeekTickets.html", context)
 
 def buy_history(request):
     return render_to_response("buyhistory.html", context1)
