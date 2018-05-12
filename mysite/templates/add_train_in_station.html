@@ -18,12 +18,12 @@
                 {% endfor %}
                 {% for x in num_station %}
                     <tr>
-                        <td><input type="text" id="name_station[{{x}}]" class="form-control" required></td>
-                        <td><input type="time" id="time_arriv[{{x}}]" class="form-control" required></td>
-                        <td><input type="time" id="time_start[{{x}}]" class="form-control" required></td>
-                        <td><input type="time" id="time_stopover[{{x}}]" class="form-control" required></td>
+                        <td><input type="text" name="name_station[{{x}}]" class="form-control" required></td>
+                        <td><input type="time" name="time_arriv[{{x}}]" class="form-control" required></td>
+                        <td><input type="time" name="time_start[{{x}}]" class="form-control" required></td>
+                        <td><input type="time" name="time_stopover[{{x}}]" class="form-control" required></td>
                         {% for y in num_price %}
-                            <td><input type="number" id="price[{{x}}][{{y}}]" class="form-control" required></td>
+                            <td><input type="number" name="price[{{x}}][{{y}}]" class="form-control" required></td>
                         {% endfor %}
                     </tr>
                 {% endfor %}

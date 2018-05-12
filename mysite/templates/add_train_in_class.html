@@ -12,7 +12,7 @@
     <form style="width:40%;margin-left:30%">
 
         {% for x in num_price %}
-            <input type="text" id="class_train[{{x}}]" class="form-control" required>
+            <input type="text" name="class_train[{{x}}]" class="form-control" required>
         {% endfor %}
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">继续填写详细信息（不同车站）</button>

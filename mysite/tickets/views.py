@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.template import loader
+from django.template import RequestContext
 
 answer = [
     ['G1', 'PEK', '08:00', 'SHH', '10:00', [["一等座", 3, 500.00], ["二等座", 2, 200.00], ["三等座", 1, 50.00]]],
@@ -20,7 +21,19 @@ context1 = {'login_name':'test', 'authority':1, 'asked': True, 'Historys': answe
 
 # Create your views here.
 def index(request):
-    return render_to_response("SeekTickets.html", context)
+    asked = request.COOKIES.get('asked')
+    if request.method == 'GET':
+        if asked != True:
+            context['asked'] = False
+        else:
+            context['asked'] = True
+        return render_to_response("SeekTickets.html", context,  RequestContext(request))
+    else:
+        context['asked'] = True
+        #fr = request.POST.get('from')
+        #des = request.POST.get('destination')
+        #dat = request.POST.get('dateoftrain')
+        return render(request, "SeekTickets.html", context,  RequestContext(request))
 
 def buy_history(request):
     return render_to_response("buyhistory.html", context1)

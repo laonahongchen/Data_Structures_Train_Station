@@ -8,19 +8,21 @@
     </div>
       <div class="card-body">
       <div class="row">
+        <form method="post">
         <div class="col">
           <label for="dateoftrain" class="sr-only">出发日期</label>
-          <input id="dateoftrain" type="date" class="form-control" placeholder="出发日期" required>
+          <input name="dateoftrain" type="date" class="form-control" placeholder="出发日期" required>
         </div>
         {% for x in catalogs %}
         <div class="col">
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option{{x}}">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" name="inlineRadio1" value="option{{x}}">
           <label class="form-check-label" for="inlineRadio1">{{x}}</label>
         </div>
         </div>
         {% endfor %}
           <div class="col"> <button type="submit" class="btn btn-warning">查询订票记录</button></div>
+         </form>
         </div>
       </div>
     </div><!--/.navbar-collapse -->
