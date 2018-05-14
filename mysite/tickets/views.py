@@ -21,19 +21,21 @@ context1 = {'login_name':'test', 'authority':1, 'asked': True, 'Historys': answe
 
 # Create your views here.
 def index(request):
-    asked = request.COOKIES.get('asked')
+
     if request.method == 'GET':
+        #asked = request.COOKIES.get('asked')
+        asked = False
         if asked != True:
             context['asked'] = False
         else:
             context['asked'] = True
-        return render_to_response("SeekTickets.html", context,  RequestContext(request))
+        return render_to_response("SeekTickets.html", context)
     else:
         context['asked'] = True
         #fr = request.POST.get('from')
         #des = request.POST.get('destination')
         #dat = request.POST.get('dateoftrain')
-        return render(request, "SeekTickets.html", context,  RequestContext(request))
+        return render(request, "SeekTickets.html", context)
 
 def buy_history(request):
     return render_to_response("buyhistory.html", context1)
