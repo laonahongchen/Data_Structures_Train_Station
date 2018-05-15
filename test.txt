@@ -1,0 +1,18 @@
+register dengwxn 123456 dengwxn@126.com 13550099321
+register laji 123456 dengwxn@126.com 13550099321
+register de 123456 dengxn@126.com 14560099321
+register fsfsfs lizhaoyu dengwxn@126.com 13550099321
+register deffsdn 123456 dengwxn@126.com 13550099321
+register dada 123456 dengwxn@126.com 13550099321
+register fdsfsfs 13131312 dengwxn@126.com 13550099321
+register fsfdrw 123456 dengwxn@126.com 13550099321
+register dewfw 1313231 dengwxn@126.com 13550099321
+login 2018 123456
+login 2019 lizhaoyu
+modify_profile 2018 lizhaoyu lizhaoyu@126.com 13001913385
+modify_profile 2019 meinv lizhaoyu@126.com 13001913385
+modify_privilege 2018 2019 2
+query_profile 2018
+query_profile 2019
+query-profile 2020
+query_profile 2021
