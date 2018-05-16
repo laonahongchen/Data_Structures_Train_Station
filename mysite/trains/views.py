@@ -19,13 +19,13 @@ context2 = {'login_name':'test', 'authority':2, 'num_price':range(1), 'num_stati
 context3 = {'login_name':'test', 'authority':2, 'num_price':range(1), 'class_train':trains, 'station': station_info, 'asked':False, 'has_train':False}
 
 def index(request):
-    return render_to_response("add_train.html", context)
+    return render_to_response("Add_train.html", context)
 
 def index1(request):
-    return render_to_response("add_train_in_class.html", context1)
+    return render_to_response("Add_train_in_class.html", context1)
 
 def index2(request):
-    return render_to_response("add_train_in_station.html", context2)
+    return render_to_response("Add_train_in_station.html", context2)
 
 def query_train(request):
     return render_to_response("AskTrain.html", context3)

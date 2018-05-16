@@ -32,10 +32,10 @@ def index(request):
         return render_to_response("SeekTickets.html", context)
     else:
         context['asked'] = True
-        #fr = request.POST.get('from')
-        #des = request.POST.get('destination')
-        #dat = request.POST.get('dateoftrain')
+        fr = request.POST.get('from')
+        des = request.POST.get('destination')
+        dat = request.POST.get('dateoftrain')
         return render(request, "SeekTickets.html", context)
 
 def buy_history(request):
-    return render_to_response("buyhistory.html", context1)
+    return render_to_response("Buyhistory.html", context1)

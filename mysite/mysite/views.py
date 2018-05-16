@@ -12,15 +12,15 @@ def index(request):
     return render(request, 'index.html', context)
 
 def about(request):
-    return render_to_response('about.html', context)
+    return render_to_response('About.html', context)
 
 def login(request):
-    return render_to_response('login.html', context)
+    return render_to_response('Login.html', context)
     #get id='inputName' with password ='inputPassword'
     #maybe get remember-me so use cookies please
 
 def signup(request):
-    return render_to_response('signup.html', context)
+    return render_to_response('Signup.html', context)
 
 def cinfo(request):
-    return render_to_response('signup.html', context)
+    return render_to_response('Signup.html', context)

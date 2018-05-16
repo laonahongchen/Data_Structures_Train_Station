@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block headcss %}
+<link href="/static/boot4/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+    <div class="container" style="margin-top: 50px;">
+
+      <form class="form-signin">
+        <h2 class="form-signin-heading">get informations</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputName" class="sr-only">Name</label>
+        <input type="text" name="inputName" class="form-control" placeholder="User Name" required>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="inputPhone" class="sr-only">Phone Number</label>
+        <input type="tel" name="inputPhone" class="form-control" placeholder="Phone Number" required>
+
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+      </form>
+
+    </div> <!-- /container -->
+
+{% endblock %}
