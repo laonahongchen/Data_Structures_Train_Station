@@ -11,7 +11,12 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="/static/boot4/docs/4.1/examples/sticky-footer/sticky-footer.css">
-    <link href="/static/boot41/dist/css/bootstrap.css" rel="stylesheet">
+    {% if style == 0 %}
+        <link href="/static/boot41/dist/css/bootstrap.css" rel="stylesheet">
+    {% else %}
+        <link href="/static/boot4/dist/css/bootstrap.css" rel="stylesheet">
+    {% endif %}
+
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 
@@ -47,7 +52,11 @@
 
   <body style="margin-bottom:60px;">
       <header>
-          <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+          {% if style == 0 %}
+          <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info">
+            {% else %}
+                <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            {% endif %}
             <a class="navbar-brand" href="/">Train Tickets Selling System</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -62,7 +71,6 @@
                   </li>
               </ul>
               <ul class="navbar-nav nav-right">
-                  <form class="form-inline">
               {% if authority == 0 %}
                     <li class="nav-item" > <a href="/login/" style="color: #FFFFFF"><button type="button" name="button" class="btn btn-success dlink">login now</button></a></li>
                     <li class="nav-item" style="margin-left: 10px;"> <a href="/signup/" style="color: #FFFFFF"><button type="button" name="button" class="btn btn-success">sign up now</button></a></li>
@@ -83,7 +91,13 @@
                       </li>
 
               {% endif %}
-              </form>
+                  <li class="nav-item dropleft" style="margin-left:10px;">
+                      <button type="button" name="button" class=" btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 更换页面风格 </button>
+                      <div class="dropdown-menu bg-secondary" >
+                        <a class="dropdown-item" href="/cstyle0/">windows10风格</a>
+                        <a class="dropdown-item" href="/cstyle1/">默认</a>
+                    </div>
+                  </li>
               </ul>
             </div><!-- /.nav-collapse -->
           </nav>
@@ -98,7 +112,6 @@
             <p class="float-right"><a href="#">Back to top</a></p>
             <p> <a href="/about/">About us</a> </p>
         </div>
-
     </footer>
 
     <!-- Bootstrap core JavaScript

@@ -16,8 +16,8 @@ answer1 = [
 
 catalogs = {'C-城际铁路', 'G-高铁', 'K-快车'}
 
-context = {'login_name':'test', 'authority':1, 'asked': True, 'Trains': answer, 'catalogs': catalogs}
-context1 = {'login_name':'test', 'authority':1, 'asked': True, 'Historys': answer1, 'catalogs': catalogs}
+context = {'login_name':'test', 'authority':1, 'style':1, 'asked': True, 'Trains': answer, 'catalogs': catalogs}
+context1 = {'login_name':'test', 'authority':1, 'style':1, 'asked': True, 'Historys': answer1, 'catalogs': catalogs}
 
 # Create your views here.
 def index(request):

@@ -14,9 +14,9 @@ station_info = [
     ["夏威夷", "08:02", "xx:xx", "00:00" , [1.5]],
 ]
 
-context2 = {'login_name':'test', 'authority':2, 'num_price':range(1), 'num_station':range(2), 'class_train':trains}
+context2 = {'login_name':'test', 'authority':2, 'style':1, 'num_price':range(1), 'num_station':range(2), 'class_train':trains}
 
-context3 = {'login_name':'test', 'authority':2, 'num_price':range(1), 'class_train':trains, 'station': station_info, 'asked':False, 'has_train':False}
+context3 = {'login_name':'test', 'authority':2, 'style':1, 'num_price':range(1), 'class_train':trains, 'station': station_info, 'asked':False, 'has_train':False}
 
 def index(request):
     return render_to_response("Add_train.html", context)
