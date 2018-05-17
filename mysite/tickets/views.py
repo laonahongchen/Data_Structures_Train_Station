@@ -29,7 +29,7 @@ def index(request):
             context['asked'] = False
         else:
             context['asked'] = True
-        return render_to_response("SeekTickets.html", context)
+        return render(request, "SeekTickets.html", context)
     else:
         context['asked'] = True
         fr = request.POST.get('from')
