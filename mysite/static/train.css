@@ -1,0 +1,35 @@
+.train-animation {
+    width:10%;
+    height:5%;
+    animation:myfirst 5s;
+    -moz-animation:myfirst 5s; /* Firefox */
+    -webkit-animation:myfirst 5s; /* Safari and Chrome */
+    -o-animation:myfirst 5s; /* Opera */
+    animation-timing-function:ease-in;
+    -webkit-animation-timing-function:ease-in;
+    -moz-animation-timing-function:ease-in;
+    -o-animation-timing-function:ease-in;
+}
+@keyframes myfirst
+{
+from {left:0%;}
+to {left:90%;}
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+    from {left:0%;}
+    to {left:90%;}
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+    from {left:0%;}
+    to {left:90%;}
+}
+
+@-o-keyframes myfirst /* Opera */
+{
+    from {left:0%;}
+    to {left:90%;}
+}
