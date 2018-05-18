@@ -18,7 +18,7 @@
     {% endif %}
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="/static/train.css">
 
     <!--
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -50,7 +50,7 @@
     <![endif]-->
   </head>
 
-  <body style="margin-bottom:60px;">
+  <body style="margin-bottom:3rem;">
       <header>
           {% if style == 0 %}
           <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info">
@@ -73,7 +73,7 @@
               <ul class="navbar-nav nav-right">
               {% if authority == 0 %}
                     <li class="nav-item" > <a href="/login/" style="color: #FFFFFF"><button type="button" name="button" class="btn btn-success dlink">login now</button></a></li>
-                    <li class="nav-item" style="margin-left: 10px;"> <a href="/signup/" style="color: #FFFFFF"><button type="button" name="button" class="btn btn-success">sign up now</button></a></li>
+                    <li class="nav-item" style="margin-left: .1rem;"> <a href="/signup/" style="color: #FFFFFF"><button type="button" name="button" class="btn btn-success">sign up now</button></a></li>
               {% else %}
                     <li class="nav-item btn-group dropleft">
                         <button type="button" name="button" class=" btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 用户：{{login_name}} </button>
@@ -91,7 +91,7 @@
                       </li>
 
               {% endif %}
-                  <li class="nav-item dropleft" style="margin-left:10px;">
+                  <li class="nav-item dropleft" style="margin-left:.1rem;">
                       <button type="button" name="button" class=" btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 更换页面风格 </button>
                       <div class="dropdown-menu bg-secondary" >
                         <a class="dropdown-item" href="/cstyle0/">windows10风格</a>

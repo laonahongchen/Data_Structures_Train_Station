@@ -11,8 +11,11 @@
         <h2 class="form-signin-heading">Please log in</h2>
         <label for="inputName" class="sr-only">User name</label>
         <input type="text" name="inputName" class="form-control" placeholder="User name" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="input-group">
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" name="inputPassword" class="form-control js-password-control" placeholder="Password" required>
+          <span class="input-group-addon js-password-btn"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></span>
+        </div>
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me
