@@ -11,15 +11,23 @@
         <h2 class="form-signin-heading">Please log in</h2>
         <label for="inputName" class="sr-only">User name</label>
         <input type="text" name="inputName" class="form-control" placeholder="User name" required autofocus>
-        <div class="input-group">
+        <div class="input-group-append">
           <label for="inputPassword" class="sr-only">Password</label>
           <input type="password" name="inputPassword" id="pass" class="form-control js-password-control" placeholder="Password" required>
-          <span class="input-group-addon js-password-btn" style="height:auto;"><button type="button" id="btn" style="height:auto;"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></button></span>
         </div>
-        <div class="checkbox">
+
+        <div class="row">
+
+        <div class="checkbox col">
           <label>
             <input type="checkbox" value="remember-me"> Remember me
           </label>
+        </div>
+        <div class="col" id="btn">
+            <img src="/static/eye.png" alt="eye" style="height:1.5rem;">
+            <b>显示密码</b>
+        </div>
+
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
