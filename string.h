@@ -11,7 +11,7 @@ struct mystring {
 		for (int i = 0; i < s.len; ++i) os << s.str[i];
 		return os;
 	}
-	char str[_size];
+	char str[_size + 1];
 	int len, size;
 
 	mystring() {
