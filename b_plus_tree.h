@@ -1,6 +1,8 @@
 #ifndef bplustree_model
 #define bplustree_model
 
+#define _CRT_SECURE_NO_WARNINGS  
+
 #include <iostream>
 #include <cstdio>
 #include <cmath>
@@ -8,7 +10,7 @@
 #include <cstddef>
 #include "model_predefined.h"
 #include <assert.h>
-
+#include "newstring.h"
 
 #define OFFSET_META 0
 #define OFFSET_BLOCK OFFSET_META + sizeof(meta_t)
@@ -45,6 +47,7 @@ class bplus_tree {
 			off_t prev;
 			size_t num;
 			index_t children[TREE_ORDER];
+
 			//children[i].max < children[i].key <= children[i+1].min
 		};
 
@@ -197,10 +200,10 @@ class bplus_tree {
 	public:
 		bplus_tree(const char *pa, bool force_empty = false) : fp(nullptr), fp_level(0) {
 			memset(path, 0, sizeof(path));
-			strcpy_s(path, pa);
+			strcpy(path, pa);
 
 			if (!force_empty)
-				if (map(&meta, OFFSET_META))//find_meta
+				if (map(&meta, OFFSET_META) != 0)//find_meta
 					force_empty = true;
 
 			if (force_empty) { //init_the_file
@@ -219,6 +222,7 @@ class bplus_tree {
 			if (record != leaf.children + leaf.num) {
 				*value = record->value;
 				return keycmp(record->key, key); //0:success
+				
 			}
 			else
 				return -1;
@@ -240,7 +244,7 @@ class bplus_tree {
 
 			record_t *to_delete = find(leaf, key);
 
-			if (!(*to_delete == key))  //record_not_exist
+			if (to_delete == end(leaf))  //record_not_exist
 				return -1;
 
 			copy(to_delete + 1, end(leaf), to_delete); //delete and move
@@ -297,7 +301,7 @@ class bplus_tree {
 
 		}
 
-		int insert(const key_t& key, value_t value) {
+		int insert(const key_t& key, const value_t& value) {
 
 			off_t parent = search_index(key);
 			off_t offset = search_leaf(parent, key);
@@ -341,7 +345,7 @@ class bplus_tree {
 		}
 
 		//change value
-		int update(const key_t& key, value_t value) {
+		int update(const key_t& key, const value_t &value) {
 
 			off_t offset = search_leaf(key);
 			leaf_node_t leaf;
@@ -417,7 +421,7 @@ class bplus_tree {
 
 		void remove_from_index(off_t offset, internal_node_t &node, const key_t &key) {
 
-			size_t min_num = meta.root_offset == offset ? 1 : meta.order / 2;
+			size_t min_num = (meta.root_offset == offset) ? 1 : meta.order / 2;
 
 			key_t index_key = begin(node)->key;
 			index_t *to_delete = find(node, key); //find next key(need delete)
@@ -510,7 +514,8 @@ class bplus_tree {
 					put_pos = begin(to);
 					map(&parent, from.parent);
 					child_t pos = find(parent, begin(from)->key);
-					put_pos->key = (lend_pos - 1)->key;
+					put_pos->key = pos->key;
+					pos->key = (lend_pos - 1)->key;
 					unmap(&parent, from.parent);
 				}
 
@@ -565,6 +570,7 @@ class bplus_tree {
 			internal_node_t node;
 			map(&node, parent);
 			index_t *w = find(node, o);  //find next key(bigger than o) 
+			
 			w->key = n;   //change key
 			unmap(&node, parent);
 			if (w == node.children + node.num - 1)  //borrower and lender have different parent
@@ -711,19 +717,12 @@ class bplus_tree {
 		}
 
 		void open_file(const char *mode = "rb+") const {
-
-			if (fp_level == 0)
-				fopen_s(&fp, path, mode);
-
-			++fp_level;
+			
+			fp = fopen(path, mode);
 		}
 
 		void close_file() const {
-
-			if (fp_level == 1)
-				fclose(fp);
-
-			--fp_level;
+			fclose(fp);
 		}
 
 		off_t alloc(size_t size) {
@@ -786,6 +785,11 @@ class bplus_tree {
 		int unmap(T *block, off_t offset) const {
 			return unmap(block, offset, sizeof(T));
 		}
+
+		
+			
+
+
 
 };
 
