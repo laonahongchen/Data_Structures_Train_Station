@@ -63,7 +63,7 @@ void file_query_profile(const int cintid) {
 	mystring<20> password(charpassword);
 	mystring<20> email(charemail);
 	mystring<20> phone(charphone);
-	cout << name <<  ' ' << email << ' ' << phone << ' ' << privilege << '\n';
+	cout << name << ' '<< password << ' ' << email << ' ' << phone << ' ' << privilege << '\n';
 	fout.seekg(0, ios::beg);
 	return;
 }
@@ -95,12 +95,12 @@ void file_modify_priviledge(const int &id1, const int &id2, const int &privilege
 	fout.seekg((id2 - 2018) * user_block + sizeof(char) * 120);
 	fout.read(reinterpret_cast<char *>(&privilege2), sizeof(int));
 	if (privilege1 == 2 && privilege2 != 2) {
-		//fout.seekg(-4, ios::cur);
 		fout.seekp((id2 - 2018) * user_block + sizeof(char) * 120);
 		fout.write(reinterpret_cast<const char *>(&privilege), sizeof(int));
 		cout << 1 << '\n';
 	}
 	else cout << 0 << '\n';
 	fout.seekg(0, ios::beg);
+	fout.seekp(0, ios::beg);
 	return;
 }
