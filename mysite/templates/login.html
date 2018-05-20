@@ -7,13 +7,14 @@
 
     <div class="container" style="margin-top: 4rem;">
 
-      <form class="form-signin">
+      <form class="form-signin" method="post" action="/login/">
+        {% csrf_token %}
         <h2 class="form-signin-heading">Please log in</h2>
         <label for="inputName" class="sr-only">User name</label>
-        <input type="text" name="inputName" class="form-control" placeholder="User name" required autofocus>
+        <input type="text" name="userid" class="form-control" placeholder="UserID" required autofocus>
         <div class="input-group-append">
           <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" name="inputPassword" id="pass" class="form-control js-password-control" placeholder="Password" required>
+          <input type="password" name="password" id="pass" class="form-control js-password-control" placeholder="Password" required>
         </div>
 
         <div class="row">
