@@ -7,18 +7,19 @@
 
     <div class="container" style="margin-top: 4rem;">
 
-      <form class="form-signin">
+      <form class="form-signin" method="post" action="/signup/">
+        {% csrf_token %}
         <h2 class="form-signin-heading">get informations</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email" name="emailaddress" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputName" class="sr-only">Name</label>
-        <input type="text" name="inputName" class="form-control" placeholder="User Name" required>
+        <input type="text" name="username" class="form-control" placeholder="User Name" required>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
         <label for="inputPassword" class="sr-only">Repeat Password</label>
-        <input type="password" name="RePassword" class="form-control" placeholder="Repeate Password" required>
+        <input type="password" name="rePassword" class="form-control" placeholder="Repeate Password" required>
         <label for="inputPhone" class="sr-only">Phone Number</label>
-        <input type="tel" name="inputPhone" class="form-control" placeholder="Phone Number" required>
+        <input type="tel" name="phonenumber" class="form-control" placeholder="Phone Number" required>
 
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>

@@ -19,8 +19,16 @@ catalogs = {'C-城际铁路', 'G-高铁', 'K-快车'}
 context = {'login_name':'test', 'authority':1, 'style':1, 'asked': True, 'Trains': answer, 'catalogs': catalogs}
 context1 = {'login_name':'test', 'authority':1, 'style':1, 'asked': True, 'Historys': answer1, 'catalogs': catalogs}
 
+def getServerSideCookie(request, cookie, default_val=None):
+    val = request.session.get(cookie)
+    if not val:
+        val = default_val
+    return val
+
 # Create your views here.
 def index(request):
+    userid = getServerSideCookie(request, 'userid', '0')
+    userpv = getServerSideCookie(request, 'userpv', '0')
 
     if request.method == 'GET':
         #asked = request.COOKIES.get('asked')
@@ -29,13 +37,16 @@ def index(request):
             context['asked'] = False
         else:
             context['asked'] = True
-        return render(request, "SeekTickets.html", context)
+        return render(request, "SeekTickets.html", context = {'login_name':userid, 'authority':userpv})
     else:
         context['asked'] = True
         fr = request.POST.get('from')
         des = request.POST.get('destination')
         dat = request.POST.get('dateoftrain')
-        return render(request, "SeekTickets.html", context)
+        return render(request, "SeekTickets.html", context = {'login_name':userid, 'authority':userpv})
 
 def buy_history(request):
-    return render_to_response("Buyhistory.html", context1)
+    userid = getServerSideCookie(request, 'userid', '0')
+    userpv = getServerSideCookie(request, 'userpv', '0')
+
+    return render_to_response("Buyhistory.html", context = {'login_name':userid, 'authority':userpv})

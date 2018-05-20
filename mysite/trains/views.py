@@ -4,6 +4,9 @@ from django.http import HttpResponse
 from django.template import loader
 # Create your views here.
 
+import os
+import ctypes
+
 context = {'login_name':'test', 'authority':2}
 context1 = {'login_name':'test', 'authority':2, 'num_price':range(1)}
 
@@ -18,8 +21,17 @@ context2 = {'login_name':'test', 'authority':2, 'style':1, 'num_price':range(1),
 
 context3 = {'login_name':'test', 'authority':2, 'style':1, 'num_price':range(1), 'class_train':trains, 'station': station_info, 'asked':False, 'has_train':False}
 
+def getServerSideCookie(request, cookie, default_val=None):
+    val = request.session.get(cookie)
+    if not val:
+        val = default_val
+    return val
+
 def index(request):
-    return render_to_response("Add_train.html", context)
+    userid = getServerSideCookie(request, 'userid', '0')
+    userpv = getServerSideCookie(request, 'userpv', '0')
+
+    return render(request, 'Add_train.html', context = {'login_name':userid, 'authority':userpv})
 
 def index1(request):
     return render_to_response("Add_train_in_class.html", context1)
@@ -28,4 +40,7 @@ def index2(request):
     return render_to_response("Add_train_in_station.html", context2)
 
 def query_train(request):
-    return render_to_response("AskTrain.html", context3)
+    userid = getServerSideCookie(request, 'userid', '0')
+    userpv = getServerSideCookie(request, 'userpv', '0')
+
+    return render(request, 'AskTrain.html', context = {'login_name':userid, 'authority':userpv})

@@ -67,21 +67,22 @@
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/about/">about</a>
+                    <a class="nav-link" href="/about/">about </a>
                   </li>
               </ul>
               <ul class="navbar-nav nav-right">
-              {% if authority == 0 %}
+              {% if authority == "0" %}
                     <li class="nav-item" > <a href="/login/" style="color: #FFFFFF"><button type="button" name="button" class="btn btn-success dlink">login now</button></a></li>
                     <li class="nav-item" style="margin-left: .1rem;"> <a href="/signup/" style="color: #FFFFFF"><button type="button" name="button" class="btn btn-success">sign up now</button></a></li>
               {% else %}
                     <li class="nav-item btn-group dropleft">
-                        <button type="button" name="button" class=" btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 用户：{{login_name}} </button>
+                        <button type="button" name="button" class=" btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                            用户：{{ login_name }} </button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item" href="/change_info/">更改用户信息</a>
                           <a class="dropdown-item" href="/tickets/buyhistory">查询订票记录</a>
                           <div class="dropdown-divider"></div>
-                          {% if authority > 1 %}
+                          {% if authority == "2" %}
                               <a class="dropdown-item" href="/trains/">加车次</a>
                               <a class="dropdown-item" href="/trains/query_train/">查询车次</a>
                               <div class="dropdown-divider"></div>
@@ -89,7 +90,6 @@
                           <a class="dropdown-item" href="/logout/">登出</a>
                       </div>
                       </li>
-
               {% endif %}
                   <li class="nav-item dropleft" style="margin-left:.1rem;">
                       <button type="button" name="button" class=" btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 更换页面风格 </button>
