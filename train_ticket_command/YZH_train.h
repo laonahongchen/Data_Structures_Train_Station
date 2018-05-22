@@ -207,8 +207,10 @@ struct train{
 		for (int i = loc1_pos; i < loc2_pos; ++i) {
 			if (ticket[date - 1][i][ticket_kind] < num)
 				return false;
-			ticket[date - 1][i][ticket_kind] -= num;
 		}
+
+		for (int i = loc1_pos; i < loc2_pos; ++i) 
+			ticket[date - 1][i][ticket_kind] -= num;
 
 		return true;
 
@@ -244,8 +246,10 @@ struct train{
 		for (int i = loc1_pos; i < loc2_pos; ++i) {
 			if (ticket[date - 1][i][ticket_kind] + num > 2000)
 				return false;
-			ticket[date - 1][i][ticket_kind] += num;
 		}
+
+		for (int i = loc1_pos; i < loc2_pos; ++i) 
+			ticket[date - 1][i][ticket_kind] += num;
 
 		return true;
 	}
