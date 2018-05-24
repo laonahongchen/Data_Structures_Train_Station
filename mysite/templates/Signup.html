@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block headcss %}
-<link href="/static/boot4/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
+<link href="/static/boot41/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -17,8 +17,8 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="pass" name="password" class="form-control" placeholder="Password" required>
         <label for="inputPhone" class="sr-only">Phone Number</label>
-        <input type="number" name="phonenumber" class="form-control" placeholder="Phone Number" required>
-        <div class="row" id="btn">
+        <input type="tel" name="phonenumber" class="form-control" placeholder="Phone Number" required>
+        <div id="btn">
             <img src="/static/eye.png" alt="eye" style="height:1.5rem;">
             <b>显示密码</b>
         </div>

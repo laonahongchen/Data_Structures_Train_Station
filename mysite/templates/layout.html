@@ -10,13 +10,13 @@
     <title>Train Tickets</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="/static/boot4/docs/4.1/examples/sticky-footer/sticky-footer.css">
+
     {% if style == 0 %}
         <link href="/static/boot41/dist/css/bootstrap.css" rel="stylesheet">
     {% else %}
         <link href="/static/boot4/dist/css/bootstrap.css" rel="stylesheet">
     {% endif %}
-
+    <link rel="stylesheet" href="/static/boot4/docs/4.1/examples/sticky-footer-navbar/sticky-footer-navbar.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/train.css">
 
@@ -67,7 +67,7 @@
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/about/">about </a>
+                    <a class="nav-link" href="/about/">About </a>
                   </li>
               </ul>
               <ul class="navbar-nav nav-right">
@@ -122,7 +122,6 @@
     <script>window.jQuery || document.write('<script src="/static/boot4/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="/static/boot4/assets/js/vendor/popper.min.js"></script>
     <script src="/static/boot4/dist/js/bootstrap.js"></script>
-    <script src="/static/password.js"></script>
     {% block jsextends %}
     {% endblock %}
 

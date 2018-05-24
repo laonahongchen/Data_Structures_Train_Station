@@ -1,14 +1,11 @@
-$(document).ready(function() {
-    function jump(count) {
-        window.setTimeout(function(){
-            count--;
-            if(count > 0) {
-                $('#num').attr('innerHTML', count);
-                jump(count);
-            } else {
-                location.href="/";
-            }
-        }, 1000);
-    }
-    jump(5);
-});
+function lxfEndtime(){
+		$t=$('#Number1').html();
+		if($t!=0){
+			$('#timeSkip').html($t-1);
+			$i=setTimeout("lxfEndtime()",1000);
+			if( $('#timeSkip').html() == 0 ){
+				window.open('/','_self');
+			}
+		}
+	}
+	lxfEndtime();
