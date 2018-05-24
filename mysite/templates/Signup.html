@@ -15,16 +15,20 @@
         <label for="inputName" class="sr-only">Name</label>
         <input type="text" name="username" class="form-control" placeholder="User Name" required>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
-        <label for="inputPassword" class="sr-only">Repeat Password</label>
-        <input type="password" name="rePassword" class="form-control" placeholder="Repeate Password" required>
+        <input type="password" id="pass" name="password" class="form-control" placeholder="Password" required>
         <label for="inputPhone" class="sr-only">Phone Number</label>
         <input type="number" name="phonenumber" class="form-control" placeholder="Phone Number" required>
-
+        <div class="row" id="btn">
+            <img src="/static/eye.png" alt="eye" style="height:1.5rem;">
+            <b>显示密码</b>
+        </div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
       </form>
 
     </div> <!-- /container -->
 
+{% endblock %}
+{% block jsextends %}
+    <script src="/static/password.js"></script>
 {% endblock %}

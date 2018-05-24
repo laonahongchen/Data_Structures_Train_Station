@@ -96,3 +96,15 @@ def user_logout(request):
 
 def cinfo(request):
     return render_to_response('Signup.html', context)
+
+def page_not_found(request):
+    userid = getServerSideCookie(request, 'userid', '0')
+    userpv = getServerSideCookie(request, 'userpv', '0')
+
+    return render_to_response('Error.html', context = {'login_name':userid, 'authority':userpv})
+
+def page_error(request):
+    userid = getServerSideCookie(request, 'userid', '0')
+    userpv = getServerSideCookie(request, 'userpv', '0')
+
+    return render_to_response('Error.html', context = {'login_name':userid, 'authority':userpv})

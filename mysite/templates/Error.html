@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="container">
+    <img src="/static/train.png" alt="train" class="train-animation">
+    <div class="card card-default" style="margin-top:3rem;">
+        <div class="card-header">
+            <b>您访问的地址有误，将自动跳转到主页</b>
+        </div>
+        <div class="card-body" style="text-align:center">
+            <br/>页面将在5秒后跳转...<br/>还剩<span id="num">5</span>秒
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block jsextends %}
+    <script type="text/javascript" src="/static/error.js"></script>
+{% endblock %}
