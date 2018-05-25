@@ -32,18 +32,22 @@
                 </div>
                 <div class="collapse" id="info">
                     <table class="table">
-                        <th>站名</th><th>车辆进站时间</th><th>发车时间</th><th>停留时间</th>
-                        {% for x in class_train %}
-                            <th>{{x}}价格(￥)</th>
-                        {% endfor %}
-                        {% for x in station %}
-                            <tr>
-                                <td>{{x.0}}</td><td>{{x.1}}</td><td>{{x.2}}</td><td>{{x.3}}</td>
-                                {% for y in x.4 %}
-                                    <td>{{y}}</td>
-                                {% endfor %}
-                            </tr>
-                        {% endfor %}
+                        <thead>
+                            <th>站名</th><th>车辆进站时间</th><th>发车时间</th><th>停留时间</th>
+                        </thead>
+                        <tbody>
+                            {% for x in class_train %}
+                                <th>{{x}}价格(￥)</th>
+                            {% endfor %}
+                            {% for x in station %}
+                                <tr>
+                                    <td>{{x.0}}</td><td>{{x.1}}</td><td>{{x.2}}</td><td>{{x.3}}</td>
+                                    {% for y in x.4 %}
+                                        <td>{{y}}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
                 <div class="row">

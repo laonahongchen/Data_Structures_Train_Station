@@ -8,7 +8,7 @@ from django.urls import reverse
 import os
 import ctypes
 
-context = {'login_name':'test', 'authority':0, 'style':1}
+context = {'login_name':'test', 'authority':0, 'style':'1'}
 #need to fix context which send login_name and authority to html
 #authority 0: not login 1: normal user 2:admin
 
@@ -19,24 +19,42 @@ def getServerSideCookie(request, cookie, default_val=None):
     return val
 
 def cstyle0(request):
-    context['style'] = 0
+    request.session['tmpstyle'] = '0'
     return HttpResponseRedirect(reverse('index'))
 
 def cstyle1(request):
-    context['style'] = 1
+    request.session['tmpstyle'] = '1'
     return HttpResponseRedirect(reverse('index'))
 
 def index(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
 
-    return render(request, 'index.html', context = {'login_name':userid, 'authority':userpv})
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+    return render(request, 'index.html', context)
 
 def about(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
 
-    return render_to_response('About.html', context = {'login_name':userid, 'authority':userpv})
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+    return render(request, 'About.html', context)
+
+def uploading(request):
+    userid = getServerSideCookie(request, 'userid', '0')
+    userpv = getServerSideCookie(request, 'userpv', '0')
+
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+    return render(request, 'Uploading.html', context)
 
 def login(request):
     userid = getServerSideCookie(request, 'userid', '0')
@@ -62,7 +80,11 @@ def login(request):
             request.session['userpv'] = '2'
             return HttpResponseRedirect(reverse('index'))
 
-    return render(request, 'Login.html', context = {'username':userid, 'authority':userpv})
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+    return render(request, 'Login.html', context)
 
 def signup(request):
     userid = getServerSideCookie(request, 'userid', '0')
@@ -87,7 +109,11 @@ def signup(request):
 
         if info != '-1':
             return HttpResponseRedirect(reverse('index'))
-    return render(request, 'Signup.html', context = {'username':userid, 'authority':userpv})
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+    return render(request, 'Signup.html', context)
 
 def user_logout(request):
     request.session['userid'] = None
@@ -101,10 +127,18 @@ def page_not_found(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
 
-    return render_to_response('Error.html', context = {'login_name':userid, 'authority':userpv})
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+    return render(request, 'Error.html', context)
 
 def page_error(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
 
-    return render_to_response('Error.html', context = {'login_name':userid, 'authority':userpv})
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+    return render(request, 'Error.html', context)
