@@ -31,7 +31,11 @@ def index(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
 
-    return render(request, 'Add_train.html', context = {'login_name':userid, 'authority':userpv})
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+    return render(request, 'Add_train.html', context)
 
 def index1(request):
     return render_to_response("Add_train_in_class.html", context1)
@@ -43,4 +47,8 @@ def query_train(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
 
-    return render(request, 'AskTrain.html', context = {'login_name':userid, 'authority':userpv})
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+    return render(request, 'Asktrain.html', context)

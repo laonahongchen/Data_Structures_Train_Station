@@ -30,6 +30,11 @@ def index(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
 
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+
     if request.method == 'GET':
         #asked = request.COOKIES.get('asked')
         asked = False
@@ -37,16 +42,16 @@ def index(request):
             context['asked'] = False
         else:
             context['asked'] = True
-        return render(request, "SeekTickets.html", context = {'login_name':userid, 'authority':userpv})
+        return render(request, "SeekTickets.html", context)
     else:
         context['asked'] = True
         fr = request.POST.get('from')
         des = request.POST.get('destination')
         dat = request.POST.get('dateoftrain')
-        return render(request, "SeekTickets.html", context = {'login_name':userid, 'authority':userpv})
+        return render(request, "SeekTickets.html", context)
 
 def buy_history(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
 
-    return render_to_response("Buyhistory.html", context = {'login_name':userid, 'authority':userpv})
+    return render_to_response("Buyhistory.html", context)
