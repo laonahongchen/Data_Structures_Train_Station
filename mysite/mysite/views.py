@@ -118,6 +118,7 @@ def signup(request):
 def user_logout(request):
     request.session['userid'] = None
     request.session['userpv'] = None
+    request.sessoin['tmpstyle'] = None
     return HttpResponseRedirect(reverse('index'))
 
 def cinfo(request):

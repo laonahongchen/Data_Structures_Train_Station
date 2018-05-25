@@ -25,7 +25,7 @@ def getServerSideCookie(request, cookie, default_val=None):
         val = default_val
     return val
 
-# Create your views here.
+
 def index(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')

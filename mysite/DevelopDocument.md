@@ -45,3 +45,5 @@
 - add_train_in_class 传出class_train表示等级的名字
 
 - add_train_in_station 传出name_station time_arriv time_start time_stopover price[][] 这些值
+
+- 以上的所有传输全部** 使用 ** cookie实现
