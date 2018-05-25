@@ -9,8 +9,6 @@
 
     <title>Train Tickets</title>
 
-    <!-- Bootstrap core CSS -->
-
     {% if style == 0 %}
         <link href="/static/boot41/dist/css/bootstrap.css" rel="stylesheet">
     {% else %}
@@ -20,34 +18,9 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/train.css">
 
-    <!--
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    -->
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <!-- <link href="/static/bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
-
-    <!-- Custom styles for this template -->
     {% block headcss %}
     {% endblock %}
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <!--
-    <script src="/static/bootstrap/js/ie-emulation-modes-warning.js"></script>
-
-    <script src= "/static/bootstrap/js/vendor/jquery.min.js"></script>
-
-    <link href="/static/bootstrap/css/bootstrap-table-expandable.css" rel="stylesheet">
-
-    <script src="/static/bootstrap/js/bootstrap-table-expandable.js"></script>
-
-    </script> -->
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body style="margin-bottom:3rem;">
@@ -92,8 +65,8 @@
                       </li>
               {% endif %}
                   <li class="nav-item dropleft" style="margin-left:.1rem;">
-                      <button type="button" name="button" class=" btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 更换页面风格 </button>
-                      <div class="dropdown-menu bg-secondary" >
+                      <button type="button" name="button" class=" btn btn-outline-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 更换页面风格 </button>
+                      <div class="dropdown-menu" >
                         <a class="dropdown-item" href="/cstyle0/">风格1</a>
                         <a class="dropdown-item" href="/cstyle1/">风格2（默认）</a>
                     </div>
@@ -114,9 +87,6 @@
         </div>
     </footer>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
     <script>window.jQuery || document.write('<script src="/static/boot4/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
