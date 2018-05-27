@@ -1,7 +1,7 @@
 #ifndef bplustree_model
 #define bplustree_model
 
-#define _CRT_SECURE_NO_WARNINGS  
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
 #include <cstdio>
@@ -21,7 +21,7 @@ template <class value_t>
 class bplus_tree {
 
 	public:
-		//bplustree's characters 
+		//bplustree's characters
 		struct meta_t {
 			size_t order;
 			size_t value_size;
@@ -73,7 +73,7 @@ class bplus_tree {
 		inline record_t * begin(leaf_node_t &node) const{
 			return node.children;
 		}
-	
+
 		inline record_t * end(leaf_node_t &node) const{
 			return node.children + node.num;
 		}
@@ -223,7 +223,7 @@ class bplus_tree {
 			if (record != leaf.children + leaf.num) {
 				*value = record->value;
 				return keycmp(record->key, key); //0:success
-				
+
 			}
 			else
 				return -1;
@@ -247,9 +247,9 @@ class bplus_tree {
 					bg = begin(leaf);
 				ed = end(leaf);
 
-				for (; bg != ed; ++bg) 
+				for (; bg != ed; ++bg)
 					trainid_sequence.push_back(*bg);
-				
+
 				off = leaf.next;
 			}
 
@@ -605,8 +605,8 @@ class bplus_tree {
 		void change_parent_key(off_t parent, const key_t &o, const key_t &n) {
 			internal_node_t node;
 			map(&node, parent);
-			index_t *w = find(node, o);  //find next key(bigger than o) 
-			
+			index_t *w = find(node, o);  //find next key(bigger than o)
+
 			w->key = n;   //change key
 			unmap(&node, parent);
 			if (w == node.children + node.num - 1)  //borrower and lender have different parent
@@ -753,12 +753,17 @@ class bplus_tree {
 		}
 
 		void open_file(const char *mode = "rb+") const {
-			
-			fp = fopen(path, mode);
+			if (fp_level == 0) {
+				fp = fopen(path, mode);
+				++fp_level;
+			}
 		}
 
 		void close_file() const {
-			fclose(fp);
+			if (fp_level == 1) {
+				fclose(fp);
+				--fp_level;
+			}
 		}
 
 		off_t alloc(size_t size) {
@@ -793,11 +798,10 @@ class bplus_tree {
 		}
 
 		int map(void *block, off_t offset, size_t size) const {
-
 			open_file();
 			fseek(fp, offset, SEEK_SET);
 			size_t rd = fread(block, size, 1, fp);
-			close_file();
+			fflush(fp);
 
 			return rd - 1;
 		}
@@ -808,11 +812,10 @@ class bplus_tree {
 		}
 
 		int unmap(void *block, off_t offset, size_t size) const {
-
 			open_file();
 			fseek(fp, offset, SEEK_SET);
 			size_t wt = fwrite(block, size, 1, fp);
-			close_file();
+			fflush(fp);
 
 			return wt - 1;
 		}
@@ -822,7 +825,15 @@ class bplus_tree {
 			return unmap(block, offset, sizeof(T));
 		}
 
+
+
+
+
+
 };
+
+
+
 
 
 #endif
