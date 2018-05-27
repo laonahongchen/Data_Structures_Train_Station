@@ -1,7 +1,5 @@
 #pragma once
-#include <cstring>
 #include "string.h"
-
 struct User {
 	mystring<20> id;
 	mystring<40> name;
