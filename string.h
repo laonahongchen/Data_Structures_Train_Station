@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstring>
 #include <cmath>
+#include "predifined.h"
 
 using namespace std;
 
@@ -25,7 +26,6 @@ struct mystring {
 		len = strlen(other);
 		size = _size;
 		for (int i = 0; i < strlen(other); ++i) str[i] = other[i];
-		//for (int i = strlen(other); i < size; ++i) str[i] = ' ';
 		len = strlen(other);
 		str[len] = '\0';
 	}
@@ -34,7 +34,6 @@ struct mystring {
 		size = _size;
 		len = other.len;
 		for (int i = 0; i < other.len; ++i) str[i] = other.str[i];
-		//for (int i = other.len; i < size; ++i) str[i] = ' ';
 		str[len] = '\0';
 	}
 
@@ -64,13 +63,28 @@ struct mystring {
 		return *this;
 	}
 
-};
+	mystring<_size> & operator =(const mystring<_size> &s) {
+		for (int i = 0; i < s.len; ++i)
+			str[i] = s.str[i];
+		for (int i = s.len; i < size; ++i)
+			str[i] = ' ';
+		str[_size] = '\0';
+		len = s.len;
+		return *this;
+	}
 
-/*template<int _size>
-ostream & operator << (ostream &os, const mystring<_size> &s) {
-	for (int i = 0; i < s.len; ++i) os << s.str[i];
-	return os;
-}*/
+	bool operator <(const mystring<_size> &s) {
+		return strcmp(str, s.str) < 0;
+	}
+
+	operator const char*() const {
+		return str;
+	}
+
+	operator key_t() const {
+		return key_t(str);
+	}
+};
 
 template<int _size>
 mystring<_size> IntToString(int cnt) {
@@ -87,4 +101,39 @@ mystring<_size> IntToString(int cnt) {
 	}
 	return str;
 
+}
+
+template<int _size>
+int readdate(const mystring<_size> &s) {
+	int sum = 0, cnt = 0;
+	for (int i = 0; i < s.len; ++i) {
+		if (s.str[i] == '-') {
+			cnt++;
+			continue;
+		}
+		if (cnt == 2) {
+			sum = sum * 10 + s.str[i] - '0';
+		}
+	}
+	return sum;
+}
+
+template<int _size>
+int readuser_id(const mystring<_size> &s) {
+	int sum = 0;
+	for (int i = 0; i < s.len; ++i) {
+		sum = sum * 10 + s.str[i] - '0';
+	}
+	return sum;
+}
+
+template<int size1, int size2>
+mystring<size1 + size2> operator +(const mystring<size1> &str1, const mystring<size2> &str2) {
+	mystring<size1 + size2> s;
+	for (int i = 0; i < str1.len; ++i)	s.str[i] = str1.str[i];
+	for (int i = size1; i < size1 + str2.len; ++i)	s.str[i] = str2.str[i - size1];
+	s.str[size1 + size2] = '\0';
+	s.size = size1 + size2;
+	s.len = s.size;
+	return s;
 }
