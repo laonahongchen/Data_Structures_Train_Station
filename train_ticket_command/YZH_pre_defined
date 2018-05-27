@@ -4,14 +4,15 @@
 #include <cstring>
 
 #define TREE_ORDER 4
+#define _CRT_SECURE_NO_WARNINGS
 
 struct key_t {
 	char k[102];
-	
+
 	key_t(const char *str = "")
 	{
 		memset(k, 0, sizeof(k));
-		strcpy_s(k, str);
+		strcpy(k, str);
 	}
 
 	/*int k;
