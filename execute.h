@@ -1,6 +1,6 @@
 #pragma once
 #include <fstream>
-#include "predifined.h"
+#include "predefined.h"
 #include "user.h"
 #include "train.h"
 #include "ticket.h"
@@ -70,10 +70,9 @@ void file_query_profile(const int cintid) {
 	charemail[20] = '\0';
 	charphone[20] = '\0';
 	mystring<40> name(charname);
-	mystring<20> password(charpassword);
 	mystring<20> email(charemail);
 	mystring<20> phone(charphone);
-	cout << name << ' ' << password << ' ' << email << ' ' << phone << ' ' << privilege << '\n';
+	cout << name << ' ' << email << ' ' << phone << ' ' << privilege << '\n';
 	fout.seekg(0, ios::beg);
 	return;
 }
@@ -127,7 +126,7 @@ void file_buy_ticket(const mystring<20> &id, const int &intid, const int &num, c
 	train pos;
 	ticket findticket;
 	if (thetrain.search(train_id, &pos) != 0) {
-		cout << 0 << endl;
+		cout << 0 << '\n';
 		return;
 	}
 	if (pos.buy(num, loc1, loc2, intdate, ticket_kind)) {
@@ -160,13 +159,7 @@ void file_buy_ticket(const mystring<20> &id, const int &intid, const int &num, c
 			ret_date_loc1 += ('0' + date_from % 10);
 			ret_date_loc2 += ('0' + date_to / 10);
 			ret_date_loc2 += ('0' + date_to % 10);
-			ticket newticket(train_id, loc1, loc2, date);
-			newticket.catalog = pos.catalog;
-			newticket.loc1date = ret_date_loc1;
-			newticket.loc1time = pos.sta[loc1_pos].start;
-			newticket.loc2date = ret_date_loc2;
-			newticket.loc2time = pos.sta[loc2_pos].arrive;
-			newticket.num_kind = pos.num_price;
+			ticket newticket(train_id, loc1, loc2, date, pos.catalog, ret_date_loc1, pos.sta[loc1_pos].start, ret_date_loc2, pos.sta[loc2_pos].arrive, pos.num_price);
 			for (int i = 0; i < newticket.num_kind; ++i) {
 				newticket.ticket_kind[i] = pos.name_price[i];
 				for (int j = loc1_pos; j <= loc2_pos; ++j) {
@@ -196,7 +189,7 @@ void file_buy_ticket(const mystring<20> &id, const int &intid, const int &num, c
 		}
 	}
 	else {
-		cout << 0 << endl;
+		cout << 0 << '\n';
 	}
 	return;
 }
@@ -252,6 +245,10 @@ void file_refund_ticket(const int &num, const mystring<20> &id, const int &intid
 	}
 	train postrain;
 	ticket pos;
+	if (thetrain.search(train_id, &postrain) != 0) {
+		cout << 0 << '\n';
+		return;
+	}
 	mystring<90> key = id + date + train_id + loc1 + loc2;
 	if (theticket.search(key, &pos) != 0) {
 		cout << 0 << '\n';
@@ -267,11 +264,13 @@ void file_refund_ticket(const int &num, const mystring<20> &id, const int &intid
 				}
 				else {
 					pos.num_ticket_kind[i] -= num;
+					theticket.update(key, pos);
 					cout << 1 << '\n';
 					return;
 				}
 			}
 		}
 	}
+	else cout << 0 << '\n';
 	return;
 }

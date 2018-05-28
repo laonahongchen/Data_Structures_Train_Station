@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstring>
 #include <cmath>
-#include "predifined.h"
+#include "predefined.h"
 
 using namespace std;
 
@@ -81,8 +81,8 @@ struct mystring {
 		return str;
 	}
 
-	operator key_t() const {
-		return key_t(str);
+	operator key_type() const {
+		return key_type(str);
 	}
 };
 

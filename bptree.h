@@ -1,11 +1,12 @@
 #pragma once
-#define _CRT_SECURE_NO_WARNINGS  
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
 #include <cstdio>
 #include <cmath>
 #include <cstring>
 #include <cstddef>
-#include "predifined.h"
+#include "predefined.h"
 #include <assert.h>
 #include "string.h"
 #include "vector.h"
@@ -18,7 +19,7 @@ template <class value_t>
 class bplus_tree {
 
 public:
-	//bplustree's characters 
+	//bplustree's characters
 	struct meta_t {
 		size_t order;
 		size_t value_size;
@@ -33,7 +34,7 @@ public:
 
 	//index:key and children_slot_in_file
 	struct index_t {
-		key_t key;
+		key_type key;
 		off_t child;
 	};
 
@@ -51,7 +52,7 @@ public:
 
 	//terminate record
 	struct record_t {
-		key_t key;
+		key_type key;
 		value_t value;
 	};
 
@@ -84,7 +85,7 @@ public:
 	}
 
 	//upper_bound
-	inline index_t *find(internal_node_t &node, const key_t &key) const {
+	inline index_t *find(internal_node_t &node, const key_type &key) const {
 		index_t *st = begin(node);
 		index_t *ed = end(node) - 1;
 		size_t low = 0, high = node.num - 2, mid;
@@ -102,7 +103,7 @@ public:
 		else return st + high;
 	}
 
-	inline index_t *lower_find(internal_node_t &node, const key_t &key) const {
+	inline index_t *lower_find(internal_node_t &node, const key_type &key) const {
 		index_t *st = begin(node);
 		index_t *ed = end(node) - 1;
 		size_t low = 0, high = node.num - 2, mid;
@@ -121,7 +122,7 @@ public:
 	}
 
 	//lower_bound
-	inline record_t *find(leaf_node_t &node, const key_t &key) const {
+	inline record_t *find(leaf_node_t &node, const key_type &key) const {
 		record_t *st = begin(node);
 		record_t *ed = end(node);
 		size_t low = 0, high = node.num - 1, mid;
@@ -141,7 +142,7 @@ public:
 		else return st + high;
 	}
 
-	inline record_t *upper_find(leaf_node_t &node, const key_t &key) const {
+	inline record_t *upper_find(leaf_node_t &node, const key_type &key) const {
 		record_t *st = begin(node);
 		record_t *ed = end(node);
 		size_t low = 0, high = node.num - 1, mid;
@@ -212,7 +213,7 @@ public:
 
 	}
 	//search the record and put the value into the point
-	int search(const key_t& key, value_t *value) const {
+	int search(const key_type& key, value_t *value) const {
 		leaf_node_t leaf;
 		map(&leaf, search_leaf(key));
 
@@ -226,7 +227,7 @@ public:
 			return -1;
 	}
 
-	int search_range(const key_t &left, const key_t &right, sjtu::vector<record_t> &trainid_sequence) const {
+	int search_range(const key_type &left, const key_type &right, sjtu::vector<record_t> &trainid_sequence) const {
 		if (keycmp(left, right) > 0)
 			return 0;
 		off_t off_left = search_leaf(left);
@@ -262,7 +263,7 @@ public:
 
 
 	//remove the record
-	int remove(const key_t & key) {
+	int remove(const key_type & key) {
 
 		internal_node_t parent;
 		leaf_node_t leaf;
@@ -296,7 +297,7 @@ public:
 
 			//finally merge
 			if (!borrowed) {
-				key_t index_key;
+				key_type index_key;
 
 				if (pos == end(parent) - 1) {
 
@@ -334,7 +335,7 @@ public:
 		return 0;
 	}
 
-	int insert(const key_t& key, const value_t& value) {
+	int insert(const key_type& key, const value_t& value) {
 
 		off_t parent = search_index(key);
 		off_t offset = search_leaf(parent, key);
@@ -372,13 +373,13 @@ public:
 		unmap(&leaf, offset);
 		unmap(&new_leaf, leaf.next);
 
-		insert_key_to_index(parent, new_leaf.children[0].key, offset, leaf.next);  //split_index_recursively
+		insert_key_typeo_index(parent, new_leaf.children[0].key, offset, leaf.next);  //split_index_recursively
 
 		return 0;
 	}
 
 	//change value
-	int update(const key_t& key, const value_t &value) {
+	int update(const key_type& key, const value_t &value) {
 
 		off_t offset = search_leaf(key);
 		leaf_node_t leaf;
@@ -408,7 +409,7 @@ public:
 		memset(&meta, 0, sizeof(meta_t));
 		meta.order = TREE_ORDER;
 		meta.value_size = sizeof(value_t);
-		meta.key_size = sizeof(key_t);
+		meta.key_size = sizeof(key_type);
 		meta.height = 1;
 		meta.slot = OFFSET_BLOCK;
 
@@ -426,7 +427,7 @@ public:
 		unmap(&leaf, root.children[0].child);
 	}
 
-	off_t search_index(const key_t &key) const {
+	off_t search_index(const key_type &key) const {
 
 		off_t now = meta.root_offset;
 		size_t h = meta.height;
@@ -440,7 +441,7 @@ public:
 		return now;
 	}
 
-	off_t search_leaf(off_t index, const key_t &key) const {
+	off_t search_leaf(off_t index, const key_type &key) const {
 
 		internal_node_t node;
 		map(&node, index);
@@ -448,15 +449,15 @@ public:
 		return i->child;
 	}
 
-	off_t search_leaf(const key_t &key) const {
+	off_t search_leaf(const key_type &key) const {
 		return search_leaf(search_index(key), key);
 	}
 
-	void remove_from_index(off_t offset, internal_node_t &node, const key_t &key) {
+	void remove_from_index(off_t offset, internal_node_t &node, const key_type &key) {
 
 		size_t min_num = (meta.root_offset == offset) ? 1 : meta.order / 2;
 
-		key_t index_key = begin(node)->key;
+		key_type index_key = begin(node)->key;
 		index_t *to_delete = find(node, key); //find next key(need delete)
 		if (to_delete != end(node)) {
 			(to_delete + 1)->child = to_delete->child;  //change offset
@@ -599,10 +600,10 @@ public:
 
 	}
 
-	void change_parent_key(off_t parent, const key_t &o, const key_t &n) {
+	void change_parent_key(off_t parent, const key_type &o, const key_type &n) {
 		internal_node_t node;
 		map(&node, parent);
-		index_t *w = find(node, o);  //find next key(bigger than o) 
+		index_t *w = find(node, o);  //find next key(bigger than o)
 
 		w->key = n;   //change key
 		unmap(&node, parent);
@@ -621,7 +622,7 @@ public:
 		node_remove(&left, &right);
 	}
 
-	void insert_record_without_split(leaf_node_t *leaf, const key_t &key,
+	void insert_record_without_split(leaf_node_t *leaf, const key_type &key,
 		const value_t &value) {
 
 		record_t *pos = upper_find(*leaf, key);
@@ -631,7 +632,7 @@ public:
 		++leaf->num;
 	}
 
-	void insert_key_to_index(off_t offset, const key_t &key, off_t oldchild, off_t newchild) {
+	void insert_key_typeo_index(off_t offset, const key_type &key, off_t oldchild, off_t newchild) {
 
 		//root_need_split
 		if (offset == 0) {
@@ -657,7 +658,7 @@ public:
 
 		//recursion_end
 		if (node.num < meta.order) {
-			insert_key_to_index_without_split(node, key, newchild);
+			insert_key_typeo_index_without_split(node, key, newchild);
 			unmap(&node, offset);
 			return;
 		}
@@ -677,26 +678,26 @@ public:
 			--point;
 
 		//middle key is left's max
-		key_t middle_key = node.children[point].key;
+		key_type middle_key = node.children[point].key;
 
 		copy(begin(node) + point + 1, end(node), begin(new_node));
 		new_node.num = node.num - point - 1;
 		node.num = point + 1;
 
 		if (_right)
-			insert_key_to_index_without_split(new_node, key, newchild);
+			insert_key_typeo_index_without_split(new_node, key, newchild);
 		else
-			insert_key_to_index_without_split(node, key, newchild);
+			insert_key_typeo_index_without_split(node, key, newchild);
 
 		unmap(&node, offset);
 		unmap(&new_node, node.next);
 		change_children_parent(begin(new_node), end(new_node), node.next);
 
 		//give middle to parent
-		insert_key_to_index(node.parent, middle_key, offset, node.next);
+		insert_key_typeo_index(node.parent, middle_key, offset, node.next);
 	}
 
-	void insert_key_to_index_without_split(internal_node_t &node, const key_t &key,
+	void insert_key_typeo_index_without_split(internal_node_t &node, const key_type &key,
 		off_t newchild) {
 
 		index_t *pos = find(node, key);
@@ -750,12 +751,17 @@ public:
 	}
 
 	void open_file(const char *mode = "rb+") const {
-
-		fp = fopen(path, mode);
+		if (fp_level == 0) {
+			fp = fopen(path, mode);
+			++fp_level;
+		}
 	}
 
 	void close_file() const {
-		fclose(fp);
+		if (fp_level == 1) {
+			fclose(fp);
+			--fp_level;
+		}
 	}
 
 	off_t alloc(size_t size) {
@@ -790,11 +796,10 @@ public:
 	}
 
 	int map(void *block, off_t offset, size_t size) const {
-
 		open_file();
 		fseek(fp, offset, SEEK_SET);
 		size_t rd = fread(block, size, 1, fp);
-		close_file();
+		fflush(fp);
 
 		return rd - 1;
 	}
@@ -805,11 +810,10 @@ public:
 	}
 
 	int unmap(void *block, off_t offset, size_t size) const {
-
 		open_file();
 		fseek(fp, offset, SEEK_SET);
 		size_t wt = fwrite(block, size, 1, fp);
-		close_file();
+		fflush(fp);
 
 		return wt - 1;
 	}
@@ -819,4 +823,13 @@ public:
 		return unmap(block, offset, sizeof(T));
 	}
 
+
+
+
+
+
 };
+
+
+
+

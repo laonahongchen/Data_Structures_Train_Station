@@ -33,7 +33,7 @@ struct train {
 	bool besaled;
 	int num_station;
 	int num_price;
-	int ticket[30][59][5] = { 0 };  //ticket[i][j][k]: date: i, kind: k, sta[j] -> sta[j+1] has how many tickets
+	int ticket[30][59][5];  //ticket[i][j][k]: date: i, kind: k, sta[j] -> sta[j+1] has how many tickets
 	train_station sta[60];
 
 	train() : besaled(false), num_station(0), num_price(0) {}
@@ -116,7 +116,7 @@ struct train {
 		for (int i = 0; i < num_station; ++i) {
 			cout << sta[i].name << ' ' << sta[i].arrive << ' ' << sta[i].start << ' ' << sta[i].stopover;
 			for (int j = 0; j < num_price; ++j)
-				cout << ' ' << ("гд") << sta[i].price[j];
+				cout << ' ' <<  "гд" << sta[i].price[j];
 			cout << '\n';
 		}
 	}

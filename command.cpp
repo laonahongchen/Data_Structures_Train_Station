@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-#include "predifined.h"
+#include "predefined.h"
 #include "bptree.h"
 #include "string.h"
 #include "read.h"
@@ -59,6 +59,9 @@ void init() {
 }
 
 int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
 	init();
 	bplus_tree<ticket> theticket("ticket.db");
 	bplus_tree<train> thetrain("train.db");
@@ -103,9 +106,9 @@ int main() {
 		else if (commandtype == QUERY_TICKET) {
 			mystring<20> loc1 = readLOC(it);
 			mystring<20> loc2 = readLOC(it);
-			int date = readINTDATE(it);
+			int intdate = readINTDATE(it);
 			mystring<10> catalog = readCATALOG(it);
-			query_ticket(loc1, loc2, date, catalog, find_train, thetrain);
+			query_ticket(loc1, loc2, intdate, catalog, find_train, thetrain);
 		}
 		else if (commandtype == QUERY_TRANSFER) {
 			mystring<20> loc1 = readLOC(it);
