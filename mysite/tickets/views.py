@@ -55,3 +55,19 @@ def buy_history(request):
     userpv = getServerSideCookie(request, 'userpv', '0')
 
     return render_to_response("Buyhistory.html", context)
+
+def booking(request):
+    userid = getServerSideCookie(request, 'userid', '0')
+
+    if request.method == 'POST':
+        fromStation = request.POST.get('fromStation')
+        toStation = request.POST.get('toStation')
+        G = checkbox(request.POST.get('G'))
+        D = checkbox(request.POST.get('D'))
+        T = checkbox(request.POST.get('T'))
+        K = checkbox(request.POST.get('K'))
+        C = checkbox(request.POST.get('C'))
+        return render(request, 'chinarailway/booking.html', context = {'fromStation':fromStation, 'toStation':toStation, 'G':G, 'D':D, 'T':T, 'K':K, 'C':C})
+    else:
+        G = D = T = K = C = 'checked'
+        return render(request, 'chinarailway/booking.html', context = {'G':G, 'D':D, 'T':T, 'K':K, 'C':C})

@@ -1,0 +1,45 @@
+<!doctype html> 
+{% extends 'chinarailway/base.html' %}
+{% load staticfiles %}
+
+{% block custom_style_block %}
+<link href="{% static 'chinarailway/css/login.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body_block %}
+<div class="text-center">
+  <form class="form-signin" id="user_form" method="post" 
+  action="/chinarailway/register/" enctype="multipart/form-data">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+    {% csrf_token %}
+    <label for="inputUsername" class="sr-only">Username</label>
+    <input type="text" name="username" class="form-control" placeholder="Username" required>
+
+    <label for="inputEmailaddress" class="sr-only">Email address</label>
+    <input type="text" name="emailaddress" class="form-control" placeholder="Email address" required>
+
+    <label for="inputEmailaddress" class="sr-only">Phone number</label>
+    <input type="text" name="phonenumber" class="form-control" placeholder="Phone number" required>
+
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" name="password" class="form-control" placeholder="Password" required>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Sign up</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+  </form>
+<!--
+  {% if registered %} says:
+  <strong>thank you for registering!</strong>
+  <a href="/bookstore/">Homepage.</a>
+  <br /> {% else %} says:
+  <strong>register here!</strong>
+  <br />
+  <form id="user_form" method="post" action="/bookstore/register/" enctype="multipart/form-data">
+    {% csrf_token %} {{ user_form.as_p }} {{ profile_form.as_p }}
+    <input type="submit" name="submit" value="Register" />
+  </form>
+  {% endif %}
+-->
+</div>
+
+{% endblock %}
