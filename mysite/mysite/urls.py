@@ -32,6 +32,7 @@ urlpatterns = [
     path('cstyle1/', views.cstyle1, name="cstyle1"),
     path('trains/', include('trains.urls')),
     path('tickets/', include('tickets.urls')),
+    path('chinarailway/', include('system.urls')),
 ]
 
 handler404 = views.page_not_found
