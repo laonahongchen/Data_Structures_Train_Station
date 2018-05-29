@@ -23,11 +23,6 @@ struct ticket {
 	ticket() {};
 	ticket(const mystring<20> &ctrain_id, const mystring<20> &cloc1, const mystring<20> &cloc2, const mystring<10> &cdate)
 		: train_id(ctrain_id), loc1(cloc1), loc2(cloc2), date(cdate) {};
-	ticket(const mystring<20> &ctrain_id, const mystring<20> &cloc1, const mystring<20> &cloc2,
-		const mystring<10> &cdate, const int cnum_kind, const mystring<20> *cticket_kind)
-		: train_id(ctrain_id), loc1(cloc1), loc2(cloc2), date(cdate), num_kind(cnum_kind) {
-		for (int i = 0; i < num_kind; i++) ticket_kind[i] = cticket_kind[i];
-	};
 	void display() {
 		cout << train_id << ' ' << loc1 << ' ' << loc1date << ' ' << loc1time << ' ' << loc2 << ' ' << loc2date << ' ' << loc2time << ' ';
 		for (int i = 0; i < num_kind; ++i) cout << ticket_kind[i] << ' ' << num_ticket_kind[i] << ' ' << price_ticket_kind[i] << ' ';
@@ -89,8 +84,8 @@ void query_ticket(const mystring<20> &loc1, const mystring<20> &loc2, int date,
 {
 	mystring<20> left, right;
 	for (int i = 0; i < 20; ++i) {
-		left += ' ';
-		right += 'z';
+		left.str[left.len++] = 0;
+		right.str[right.len++] = 255;
 	}
 	mystring<60> leftkey = loc1 + loc2 + left;
 	mystring<60> rightkey = loc1 + loc2 + right;
@@ -117,9 +112,9 @@ void query_ticket(const mystring<20> &loc1, const mystring<20> &loc2, int date,
 	for (int i = 0; i < true_sequence.size(); ++i) {
 		mystring<20> train_id;
 		for (int j = 0; j < 20; ++j) {
-			if (true_sequence[i].key.k[80 + j] == ' ')
+			if (true_sequence[i].key.k[40 + j] == ' ')
 				break;
-			train_id += true_sequence[i].key.k[80 + j];
+			train_id += true_sequence[i].key.k[40 + j];
 		}
 		train pos;
 		if (thetrains.search(train_id, &pos) == 0)
@@ -207,9 +202,9 @@ void query_transfer(const mystring<20> &loc1, const mystring<20> &loc2, int date
 
 				mystring<20> train_id_one;
 				for (int j = 0; j < 20; ++j) {
-					if (true_sequence_one[i].key.k[80 + j] == ' ')
+					if (true_sequence_one[i].key.k[40 + j] == ' ')
 						break;
-					train_id_one += true_sequence_one[i].key.k[80 + j];
+					train_id_one += true_sequence_one[i].key.k[40 + j];
 				}
 				train train_one;
 				if (thetrains.search(train_id_one, &train_one) != 0)
@@ -226,9 +221,9 @@ void query_transfer(const mystring<20> &loc1, const mystring<20> &loc2, int date
 				for (int j = 0; j < true_sequence_two.size(); ++j) {
 					mystring<20> train_id_two;
 					for (int k = 0; k < 20; ++k) {
-						if (true_sequence_two[j].key.k[80 + k] == ' ')
+						if (true_sequence_two[j].key.k[40 + k] == ' ')
 							break;
-						train_id_two += true_sequence_two[j].key.k[80 + k];
+						train_id_two += true_sequence_two[j].key.k[40 + k];
 					}
 					train train_two;
 					if (thetrains.search(train_id_two, &train_two) != 0)
