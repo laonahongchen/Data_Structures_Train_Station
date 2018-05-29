@@ -31,8 +31,8 @@ def index(request):
     userpv = getServerSideCookie(request, 'userpv', '0')
 
     context['login_name'] = userid
-    context['authority'] = userpv
-    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+    context['authority'] = userpv 
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1') 
 
     return render(request, 'index.html', context)
 

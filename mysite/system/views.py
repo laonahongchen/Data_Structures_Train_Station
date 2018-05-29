@@ -81,7 +81,7 @@ def booking(request):
 def register(request):
     userid = getServerSideCookie(request, 'userid', '0')
     if userid != '0':
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('cr_index'))
 
     registered = False
     if request.method == 'POST':
@@ -99,14 +99,14 @@ def register(request):
         info = dataOutput.value.decode('UTF-8')
 
         if info != '-1':
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('cr_index'))
 
     return render(request, 'chinarailway/register.html', context = {'userid':userid})
 
 def user_login(request):
     userid = getServerSideCookie(request, 'userid', '0')
     if userid != '0':
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('cr_index'))
 
     if request.method == 'POST':
         userid = request.POST.get('userid')
@@ -122,9 +122,9 @@ def user_login(request):
 
         if info == '1':
             request.session['userid'] = userid
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('cr_index'))
     return render(request, 'chinarailway/login.html', context = {'userid':userid})
 
 def user_logout(request):
     request.session['userid'] = None
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('cr_index'))
