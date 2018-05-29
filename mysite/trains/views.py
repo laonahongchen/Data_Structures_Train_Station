@@ -51,4 +51,4 @@ def query_train(request):
     context['authority'] = userpv
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
-    return render(request, 'Asktrain.html', context)
+    return render(request, 'AskTrain.html', context)
