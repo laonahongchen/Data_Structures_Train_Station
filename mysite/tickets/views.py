@@ -67,7 +67,7 @@ def booking(request):
         T = checkbox(request.POST.get('T'))
         K = checkbox(request.POST.get('K'))
         C = checkbox(request.POST.get('C'))
-        return render(request, 'chinarailway/booking.html', context = {'fromStation':fromStation, 'toStation':toStation, 'G':G, 'D':D, 'T':T, 'K':K, 'C':C})
+        return render(request, 'chinarailway/index.html', context = {'fromStation':fromStation, 'toStation':toStation, 'G':G, 'D':D, 'T':T, 'K':K, 'C':C})
     else:
         G = D = T = K = C = 'checked'
         return render(request, 'chinarailway/booking.html', context = {'G':G, 'D':D, 'T':T, 'K':K, 'C':C})
