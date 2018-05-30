@@ -1483,8 +1483,9 @@ pre code {
 .table {
     width: 100%;
     max-width: 100%;
-    margin-bottom: 1rem;
-    background-color: transparent
+    /* cancel margin-bottom */
+    /* margin-bottom: 1rem; */
+    background-color: transparent;
 }
 
 .table td, .table th {
@@ -5757,6 +5758,11 @@ a.bg-info:focus, a.bg-info:hover, button.bg-info:focus, button.bg-info:hover {
 
 .bg-warning {
     background-color: #ffc107!important
+}
+
+.table-hover > tbody > tr.no-hover:hover > td,
+.table-hover > tbody > tr.no-hover:hover > th {
+    background-color: inherit;
 }
 
 a.bg-warning:focus, a.bg-warning:hover, button.bg-warning:focus, button.bg-warning:hover {
