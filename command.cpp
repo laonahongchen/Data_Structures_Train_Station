@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-#include "predifined.h"
+#include "predefined.h"
 #include "bptree.h"
 #include "string.h"
 #include "read.h"
@@ -24,41 +24,13 @@ void init() {
 	fout.seekg(0, ios::end);
 	user_number = fout.tellg() / user_block;
 	fout.seekg(0, ios::beg);
-	fstream fout1;
-	fout1.open("ticket.db", ios::binary | ios::in | ios::out);
-	if (!fout1) {
-		fout1.open("ticket.db", ios::binary | ios::out);
-		fout1.close();
-	}
-	else fout1.close();
-	fout1.open("train.db", ios::binary | ios::in | ios::out);
-	if (!fout1) {
-		fout1.open("train.db", ios::binary | ios::out);
-		fout1.close();
-	}
-	else fout1.close();
-	fout1.open("find_ticket.db", ios::binary | ios::in | ios::out);
-	if (!fout1) {
-		fout1.open("find_ticket.db", ios::binary | ios::out);
-		fout1.close();
-	}
-	else fout1.close();
-	fout1.open("find_train.db", ios::binary | ios::in | ios::out);
-	if (!fout1) {
-		fout1.open("find_train.db", ios::binary | ios::out);
-		fout1.close();
-	}
-	else fout1.close();
-	fout1.open("location.db", ios::binary | ios::in | ios::out);
-	if (!fout1) {
-		fout1.open("location.db", ios::binary | ios::out);
-		fout1.close();
-	}
-	else fout1.close();
 	return;
 }
 
 int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
 	init();
 	bplus_tree<ticket> theticket("ticket.db");
 	bplus_tree<train> thetrain("train.db");
@@ -103,9 +75,9 @@ int main() {
 		else if (commandtype == QUERY_TICKET) {
 			mystring<20> loc1 = readLOC(it);
 			mystring<20> loc2 = readLOC(it);
-			int date = readINTDATE(it);
+			int intdate = readINTDATE(it);
 			mystring<10> catalog = readCATALOG(it);
-			query_ticket(loc1, loc2, date, catalog, find_train, thetrain);
+			query_ticket(loc1, loc2, intdate, catalog, find_train, thetrain);
 		}
 		else if (commandtype == QUERY_TRANSFER) {
 			mystring<20> loc1 = readLOC(it);
@@ -227,6 +199,7 @@ int main() {
 			fout1.close();
 			fout1.open("location.db", ios::out);
 			fout1.close();
+			user_number = 0;
 			cout << 1 << '\n';
 		}
 		else if (commandtype == INVALID_COMMANDTYPE) continue;

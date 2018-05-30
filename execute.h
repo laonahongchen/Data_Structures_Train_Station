@@ -1,6 +1,6 @@
 #pragma once
 #include <fstream>
-#include "predifined.h"
+#include "predefined.h"
 #include "user.h"
 #include "train.h"
 #include "ticket.h"
@@ -70,10 +70,9 @@ void file_query_profile(const int cintid) {
 	charemail[20] = '\0';
 	charphone[20] = '\0';
 	mystring<40> name(charname);
-	mystring<20> password(charpassword);
 	mystring<20> email(charemail);
 	mystring<20> phone(charphone);
-	cout << name << ' ' << password << ' ' << email << ' ' << phone << ' ' << privilege << '\n';
+	cout << name << ' ' << email << ' ' << phone << ' ' << privilege << '\n';
 	fout.seekg(0, ios::beg);
 	return;
 }
@@ -127,7 +126,7 @@ void file_buy_ticket(const mystring<20> &id, const int &intid, const int &num, c
 	train pos;
 	ticket findticket;
 	if (thetrain.search(train_id, &pos) != 0) {
-		cout << 0 << endl;
+		cout << 0 << '\n';
 		return;
 	}
 	if (pos.buy(num, loc1, loc2, intdate, ticket_kind)) {
@@ -196,7 +195,7 @@ void file_buy_ticket(const mystring<20> &id, const int &intid, const int &num, c
 		}
 	}
 	else {
-		cout << 0 << endl;
+		cout << 0 << '\n';
 	}
 	return;
 }
@@ -252,6 +251,10 @@ void file_refund_ticket(const int &num, const mystring<20> &id, const int &intid
 	}
 	train postrain;
 	ticket pos;
+	if (thetrain.search(train_id, &postrain) != 0) {
+		cout << 0 << '\n';
+		return;
+	}
 	mystring<90> key = id + date + train_id + loc1 + loc2;
 	if (theticket.search(key, &pos) != 0) {
 		cout << 0 << '\n';
@@ -267,11 +270,13 @@ void file_refund_ticket(const int &num, const mystring<20> &id, const int &intid
 				}
 				else {
 					pos.num_ticket_kind[i] -= num;
+					theticket.update(key, pos);
 					cout << 1 << '\n';
 					return;
 				}
 			}
 		}
 	}
+	else cout << 0 << '\n';
 	return;
 }

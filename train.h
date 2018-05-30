@@ -2,6 +2,7 @@
 
 #include "bptree.h"
 #include "string.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -33,7 +34,7 @@ struct train {
 	bool besaled;
 	int num_station;
 	int num_price;
-	int ticket[30][59][5] = { 0 };  //ticket[i][j][k]: date: i, kind: k, sta[j] -> sta[j+1] has how many tickets
+	int ticket[30][59][5];  //ticket[i][j][k]: date: i, kind: k, sta[j] -> sta[j+1] has how many tickets
 	train_station sta[60];
 
 	train() : besaled(false), num_station(0), num_price(0) {}
@@ -116,7 +117,7 @@ struct train {
 		for (int i = 0; i < num_station; ++i) {
 			cout << sta[i].name << ' ' << sta[i].arrive << ' ' << sta[i].start << ' ' << sta[i].stopover;
 			for (int j = 0; j < num_price; ++j)
-				cout << ' ' << ("гд") << sta[i].price[j];
+				cout << ' ' <<  "я┐е" << sta[i].price[j];
 			cout << '\n';
 		}
 	}
@@ -283,10 +284,10 @@ struct train {
 					ticket_num = ticket[date - 1][j][i];
 			}
 			double price = 0;
-			for (int j = loc1_pos; j <= loc2_pos; ++j)
+			for (int j = loc1_pos + 1; j <= loc2_pos; ++j)
 				price += sta[j].price[i];
 
-			cout << ' ' << ticket_num << ' ' << price;
+			cout << ' ' << ticket_num << ' ' << setprecision(20) << price;
 		}
 		cout << '\n';
 	}
