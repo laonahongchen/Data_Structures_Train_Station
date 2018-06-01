@@ -3,10 +3,14 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
+
+from django.conf import settings
+from django.contrib import messages
 # Create your views here.
 
 import os
 import ctypes
+import requests
 
 context = {'login_name':'test', 'authority':0, 'style':'1'}
 #need to fix context which send login_name and authority to html
@@ -31,8 +35,8 @@ def index(request):
     userpv = getServerSideCookie(request, 'userpv', '0')
 
     context['login_name'] = userid
-    context['authority'] = userpv 
-    context['style'] = getServerSideCookie(request, 'tmpstyle', '1') 
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
     return render(request, 'index.html', context)
 
@@ -99,16 +103,28 @@ def signup(request):
         phonenumber = request.POST.get('phonenumber')
         password = request.POST.get('password')
 
-        lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
-        dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'), 1000)
-        dataOutput = ctypes.create_string_buffer(1000)
-        inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
-        outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
-        lib.userRegister(inputPointer, outputPointer)
-        info = dataOutput.value.decode('UTF-8')
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        data = {
+            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            'response': recaptcha_response
+        }
+        
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        result = r.json()
 
-        if info != '-1':
-            return HttpResponseRedirect(reverse('index'))
+        if result['success']:
+            lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
+            dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'), 1000)
+            dataOutput = ctypes.create_string_buffer(1000)
+            inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
+            outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
+            lib.userRegister(inputPointer, outputPointer)
+            info = dataOutput.value.decode('UTF-8')
+
+            if info != '-1':
+                return HttpResponseRedirect(reverse('index'))
+        else:
+             messages.error(request, 'Invalid reCAPTCHA. Please try again.')
     context['login_name'] = userid
     context['authority'] = userpv
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')

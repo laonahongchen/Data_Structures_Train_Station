@@ -48,10 +48,10 @@ def index(request):
             else:
                 value = '有'
                 textclass = 'text-success'
-            print((value, textclass))
+#            print((value, textclass))
             post.append((value, textclass))
         post_list.append(post)
-    print(post_list)
+    #print(post_list)
     wade = 'class=text-success'
 
     userid = getServerSideCookie(request, 'userid', '0')

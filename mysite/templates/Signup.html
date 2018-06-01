@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block headcss %}
 <link href="/static/boot41/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
+<script src='https://www.google.com/recaptcha/api.js'></script>
 {% endblock %}
 
 {% block body %}
@@ -22,6 +23,7 @@
             <img src="/static/eye.png" alt="eye" style="height:1.5rem;">
             <b>显示密码</b>
         </div>
+        <div class="g-recaptcha" data-sitekey="6LeSvlwUAAAAANmwdITzNUOZEtG0qzsZHG-losL9"></div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
       </form>

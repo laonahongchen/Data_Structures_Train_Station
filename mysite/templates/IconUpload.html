@@ -1,9 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="container">
     <div class="card">
         <div class="card-header">
-            <b>请选择上传的文件（请确保是以下载的模式重新上传的，否则后果自负）</b>
+            <b>please ypload</b>
         </div>
         <div class="card-body">
             <form method="post">
@@ -14,7 +13,7 @@
                         <span class="input-group-text">Upload</span>
                       </div>
                       <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01" accept="application/x-zip-compressed">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01" accept="image/x-png" >
                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                       </div>
                     </div>
@@ -25,9 +24,7 @@
             </form>
         </div>
     </div>
-</div>
 {% endblock %}
-
 {% block jsextends %}
     <script src="/static/file_size.js"></script>
 {% endblock %}
