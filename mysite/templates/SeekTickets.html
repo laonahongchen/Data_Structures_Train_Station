@@ -4,7 +4,9 @@
 {% endblock %}
 {% block jsextends %}
     <script type="text/javascript" src="/static/jquery.tablesorter.js"></script>
+    <!--
     <script type="text/javascript" src="/static/jquery.tablesorter.widgets.js"></script>
+-->
     <script type="text/javascript">
     $(function() {
         $("table").tablesorter({
@@ -87,8 +89,8 @@
 
                 <tr data-toggle="collapse" data-target="#tickets_info{{x.0}}" class="accordion-toggle"><td>{{x.0}}</td><td>{{x.1}}</td><td>{{x.2}}</td><td>{{x.3}}</td><td>{{x.4}}</td></tr>
                 <tr>
+                    <td style="display:none">{{x.0}}</td><td style="display:none">{{x.1}}</td><td style="display:none">{{x.2}}</td><td style="display:none">{{x.3}}</td><td style="display:none">{{x.4}}</td>
                     <td colspan="5">
-
                             <div class="collapse" id="tickets_info{{x.0}}" class="accordion-body">
                                 {% for a in x.5 %}
                                 <p><div class="row" style="text-align:center;">
@@ -133,8 +135,7 @@
                             </div>
 
                         </td>
-                    </tr>
-
+                </tr>
             {% endfor %}
             </tbody>
             <!--
