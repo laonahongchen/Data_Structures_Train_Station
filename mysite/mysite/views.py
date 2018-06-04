@@ -108,23 +108,23 @@ def signup(request):
             'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
             'response': recaptcha_response
         }
-        
-        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
-        result = r.json()
 
-        if result['success']:
-            lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
-            dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'), 1000)
-            dataOutput = ctypes.create_string_buffer(1000)
-            inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
-            outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
-            lib.userRegister(inputPointer, outputPointer)
-            info = dataOutput.value.decode('UTF-8')
+        #r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        #result = r.json()
 
-            if info != '-1':
-                return HttpResponseRedirect(reverse('index'))
-        else:
-             messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+    #    if result['success']:
+        lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
+        dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'), 1000)
+        dataOutput = ctypes.create_string_buffer(1000)
+        inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
+        outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
+        lib.userRegister(inputPointer, outputPointer)
+        info = dataOutput.value.decode('UTF-8')
+
+        if info != '-1':
+            return HttpResponseRedirect(reverse('index'))
+    #    else:
+    #         messages.error(request, 'Invalid reCAPTCHA. Please try again.')
     context['login_name'] = userid
     context['authority'] = userpv
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
