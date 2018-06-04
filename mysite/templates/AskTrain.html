@@ -1,5 +1,7 @@
 {% extends 'query_train.html' %}
-
+{% block jsextends %}
+    <script type="text/javascript" src="/static/jquery.tablesorter.js"></script>
+{% endblock %}
 {% block ans %}
     {% if asked == True %}
         <div class="container">
@@ -31,7 +33,7 @@
                     </div>
                 </div>
                 <div class="collapse" id="info">
-                    <table class="table">
+                    <table class="table tablesorter">
                         <thead>
                             <th>站名</th><th>车辆进站时间</th><th>发车时间</th><th>停留时间</th>
                         </thead>

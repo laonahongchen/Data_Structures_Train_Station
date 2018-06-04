@@ -1,5 +1,67 @@
 {% extends 'searchtrain.html' %}
+{% block headcss %}
+    <link rel="stylesheet" href="/static/theme.bootstrap_4.min.css">
+{% endblock %}
+{% block jsextends %}
+    <script type="text/javascript" src="/static/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="/static/jquery.tablesorter.widgets.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        $("table").tablesorter({
+        theme : "bootstrap",
 
+        widthFixed: true,
+
+        // widget code contained in the jquery.tablesorter.widgets.js file
+        // use the zebra stripe widget if you plan on hiding any rows (filter widget)
+        // the uitheme widget is NOT REQUIRED!
+        widgets : [ "filter", "columns", "zebra" ],
+
+        widgetOptions : {
+          // using the default zebra striping class name, so it actually isn't included in the theme variable above
+          // this is ONLY needed for bootstrap theming if you are using the filter widget, because rows are hidden
+          zebra : ["even", "odd"],
+
+          // class names added to columns when sorted
+          columns: [ "primary", "secondary", "tertiary" ],
+
+          // reset filters button
+          filter_reset : ".reset",
+
+          // extra css class name (string or array) added to the filter element (input or select)
+          filter_cssFilter: [
+            'form-control',
+            'form-control',
+            'form-control custom-select', // select needs custom class names :(
+            'form-control',
+            'form-control',
+            'form-control',
+            'form-control'
+          ]
+
+        }
+        })
+        .tablesorterPager({
+
+        // target the pager markup - see the HTML block below
+        container: $(".ts-pager"),
+
+        // target the pager page select dropdown - choose a page
+        cssGoto  : ".pagenum",
+
+        // remove rows from the table to speed up the sort of large tables.
+        // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+        removeRows: false,
+
+        // output string - default is '{page}/{totalPages}';
+        // possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
+        output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+
+        });
+
+        });
+    </script>
+{% endblock %}
 {% block answer %}
     {% if asked == True %}
     <div class="container">
@@ -7,14 +69,20 @@
         <div class="card-heading">
             <h3 class="card-title text-center">查询结果</h3>
         </div>
-        <table class="table">
+        <div class="card-body">
+        <table class="table tablesorter" id="myTable">
+            <thead>
+                <tr>
                     <th>车次</th><th><img src="/static/st.png" alt="start" width="20" height="20"> 起始地 </th><th><span class="fa fa-clock-o fa-lg" aria-hidden="true" ></span>发车时间</th><th><img src="/static/ed.png" alt="end" width="20" height="20">目的地</th><th><span class="fa fa-clock-o fa-lg" aria-hidden="true" ></span>到达时间</th>
+                </tr>
+            </thead>
                     <!-- <tr><td>产品 B</td><td>400</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><a href="http://www.baidu.com"> <button type="button" class="btn btn-default btn-lg">
           <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Buy now
         </button></a></td> </tr> -->
             <!--
             <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             -->
+            <tbody>
             {% for x in Trains %}
 
                 <tr data-toggle="collapse" data-target="#tickets_info{{x.0}}" class="accordion-toggle"><td>{{x.0}}</td><td>{{x.1}}</td><td>{{x.2}}</td><td>{{x.3}}</td><td>{{x.4}}</td></tr>
@@ -68,6 +136,7 @@
                     </tr>
 
             {% endfor %}
+            </tbody>
             <!--
             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
             Button with data-target
@@ -75,6 +144,7 @@
         -->
 
         </table>
+    </div>
     </div>
     </div>
     {% endif %}
