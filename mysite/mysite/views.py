@@ -6,8 +6,11 @@ from django.urls import reverse
 
 from django.conf import settings
 from django.contrib import messages
-# Create your views here.
 
+from urllib.request import urlopen
+from urllib.error import HTTPError
+
+import json
 import os
 import ctypes
 import requests
@@ -50,6 +53,21 @@ def about(request):
 
     return render(request, 'About.html', context)
 
+def getip(request):
+    if 'HTTP_X_FORWARDED_FOR' in request.META:
+        ip =  request.META['HTTP_X_FORWARDED_FOR']
+    else:
+        ip = request.META['REMOTE_ADDR']
+    return ip
+
+def getCountry(ipAddress):
+    try:
+        response = urlopen("http://freegeoip.net/json/"+ipAddress).read().decode('utf-8')
+    except HTTPError:
+        pass
+    responseJson = json.loads(response)
+    return responseJson.get("country_code")
+
 def uploading(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
@@ -61,6 +79,8 @@ def uploading(request):
     return render(request, 'Uploading.html', context)
 
 def login(request):
+#    print(getip(request))
+#    print(getCountry('203.78.6.5'))
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
     if userid != '0':
