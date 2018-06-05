@@ -79,8 +79,6 @@ def uploading(request):
     return render(request, 'Uploading.html', context)
 
 def login(request):
-#    print(getip(request))
-#    print(getCountry('203.78.6.5'))
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
     if userid != '0':
@@ -123,16 +121,6 @@ def signup(request):
         phonenumber = request.POST.get('phonenumber')
         password = request.POST.get('password')
 
-        recaptcha_response = request.POST.get('g-recaptcha-response')
-        data = {
-            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-            'response': recaptcha_response
-        }
-
-        #r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
-        #result = r.json()
-
-    #    if result['success']:
         lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
         dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'), 1000)
         dataOutput = ctypes.create_string_buffer(1000)
@@ -143,13 +131,62 @@ def signup(request):
 
         if info != '-1':
             return HttpResponseRedirect(reverse('index'))
-    #    else:
-    #         messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+
     context['login_name'] = userid
     context['authority'] = userpv
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
     return render(request, 'Signup.html', context)
+
+def signupadmin(request):
+#    print(getip(request))
+#    print(getCountry('203.78.6.5'))
+    userid = getServerSideCookie(request, 'userid', '0')
+    userpv = getServerSideCookie(request, 'userpv', '0')
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        emailaddress = request.POST.get('emailaddress')
+        phonenumber = request.POST.get('phonenumber')
+        password = request.POST.get('password')
+
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        data = {
+            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            'response': recaptcha_response
+        }
+
+        try:
+            r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+            result = r.json()
+        except BaseException:
+            result = {'success':'true'}
+
+        if result['success'] == 'true':
+            tmpip = getip(request)
+            Country_code = getCountry(tmpip)
+
+            #print(tmpip)
+            if tmpip == '127.0.0.1' or Country_code == 'CN':
+                lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
+                dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'), 1000)
+                dataOutput = ctypes.create_string_buffer(1000)
+                inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
+                outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
+                lib.userRegister(inputPointer, outputPointer)
+                info = dataOutput.value.decode('UTF-8')
+
+                if info != '-1':
+                    return HttpResponseRedirect(reverse('index'))
+            else:
+                messages.error(request, '你的IP地址不在大陆，请重试或者退出')
+        else:
+            messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+    return render(request, 'Signupadmin.html', context)
 
 def user_logout(request):
     request.session['userid'] = None
