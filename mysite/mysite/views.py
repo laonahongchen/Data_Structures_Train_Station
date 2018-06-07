@@ -159,6 +159,7 @@ def signupadmin(request):
         try:
             r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
             result = r.json()
+            print(result['success'])
         except BaseException:
             result = {'success':'true'}
 
