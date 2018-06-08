@@ -1,21 +1,21 @@
 {% extends "layout.html" %}
 {% load staticfiles %}
+{% load i18n %}
 {% block body %}
 <div class="container">
     <img src="/static/train.png" alt="train" class="train-animation">
     <div class="card card-default" style="margin-top:3rem;">
         <div class="card-header">
-            <b>您访问的地址有误，将自动跳转到<a href="/">主页</a> </b>
+            <b>{% trans "There is something wrong with the url you have just entered" %}<a href="/">{% trans "Home page" %}</a> </b>
         </div>
         <div class="card-body" style="text-align:center">
-            <p>页面将在19秒后跳转...</p>还剩<span id="timeSkip">10</span>秒
+            <p>{% trans "The page will be automatically go to the home page after 10 seconds" %}</p>{% trans "There are" %}<span id="timeSkip">10</span>{% trans "seconds rest" %}
         </div>
     </div>
 </div>
 {% endblock %}
 {% block jsextends %}
 <script>
-    //倒计时10S跳转
     function lxfEndtime(){
         $t=$('#timeSkip').html();
         if($t!=0){

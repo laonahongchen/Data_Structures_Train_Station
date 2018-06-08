@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% load staticfiles %}
+{% load i18n %}
 {% block headcss %}
 <link href="/static/boot41/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
 {% endblock %}
@@ -10,24 +11,25 @@
 
       <form class="form-signin" method="post" action="/login/">
         {% csrf_token %}
-        <h2 class="form-signin-heading">Please log in</h2>
-        <label for="inputName" class="sr-only">User name</label>
-        <input type="text" name="userid" class="form-control" placeholder="UserID" required autofocus>
+        <h2 class="form-signin-heading">{% trans "Please log in" %}</h2>
+        <label for="inputName" class="sr-only">{% trans "User name" %}</label>
+        <input type="text" name="userid" class="form-control" placeholder="trans UserID" required autofocus>
         <div class="input-group-append">
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" name="password" id="pass" class="form-control js-password-control" placeholder="Password" required>
+          <label for="inputPassword" class="sr-only">{% trans Password %}</label>
+          <input type="password" name="password" id="pass" class="form-control js-password-control" placeholder="{% trans 'Password' %}" required>
         </div>
 
         <div class="row">
 
+        <!--
         <div class="checkbox col">
           <label>
             <input type="checkbox" value="remember-me" name="remember-me"> Remember me
           </label>
-        </div>
+        </div> -->
         <div class="col" id="btn">
             <img src="/static/eye.png" alt="eye" style="height:1.5rem;">
-            <b>显示密码</b>
+            <b>{% trans "Show password" %}</b>
         </div>
 
         </div>
@@ -35,7 +37,7 @@
 
         <div class="card" style="margin-top: 1rem;">
             <div class="card-body">
-                没有账号？点击<a href="/signup/">这里</a>注册。
+                {% trans "No account? Click" %}<a href="/signup/">{% trans "here" %} </a> {% trans "to register" %}
             </div>
         </div>
       </form>

@@ -1,25 +1,26 @@
 {% extends "layout.html" %}
 {% load staticfiles %}
+{% load i18n %}
 {% block body %}
 
 <div class="container">
 <img src="{% static  'train.png' %}" alt="train" class="train-animation">
 <div class="card card-default" style="margin-top:3rem;">
 	<div class="card-heading">
-		<h3 class="card-title">关于我们</h3>
+		<h3 class="card-title">{% trans "About us" %} </h3>
 	</div>
 	<div class="card-body">
-		我们是来自2017级ACM班的四位同学，本网站是用于承载我们2017-2018季度作业的地方。
+		{% trans "We are for student of ACM honored class in SJTU, and this is a page as our homework." %}
 	</div>
 	<table class="table table-hover">
 		<thead>
-			<th>姓名</th><th>负责内容</th>
+			<th> {% trans "Name" %} </th><th> {% trans "Work Done" %}</th>
 		</thead>
 		<tbody>
-			<tr><td>陈伟哲</td><td>网页页面</td></tr>
-			<tr><td>邓伟信</td><td>前后端连接</td></tr>
-        	<tr><td>李照宇</td><td>后端(涉及用户的相关操作）</td></tr>
-        	<tr><td>余子涵</td><td>后端</td></tr>
+			<tr><td>陈伟哲</td><td>{% trans "Web Page" %}</td></tr>
+			<tr><td>邓伟信</td><td>{% trans "Link of the HTML with the back programme" %}</td></tr>
+        	<tr><td>李照宇</td><td>{% trans "test code (the activities concerns users)" %}</td></tr>
+        	<tr><td>余子涵</td><td>{% trans "test code" %} </td></tr>
 		</tbody>
 	</table>
 </div>

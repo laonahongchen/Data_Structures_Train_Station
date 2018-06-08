@@ -1,0 +1,104 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-08 13:34+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: templates/About.html:10
+msgid "About us"
+msgstr ""
+
+#: templates/About.html:13
+msgid ""
+"We are for student of ACM honored class in SJTU, and this is a page as our "
+"homework."
+msgstr ""
+
+#: templates/About.html:17
+msgid "Name"
+msgstr ""
+
+#: templates/About.html:17
+msgid "Work Done"
+msgstr ""
+
+#: templates/About.html:20
+msgid "Web Page"
+msgstr ""
+
+#: templates/About.html:21
+msgid "Link of the HTML with the back programme"
+msgstr ""
+
+#: templates/About.html:22
+msgid "test code (the activities concerns users)"
+msgstr ""
+
+#: templates/About.html:23
+msgid "test code"
+msgstr ""
+
+#: templates/Error.html:9
+msgid "There is something wrong with the url you have just entered"
+msgstr ""
+
+#: templates/Error.html:9
+msgid "Home page"
+msgstr ""
+
+#: templates/Error.html:12
+msgid "The page will be automatically go to the home page after 10 seconds"
+msgstr ""
+
+#: templates/Error.html:12
+msgid "There are"
+msgstr ""
+
+#: templates/Error.html:12
+msgid "seconds rest"
+msgstr ""
+
+#: templates/Login.html:14
+msgid "Please log in"
+msgstr ""
+
+#: templates/Login.html:15
+msgid "User name"
+msgstr ""
+
+#: templates/Login.html:19
+msgid "Password"
+msgstr ""
+
+#: templates/Login.html:32
+msgid "Show password"
+msgstr ""
+
+#: templates/Login.html:40
+msgid "No account? Click"
+msgstr ""
+
+#: templates/Login.html:40
+msgid "here"
+msgstr ""
+
+#: templates/Login.html:40
+msgid "to register"
+msgstr ""
+
+#: templates/layout.html:40
+msgid "Home"
+msgstr ""
