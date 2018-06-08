@@ -11,25 +11,25 @@
 
       <form class="form-signin" method="post" action="/signup/">
         {% csrf_token %}
-        <h2 class="form-signin-heading">get informations</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="emailaddress" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputName" class="sr-only">Name</label>
-        <input type="text" name="username" class="form-control" placeholder="User Name" required>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="pass" name="password" class="form-control" placeholder="Password" required>
-        <label for="inputPhone" class="sr-only">Phone Number</label>
-        <input type="tel" name="phonenumber" class="form-control" placeholder="Phone Number" required>
+        <h2 class="form-signin-heading">{% trans "register now" %}</h2>
+        <label for="inputEmail" class="sr-only">{% trans "Email address" %}</label>
+        <input type="email" name="emailaddress" class="form-control" placeholder="example@example.com" required autofocus>
+        <label for="inputName" class="sr-only">{% trans "Name" %}</label>
+        <input type="text" name="username" class="form-control" placeholder="{% trans 'User Name' %}" required>
+        <label for="inputPassword" class="sr-only">{% trans "Password" %}</label>
+        <input type="password" id="pass" name="password" class="form-control" placeholder="{% trans 'Password' %}" required>
+        <label for="inputPhone" class="sr-only">{% trans "Phone Number" %}</label>
+        <input type="tel" name="phonenumber" class="form-control" placeholder="{% trans 'Phone Number' %}" required>
         <div id="btn">
             <img src="/static/eye.png" alt="eye" style="height:1.5rem;">
-            <b>显示密码</b>
+            <b>{% trans "show password" %}</b>
         </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">{% trans "Sign up" %}</button>
 
         <div class="card" style="margin-top: 1rem;">
             <div class="card-body">
-                已有账号？点击<a href="/login/">这里</a>登录。
+                {% trans "Already has an account? Click" %}<a href="/login/">{% trans "here" %}</a>{% trans "to log in" %}
             </div>
         </div>
       </form>

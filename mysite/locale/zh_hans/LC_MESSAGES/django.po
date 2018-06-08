@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-08 13:34+0000\n"
+"POT-Creation-Date: 2018-06-08 14:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,86 +19,86 @@ msgstr ""
 
 #: templates/About.html:10
 msgid "About us"
-msgstr ""
+msgstr "关于我们"
 
 #: templates/About.html:13
 msgid ""
 "We are for student of ACM honored class in SJTU, and this is a page as our "
 "homework."
-msgstr ""
+msgstr "我们是来自上海交通大学ACM班的学生，这个网站是我们的作业。"
 
 #: templates/About.html:17
 msgid "Name"
-msgstr ""
+msgstr "姓名"
 
 #: templates/About.html:17
 msgid "Work Done"
-msgstr ""
+msgstr "负责内容"
 
 #: templates/About.html:20
 msgid "Web Page"
-msgstr ""
+msgstr "网页"
 
 #: templates/About.html:21
 msgid "Link of the HTML with the back programme"
-msgstr ""
+msgstr "前后端连接"
 
 #: templates/About.html:22
 msgid "test code (the activities concerns users)"
-msgstr ""
+msgstr "后端（与用户有关部分）"
 
 #: templates/About.html:23
 msgid "test code"
-msgstr ""
+msgstr "后端"
 
 #: templates/Error.html:9
 msgid "There is something wrong with the url you have just entered"
-msgstr ""
+msgstr "你访问的网址有误"
 
 #: templates/Error.html:9
 msgid "Home page"
-msgstr ""
+msgstr "主页"
 
 #: templates/Error.html:12
 msgid "The page will be automatically go to the home page after 10 seconds"
-msgstr ""
+msgstr "将在10s后自动跳转。"
 
 #: templates/Error.html:12
 msgid "There are"
-msgstr ""
+msgstr "还有"
 
 #: templates/Error.html:12
 msgid "seconds rest"
-msgstr ""
+msgstr "秒剩余"
 
 #: templates/Login.html:14
 msgid "Please log in"
-msgstr ""
+msgstr "请登录"
 
 #: templates/Login.html:15
 msgid "User name"
-msgstr ""
+msgstr "用户名"
 
 #: templates/Login.html:19
 msgid "Password"
-msgstr ""
+msgstr "密码"
 
 #: templates/Login.html:32
 msgid "Show password"
-msgstr ""
+msgstr "显示密码"
 
 #: templates/Login.html:40
 msgid "No account? Click"
-msgstr ""
+msgstr "没有账号？点击"
 
 #: templates/Login.html:40
 msgid "here"
-msgstr ""
+msgstr "这里"
 
 #: templates/Login.html:40
 msgid "to register"
-msgstr ""
+msgstr "注册"
 
-#: templates/layout.html:40
+#: templates/layout.html:41
 msgid "Home"
-msgstr ""
+msgstr "主页"
