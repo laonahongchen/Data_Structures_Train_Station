@@ -77,7 +77,7 @@
         <table class="table tablesorter" id="myTable">
             <thead>
                 <tr>
-                    <th>车次</th><th>车辆类型</th> <th><img src="/static/st.png" alt="start" width="20" height="20"> 起始地 </th><th><span class="fa fa-clock-o fa-lg" aria-hidden="true" ></span>发车时间</th><th><img src="/static/ed.png" alt="end" width="20" height="20">目的地</th><th><span class="fa fa-clock-o fa-lg" aria-hidden="true" ></span>到达时间</th>
+                    <th>{% trans "Train id" %}</th><th>{% trans "Train catalogs"%}</th> <th><img src="/static/st.png" alt="start" width="20" height="20"> {% trans "Starting station" %} </th><th><span class="fa fa-clock-o fa-lg" aria-hidden="true" ></span>{% trans "Departure time"%}</th><th><img src="/static/ed.png" alt="end" width="20" height="20">{% trans "Destination"%}</th><th><span class="fa fa-clock-o fa-lg" aria-hidden="true" ></span>{% trans "Arriving time"%}</th>
                 </tr>
             </thead>
                     <!-- <tr><td>产品 B</td><td>400</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><a href="http://www.baidu.com"> <button type="button" class="btn btn-default btn-lg">
@@ -97,10 +97,10 @@
                                 {% for a in x.6 %}
                                 <p><div class="row" style="text-align:center;">
                                     <div class="col">
-                                        {{a.0}}剩余：{{a.1}}
+                                        {{a.0}}{% trans "remaing" %}：{{a.1}}
                                     </div>
                                     <div class="col">
-                                        {{a.0}}票价：￥{{a.2}}
+                                        {{a.0}}{% trans "Prices" %}：￥{{a.2}}
                                     </div>
                                     <div class="col">
                                     {% if a.1 > 0 %}
@@ -108,13 +108,13 @@
                                     {% else %}
                                         <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#buyn" disabled>
                                     {%endif %}
-                                       Buy now </button>
+                                       {% trans "Buy now" %} </button>
                                        <form>
                                        <div class="modal fade" id="buyn" tabindex="-1" role="dialog" aria-labelledby="buyn" aria-hidden="true">
                                          <div class="modal-dialog modal-dialog-centered" role="document">
                                            <div class="modal-content">
                                              <div class="modal-header">
-                                               <h5 class="modal-title">请选择购买数量</h5>
+                                               <h5 class="modal-title">{% trans "Please choose the amount you want to buy"%}</h5>
                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                  <span aria-hidden="true">&times;</span>
                                                </button>
@@ -123,8 +123,8 @@
                                                <input type="number" name="num_buy" class="form-control" min="1" max="100" autofocus required>
                                              </div>
                                              <div class="modal-footer">
-                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                                               <button type="submit" class="btn btn-success">提交</button>
+                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Cancel" %}</button>
+                                               <button type="submit" class="btn btn-success">{% trans "Submit!"}</button>
                                              </div>
                                            </div>
                                          </div>

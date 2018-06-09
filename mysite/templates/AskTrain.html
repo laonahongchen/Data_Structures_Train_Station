@@ -34,11 +34,11 @@
                 <div class="collapse" id="info">
                     <table class="table tablesorter">
                         <thead>
-                            <th>站名</th><th>车辆进站时间</th><th>发车时间</th><th>停留时间</th>
+                            <th>{% trans "Number of Station" %}</th><th>{% trans "Arriving time"%}</th><th>{% trans "Departure time"%}</th><th>{% trans "Staying time" %}</th>
                         </thead>
                         <tbody>
                             {% for x in class_train %}
-                                <th>{{x}}价格(￥)</th>
+                                <th>{{x}}{% trans "Prices"%}(￥)</th>
                             {% endfor %}
                             {% for x in station %}
                                 <tr>
@@ -64,17 +64,17 @@
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title">确认删除</h5>
+                            <h5 class="modal-title">{% trans "Delete check"%}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
                           <div class="modal-body">
-                            您真的确认要删除这辆车次吗？
+                            {% trans "Are you sure you want to delete this train?"%}
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-danger">删除</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Cancel"%}</button>
+                            <button type="button" class="btn btn-danger">{% trans "Delete" %}</button>
                           </div>
                         </div>
                       </div>
