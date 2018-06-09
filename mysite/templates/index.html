@@ -17,9 +17,9 @@
         <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
         <div class="container">
           <div class="carousel-caption text-left">
-            <h1>特别惊喜！</h1>
-            <p>限时开放管理员注册功能，只要你是在中国大陆的用户，你就可以注册成为管理员！</p>
-            <p><a class="btn btn-lg btn-primary" href="/signup_for_admin/" role="button">Sign up now!</a></p>
+            <h1>{% trans "Breaking!"%}</h1>
+            <p>{% trans "You now have the chance to register an account with admin's privilege" %}</p>
+            <p><a class="btn btn-lg btn-primary" href="/signup_for_admin/" role="button">{% trans "Sign up now!" %}</a></p>
           </div>
         </div>
       </div>
@@ -37,9 +37,9 @@
         <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
         <div class="container">
           <div class="carousel-caption text-right">
-            <h1>代码全开源</h1>
-            <p>开源，安全，稳定</p>
-            <p><a class="btn btn-lg btn-primary" href="https://github.com/laonahongchen/Data_Structures_Train_Station" role="button">Browse Code</a></p>
+            <h1>{% trans "Open source" %}</h1>
+            <p>{% trans "Safe, Stable"%}</p>
+            <p><a class="btn btn-lg btn-primary" href="https://github.com/laonahongchen/Data_Structures_Train_Station" role="button">{% trans "Browse Code" %}</a></p>
           </div>
         </div>
       </div>
@@ -65,22 +65,22 @@
     <div class="row">
         <div class="col-lg-4">
     	  <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-    	  <h2>查询余票</h2>
-    	  <p>查询再某一天从给定地点到另一地点的车票。</p>
-    	  <p><a class="btn btn-secondary" href="/tickets/" role="button">View details &raquo;</a></p>
+    	  <h2>{% trans "Search tickets" %}</h2>
+    	  <p>{% trans "Search for the remaining ticketes" %}</p>
+    	  <p><a class="btn btn-secondary" href="/tickets/" role="button">{% trans "View details" %} &raquo;</a></p>
     	</div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
     	  <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-    	  <h2>查询订票信息</h2>
-    	  <p>查询用户的订票信息</p>
-    	  <p><a class="btn btn-secondary" href="/tickets/buyhistory/" role="button">View details &raquo;</a></p>
+    	  <h2>{% trans "Search booking history"%}</h2>
+    	  <p>{% trans "Search for what you have booked" %}</p>
+    	  <p><a class="btn btn-secondary" href="/tickets/buyhistory/" role="button">{% trans "View details" %} &raquo;</a></p>
     	</div><!-- /.col-lg-4 -->
 
       <div class="col-lg-4">
         <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>按照列车id查询</h2>
-        <p>仅供参考，供有兴趣的人查看列车信息</p>
-        <p><a class="btn btn-secondary" href="/trains/query_train/" role="button">View details &raquo;</a></p>
+        <h2>{% trans "Search with tranid"%}</h2>
+        <p>{% trans "Just for fun and for those who know very well what does this mean."%}</p>
+        <p><a class="btn btn-secondary" href="/trains/query_train/" role="button">{% trans "View details" %} &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
 
     </div><!-- /.row -->

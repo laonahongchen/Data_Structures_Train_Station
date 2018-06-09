@@ -5,25 +5,25 @@
     {% if asked == True %}
         <div class="container">
             <div class="card-header">
-                查询结果
+                {% trans "Search results"%}
             </div>
             <div class="card-body">
                 {% if has_train == True %}
                 <div class="row">
                     <div class="col">
-                        车号:{{train_id}}
+                        {% trans "Train id" %}:{{train_id}}
                     </div>
                     <div class="col">
-                        车名:{{train_name}}
+                        {% trans "Train name" %}:{{train_name}}
                     </div>
                     <div class="col">
-                        类型:{{catalogs}}
+                        {% trans "Catalogs" %}:{{catalogs}}
                     </div>
                     <div class="col">
-                        起点站:{{strat_station}}
+                        {% trans "Start station" %}:{{strat_station}}
                     </div>
                     <div class="col">
-                        终点站:{{end_station}}
+                        {% trans "Ending station" %}:{{end_station}}
                     </div>
                     <div class="col">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#info" aria-expanded="false" aria-controls="info">

@@ -5,7 +5,7 @@
 <div class="container" style="margin-top:3.5rem;">
     <div class="card">
     <div class="card-header">
-        <h1>您已完成：67%</h1>
+        <h1>{% trans "You have complete"%}：67%</h1>
         <div class="progress">
           <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100" style="width: 66%"></div>
         </div>
@@ -14,9 +14,9 @@
     <div class="card-body">
         <form>
             <table class="table">
-                <th>站名</th><th>列车到达时间</th><th>发车时间</th><th>停留时间</th>
+                <th>{% trans "Name of stations"%}</th><th>{% trans "Arriving time"%}</th><th>{% trans "Departure time"%}</th><th>{% trans "Staying time" %}</th>
                 {% for x in class_train %}
-                    <th>{{x}}价格(￥)</th>
+                    <th>{{x}}{% trans "Prices"%}(￥)</th>
                 {% endfor %}
                 {% for x in num_station %}
                     <tr>
@@ -30,7 +30,7 @@
                     </tr>
                 {% endfor %}
             </table>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">提交以创建列车!</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">{% trans "Submit and create the train!"%}</button>
         </form>
     </div>
     </div>
