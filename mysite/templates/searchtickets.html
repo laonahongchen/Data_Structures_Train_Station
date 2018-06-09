@@ -10,9 +10,10 @@
       <div class="row">
         <form method="post">
         <div class="col">
-          <label for="dateoftrain" class="sr-only">出发日期</label>
-          <input name="dateoftrain" type="date" class="form-control" placeholder="出发日期" required>
+          <label for="dateoftrain" class="sr-only">{% trans "Departure Date" %}</label>
+          <input name="dateoftrain" type="date" class="form-control" placeholder="{% trans 'Departure Date' %}" required>
         </div>
+        <!--
         {% for x in catalogs %}
         <div class="col">
         <div class="form-check form-check-inline">
@@ -20,8 +21,8 @@
           <label class="form-check-label" for="inlineRadio1">{{x}}</label>
         </div>
         </div>
-        {% endfor %}
-          <div class="col"> <button type="submit" class="btn btn-warning">查询订票记录</button></div>
+        {% endfor %}-->
+          <div class="col"> <button type="submit" class="btn btn-warning">{% trans "Search Now" %}</button></div>
          </form>
         </div>
       </div>

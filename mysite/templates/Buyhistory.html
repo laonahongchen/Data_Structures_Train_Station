@@ -9,7 +9,7 @@
             <h3 class="card-title">查询结果</h3>
         </div>
         <table class="table">
-                    <th>车次</th><th>出发地 </th><th>发车时间</th><th>目的地</th><th>到达时间</th>
+                    <th>车次</th><th>车次类型</th><th>出发地 </th><th>发车时间</th><th>目的地</th><th>到达时间</th>
                     <!-- <tr><td>产品 B</td><td>400</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><a href="http://www.baidu.com"> <button type="button" class="btn btn-default btn-lg">
           <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Buy now
         </button></a></td> </tr> -->
@@ -18,12 +18,12 @@
             -->
             {% for x in Historys %}
 
-                <tr data-toggle="collapse" data-target="#tickets_info{{x.0}}" class="accordion-toggle"><td>{{x.0}}</td><td>{{x.1}}</td><td>{{x.2}}</td><td>{{x.3}}</td><td>{{x.4}}</td></tr>
+                <tr data-toggle="collapse" data-target="#tickets_info{{x.0}}" class="accordion-toggle"><td>{{x.0}}</td><td>{{x.1}}</td><td>{{x.2}}</td><td>{{x.3}}</td><td>{{x.4}}</td><td>{{x.5}}</td></tr>
                 <tr>
                     <td colspan="5">
 
                             <div class="collapse" id="tickets_info{{x.0}}" class="accordion-body">
-                                {% for a in x.5 %}
+                                {% for a in x.6 %}
                                 <p><li> {{a.0}}已买：{{a.1}} </li><li> {{a.0}}单价：￥{{a.2}}</li>
                                     <li>
                                     <a href="http://www.baidu.com">

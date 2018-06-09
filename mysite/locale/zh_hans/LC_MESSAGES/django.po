@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-08 14:55+0000\n"
+"POT-Creation-Date: 2018-06-09 04:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/About.html:10
+#: templates/About.html:10 templates/index.html:141
 msgid "About us"
 msgstr "关于我们"
 
@@ -27,7 +27,8 @@ msgid ""
 "homework."
 msgstr "我们是来自上海交通大学ACM班的学生，这个网站是我们的作业。"
 
-#: templates/About.html:17
+#: templates/About.html:17 templates/Signup.html:17
+#: templates/Signupadmin.html:27
 msgid "Name"
 msgstr "姓名"
 
@@ -79,7 +80,8 @@ msgstr "请登录"
 msgid "User name"
 msgstr "用户名"
 
-#: templates/Login.html:19
+#: templates/Login.html:19 templates/Signup.html:19 templates/Signup.html:20
+#: templates/Signupadmin.html:29 templates/Signupadmin.html:30
 msgid "Password"
 msgstr "密码"
 
@@ -87,11 +89,16 @@ msgstr "密码"
 msgid "Show password"
 msgstr "显示密码"
 
+#: templates/Login.html:36
+msgid "Sign in"
+msgstr "登录"
+
 #: templates/Login.html:40
 msgid "No account? Click"
 msgstr "没有账号？点击"
 
-#: templates/Login.html:40
+#: templates/Login.html:40 templates/Signup.html:32
+#: templates/Signupadmin.html:44
 msgid "here"
 msgstr "这里"
 
@@ -99,6 +106,138 @@ msgstr "这里"
 msgid "to register"
 msgstr "注册"
 
+#: templates/Signup.html:14 templates/Signupadmin.html:24
+#, fuzzy
+#| msgid "to register"
+msgid "register now"
+msgstr "注册"
+
+#: templates/Signup.html:15 templates/Signupadmin.html:25
+msgid "Email address"
+msgstr "电子邮箱地址"
+
+#: templates/Signup.html:18 templates/Signupadmin.html:28
+#, fuzzy
+#| msgid "User name"
+msgid "User Name"
+msgstr "用户名"
+
+#: templates/Signup.html:21 templates/Signup.html:22
+#: templates/Signupadmin.html:31 templates/Signupadmin.html:32
+msgid "Phone Number"
+msgstr "电话号码"
+
+#: templates/Signup.html:25 templates/Signupadmin.html:35
+#, fuzzy
+#| msgid "Show password"
+msgid "show password"
+msgstr "显示密码"
+
+#: templates/Signup.html:28 templates/Signupadmin.html:40
+msgid "Sign up"
+msgstr "注册"
+
+#: templates/Signup.html:32 templates/Signupadmin.html:44
+#, fuzzy
+#| msgid "No account? Click"
+msgid "Already has an account? Click"
+msgstr "没有账号？点击"
+
+#: templates/Signup.html:32 templates/Signupadmin.html:44
+#, fuzzy
+#| msgid "Please log in"
+msgid "to log in"
+msgstr "请登录"
+
+#: templates/index.html:140
+msgid "Back to top"
+msgstr ""
+
+#: templates/layout.html:34
+msgid "Train Tickets Selling System"
+msgstr "火车订票系统"
+
 #: templates/layout.html:41
 msgid "Home"
 msgstr "主页"
+
+#: templates/layout.html:44
+#, fuzzy
+#| msgid "About us"
+msgid "About"
+msgstr "关于我们"
+
+#: templates/layout.html:48
+msgid "Style"
+msgstr "切换风格"
+
+#: templates/layout.html:51
+msgid "Square"
+msgstr "方角"
+
+#: templates/layout.html:53
+msgid "Rounded"
+msgstr "圆角"
+
+#: templates/layout.html:59
+msgid "login now"
+msgstr "现在登录"
+
+#: templates/layout.html:60
+msgid "sign up now"
+msgstr "现在注册"
+
+#: templates/layout.html:64
+msgid "User id:"
+msgstr "你的User id:"
+
+#: templates/layout.html:66
+msgid "Change profile"
+msgstr "更改用户信息"
+
+#: templates/layout.html:67
+msgid "Search for booking history"
+msgstr "查询订票历史"
+
+#: templates/layout.html:70
+msgid "Add train"
+msgstr "添加车次"
+
+#: templates/layout.html:71
+msgid "Search for train"
+msgstr "搜索车次"
+
+#: templates/layout.html:78
+msgid "Log out"
+msgstr "登出"
+
+#: templates/query_train.html:7
+msgid "Seach Train"
+msgstr "查询车次"
+
+#: templates/query_train.html:10
+#, fuzzy
+#| msgid "Please log in"
+msgid "Please enter Trainid"
+msgstr "请登录"
+
+#: templates/searchtickets.html:13 templates/searchtickets.html:14
+#: templates/searchtrain.html:26 templates/searchtrain.html:27
+msgid "Departure Date"
+msgstr "出发日期"
+
+#: templates/searchtickets.html:25 templates/searchtrain.html:60
+msgid "Search Now"
+msgstr "搜索"
+
+#: templates/searchtrain.html:18 templates/searchtrain.html:19
+msgid "Start"
+msgstr "始发地"
+
+#: templates/searchtrain.html:22 templates/searchtrain.html:23
+msgid "Destination"
+msgstr "目的地"
+
+#: templates/searchtrain.html:34
+msgid "Check this means you accept at most one time's getting off the train"
+msgstr "勾选此项代表你接受最多中转一次的火车"

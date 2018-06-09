@@ -10,28 +10,28 @@
       <form method="post">
           {% csrf_token %}
       <div class="row">
-        <div class="container col-9">
+        <div class="container">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
                     <div class="col">
-                      <label for="from" class="sr-only"> 起始地</label>
-                      <input type="text" placeholder="起始地" class="form-control" name="from" required autofocus>
+                      <label for="from" class="sr-only"> {% trans "Start" %}</label>
+                      <input type="text" placeholder="{% trans 'Start' %}" class="form-control" name="from" required autofocus>
                     </div>
                     <div class="col">
-                      <label for="destination" class="sr-only"> 目的地</label>
-                      <input type="text" placeholder="目的地" class="form-control" name="destination" required>
+                      <label for="destination" class="sr-only"> {% trans "Destination" %}</label>
+                      <input type="text" placeholder="{% trans 'Destination' %}" class="form-control" name="destination" required>
                     </div>
                     <div class="col">
-                      <label for="dateoftrain" class="sr-only">出发日期</label>
-                      <input name="dateoftrain" type="date" class="form-control" placeholder="出发日期" required>
+                      <label for="dateoftrain" class="sr-only">{% trans "Departure Date" %}</label>
+                      <input name="dateoftrain" type="date" class="form-control" placeholder="{% trans 'Departure Date' %}" required>
                     </div>
                     </div>
                     <div class="row">
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" value="" name="yzz">
                           <label class="form-check-label" for="yzz">
-                            勾选此选项代表你接受中转最多一次的火车。
+                            {% trans "Check this means you accept at most one time's getting off the train"%}
                           </label>
                         </div>
                     </div>
@@ -39,6 +39,7 @@
 
             </div>
         </div>
+        <!--
         <div class="col-3">
           <div class="card" style="width:100%">
             <div class="card-header">
@@ -53,10 +54,10 @@
                 {% endfor %}
             </div>
           </div>
-        </div>
+      </div>-->
     </div>
         <div class="row">
-            <button type="submit" class="btn btn-warning" style="width: 6%;margin-left:47%;">查询</button>
+            <button type="submit" class="btn btn-warning" style="width: 6%;margin-left:47%;">{% trans "Search Now"%}</button>
         </div>
         </form>
       </div>
