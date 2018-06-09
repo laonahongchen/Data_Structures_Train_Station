@@ -53,5 +53,9 @@ def index(request):
 def buy_history(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
+    
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
     return render_to_response("Buyhistory.html", context)

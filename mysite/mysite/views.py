@@ -196,7 +196,7 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 def cinfo(request):
-    return render_to_response('Signup.html', context)
+    return render_to_response('ChangeInfo.html', context)
 
 def page_not_found(request):
     userid = getServerSideCookie(request, 'userid', '0')

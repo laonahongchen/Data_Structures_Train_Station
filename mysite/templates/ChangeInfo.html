@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% block headcss %}
+<link href="/static/boot41/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+    <div class="container" style="margin-top: 4rem;">
+
+      <form class="form-signin" method="post" action="/signup/">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">{% trans "Change user info" %}</h2>
+        <label for="inputEmail" class="sr-only">{% trans "Email address" %}</label>
+        <input type="email" name="emailaddress" class="form-control" placeholder="example@example.com">
+        <label for="inputName" class="sr-only">{% trans "Name" %}</label>
+        <input type="text" name="username" class="form-control" placeholder="{% trans 'User Name' %}">
+        <label for="inputPassword" class="sr-only">{% trans "Password" %}</label>
+        <input type="password" id="pass" name="password" class="form-control" placeholder="{% trans 'Password' %}">
+        <label for="inputPhone" class="sr-only">{% trans "Phone Number" %}</label>
+        <input type="tel" name="phonenumber" class="form-control" placeholder="{% trans 'Phone Number' %}">
+        <div id="btn">
+            <img src="/static/eye.png" alt="eye" style="height:1.5rem;">
+            <b>{% trans "show password" %}</b>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">{% trans "Change user info" %}</button>
+
+      </form>
+
+    </div> <!-- /container -->
+
+{% endblock %}
+{% block jsextends %}
+    <script src="/static/password.js"></script>
+{% endblock %}
