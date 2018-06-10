@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-09 15:36+0000\n"
+"POT-Creation-Date: 2018-06-10 11:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,12 +92,12 @@ msgid "Name of stations"
 msgstr "车站名称"
 
 #: templates/Add_train_in_station.html:17 templates/AskTrain.html:37
-#: templates/SeekTickets.html:80
+#: templates/Buyhistory.html:12 templates/SeekTickets.html:80
 msgid "Arriving time"
 msgstr "到达时间"
 
 #: templates/Add_train_in_station.html:17 templates/AskTrain.html:37
-#: templates/SeekTickets.html:80
+#: templates/Buyhistory.html:12 templates/SeekTickets.html:80
 msgid "Departure time"
 msgstr "出发时间"
 
@@ -119,8 +119,9 @@ msgstr "提交以创建火车"
 msgid "Search results"
 msgstr "搜索结果"
 
-#: templates/AskTrain.html:14 templates/SeekTickets.html:80
-#: templates/query_train.html:11 templates/query_train.html:12
+#: templates/AskTrain.html:14 templates/Buyhistory.html:12
+#: templates/SeekTickets.html:80 templates/query_train.html:11
+#: templates/query_train.html:12
 msgid "Train id"
 msgstr "火车id"
 
@@ -152,8 +153,20 @@ msgstr "取消"
 msgid "Delete"
 msgstr "删除"
 
+#: templates/Buyhistory.html:12 templates/SeekTickets.html:80
+msgid "Train catalogs"
+msgstr "火车类型"
+
+#: templates/Buyhistory.html:12 templates/SeekTickets.html:80
+msgid "Starting station"
+msgstr "起始站"
+
+#: templates/Buyhistory.html:12 templates/SeekTickets.html:80
+#: templates/searchtrain.html:22 templates/searchtrain.html:23
+msgid "Destination"
+msgstr "目的地"
+
 #: templates/ChangeInfo.html:14 templates/ChangeInfo.html:28
-#| msgid "Change profile"
 msgid "Change user info"
 msgstr "更改用户信息"
 
@@ -183,21 +196,6 @@ msgstr "电话号码"
 #: templates/Signupadmin.html:35
 msgid "show password"
 msgstr "显示密码"
-
-#: templates/ChangeInfo.html:32 templates/Signup.html:32
-#: templates/Signupadmin.html:44
-msgid "Already has an account? Click"
-msgstr "已有账号？点击"
-
-#: templates/ChangeInfo.html:32 templates/Login.html:40
-#: templates/Signup.html:32 templates/Signupadmin.html:44
-msgid "here"
-msgstr "这里"
-
-#: templates/ChangeInfo.html:32 templates/Signup.html:32
-#: templates/Signupadmin.html:44
-msgid "to log in"
-msgstr "以登录"
 
 #: templates/Error.html:9
 msgid "There is something wrong with the url you have just entered"
@@ -239,22 +237,14 @@ msgstr "登录"
 msgid "No account? Click"
 msgstr "没有账号？点击"
 
+#: templates/Login.html:40 templates/Signup.html:32
+#: templates/Signupadmin.html:44
+msgid "here"
+msgstr "这里"
+
 #: templates/Login.html:40
 msgid "to register"
 msgstr "注册"
-
-#: templates/SeekTickets.html:80
-msgid "Train catalogs"
-msgstr "火车类型"
-
-#: templates/SeekTickets.html:80
-msgid "Starting station"
-msgstr "起始站"
-
-#: templates/SeekTickets.html:80 templates/searchtrain.html:22
-#: templates/searchtrain.html:23
-msgid "Destination"
-msgstr "目的地"
 
 #: templates/SeekTickets.html:100
 msgid "remaing"
@@ -275,6 +265,14 @@ msgstr "注册"
 #: templates/Signup.html:28 templates/Signupadmin.html:40
 msgid "Sign up"
 msgstr "注册"
+
+#: templates/Signup.html:32 templates/Signupadmin.html:44
+msgid "Already has an account? Click"
+msgstr "已有账号？点击"
+
+#: templates/Signup.html:32 templates/Signupadmin.html:44
+msgid "to log in"
+msgstr "以登录"
 
 #: templates/index.html:20
 msgid "Breaking!"
@@ -396,12 +394,12 @@ msgstr "查询车次"
 msgid "Please enter Trainid"
 msgstr "请输入trainid"
 
-#: templates/searchtickets.html:13 templates/searchtickets.html:14
+#: templates/searchtickets.html:15 templates/searchtickets.html:16
 #: templates/searchtrain.html:26 templates/searchtrain.html:27
 msgid "Departure Date"
 msgstr "出发日期"
 
-#: templates/searchtickets.html:25 templates/searchtrain.html:60
+#: templates/searchtickets.html:19 templates/searchtrain.html:60
 msgid "Search Now"
 msgstr "搜索"
 

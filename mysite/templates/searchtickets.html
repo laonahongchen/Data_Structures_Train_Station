@@ -3,30 +3,27 @@
 {% block body %}
 <div class="container" style="margin-top: 3.5rem;">
     <div class="card" >
-    <div class="card-header text-center" style="font-size:30px;background-color: #ee6a9b">
-        <p>{% trans "Search for booking history" %}</p>
+        <div class="card-header text-center" style="font-size:30px;background-color: #ee6a9b">
+            <p>{% trans "Search for booking history" %}</p>
+        </div>
+        <div class="card-body text-center">
+          <div class="container">
+              <form method="post">
+              <div class="row">
+
+                     <div class="col">
+                       <label for="dateoftrain" class="sr-only">{% trans "Departure Date" %}</label>
+                       <input name="dateoftrain" type="date" class="form-control" placeholder="{% trans 'Departure Date' %}" required>
+                     </div>
+                     <div class="col">
+                       <button type="submit" class="btn btn-warning">{% trans "Search Now" %}</button>
+                     </div>
+
+                </div>
+                </form>
+              </div>
+          </div>
     </div>
-      <div class="card-body">
-      <div class="row">
-        <form method="post">
-        <div class="col">
-          <label for="dateoftrain" class="sr-only">{% trans "Departure Date" %}</label>
-          <input name="dateoftrain" type="date" class="form-control" placeholder="{% trans 'Departure Date' %}" required>
-        </div>
-        <!--
-        {% for x in catalogs %}
-        <div class="col">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" name="inlineRadio1" value="option{{x}}">
-          <label class="form-check-label" for="inlineRadio1">{{x}}</label>
-        </div>
-        </div>
-        {% endfor %}-->
-          <div class="col"> <button type="submit" class="btn btn-warning">{% trans "Search Now" %}</button></div>
-         </form>
-        </div>
-      </div>
-    </div><!--/.navbar-collapse -->
 </div>
     {% block answer %}
     {% endblock %}
