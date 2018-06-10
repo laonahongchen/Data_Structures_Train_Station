@@ -53,10 +53,10 @@
                 </div>
                 <div class="row">
                     <!-- 需要看如何开放、删除、修改 -->
-                    <a href="#"><button type="button" class="btn btn-success">公开车次</button></a>
-                    <a href="#"><button type="button" class="btn btn-warning">修改车次</button></a>
+                    <a href="#"><button type="button" class="btn btn-success">{% trans "Public this train"%}</button></a>
+                    <!--<a href="#"><button type="button" class="btn btn-warning">修改车次</button></a>-->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#check_delete">
-                      删除车次
+                      {% trans "Delete this train" %}
                     </button>
 
                     <!-- Modal -->
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 {% else %}
-                    车次不存在!!!
+                    {% trans "This train doesn't exist!" %}
                 {% endif %}
             </div>
         </div>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-10 11:09+0000\n"
+"POT-Creation-Date: 2018-06-10 11:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,12 +92,12 @@ msgid "Name of stations"
 msgstr "车站名称"
 
 #: templates/Add_train_in_station.html:17 templates/AskTrain.html:37
-#: templates/Buyhistory.html:12 templates/SeekTickets.html:80
+#: templates/Buyhistory.html:77 templates/SeekTickets.html:80
 msgid "Arriving time"
 msgstr "到达时间"
 
 #: templates/Add_train_in_station.html:17 templates/AskTrain.html:37
-#: templates/Buyhistory.html:12 templates/SeekTickets.html:80
+#: templates/Buyhistory.html:77 templates/SeekTickets.html:80
 msgid "Departure time"
 msgstr "出发时间"
 
@@ -106,7 +106,7 @@ msgid "Staying time"
 msgstr "停留时间"
 
 #: templates/Add_train_in_station.html:19 templates/AskTrain.html:41
-#: templates/SeekTickets.html:103
+#: templates/Buyhistory.html:92 templates/SeekTickets.html:103
 msgid "Prices"
 msgstr "价格"
 
@@ -114,12 +114,12 @@ msgstr "价格"
 msgid "Submit and create the train!"
 msgstr "提交以创建火车"
 
-#: templates/AskTrain.html:8 templates/Buyhistory.html:9
+#: templates/AskTrain.html:8 templates/Buyhistory.html:74
 #: templates/SeekTickets.html:74
 msgid "Search results"
 msgstr "搜索结果"
 
-#: templates/AskTrain.html:14 templates/Buyhistory.html:12
+#: templates/AskTrain.html:14 templates/Buyhistory.html:77
 #: templates/SeekTickets.html:80 templates/query_train.html:11
 #: templates/query_train.html:12
 msgid "Train id"
@@ -137,6 +137,14 @@ msgstr "起始站"
 msgid "Ending station"
 msgstr "终点站"
 
+#: templates/AskTrain.html:56
+msgid "Public this train"
+msgstr "公开车次"
+
+#: templates/AskTrain.html:59
+msgid "Delete this train"
+msgstr "删除车次"
+
 #: templates/AskTrain.html:67
 msgid "Delete check"
 msgstr "确认删除"
@@ -153,18 +161,26 @@ msgstr "取消"
 msgid "Delete"
 msgstr "删除"
 
-#: templates/Buyhistory.html:12 templates/SeekTickets.html:80
+#: templates/AskTrain.html:84
+msgid "This train doesn't exist!"
+msgstr "该车次不存在！"
+
+#: templates/Buyhistory.html:77 templates/SeekTickets.html:80
 msgid "Train catalogs"
 msgstr "火车类型"
 
-#: templates/Buyhistory.html:12 templates/SeekTickets.html:80
+#: templates/Buyhistory.html:77 templates/SeekTickets.html:80
 msgid "Starting station"
 msgstr "起始站"
 
-#: templates/Buyhistory.html:12 templates/SeekTickets.html:80
+#: templates/Buyhistory.html:77 templates/SeekTickets.html:80
 #: templates/searchtrain.html:22 templates/searchtrain.html:23
 msgid "Destination"
 msgstr "目的地"
+
+#: templates/Buyhistory.html:92
+msgid "Bought"
+msgstr "已买"
 
 #: templates/ChangeInfo.html:14 templates/ChangeInfo.html:28
 msgid "Change user info"
@@ -394,14 +410,15 @@ msgstr "查询车次"
 msgid "Please enter Trainid"
 msgstr "请输入trainid"
 
+#: templates/query_train.html:15 templates/searchtickets.html:19
+#: templates/searchtrain.html:61
+msgid "Search Now"
+msgstr "搜索"
+
 #: templates/searchtickets.html:15 templates/searchtickets.html:16
 #: templates/searchtrain.html:26 templates/searchtrain.html:27
 msgid "Departure Date"
 msgstr "出发日期"
-
-#: templates/searchtickets.html:19 templates/searchtrain.html:60
-msgid "Search Now"
-msgstr "搜索"
 
 #: templates/searchtrain.html:7
 msgid "Search for trains"

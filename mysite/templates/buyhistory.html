@@ -73,7 +73,7 @@
         <div class="card-heading">
             <h3 class="card-title">{% trans "Search results"%}</h3>
         </div>
-        <table class="table">
+        <table class="table tablesorter">
                     <th>{% trans "Train id" %}</th><th>{% trans "Train catalogs"%}</th><th>{% trans "Starting station" %} </th><th>{% trans "Departure time"%}</th><th>{% trans "Destination"%}</th><th>{% trans "Arriving time"%}</th>
                     <!-- <tr><td>产品 B</td><td>400</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><a href="http://www.baidu.com"> <button type="button" class="btn btn-default btn-lg">
           <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Buy now
@@ -89,7 +89,7 @@
 
                             <div class="collapse" id="tickets_info{{x.0}}" class="accordion-body">
                                 {% for a in x.6 %}
-                                <p><li> {{a.0}}已买：{{a.1}} </li><li> {{a.0}}单价：￥{{a.2}}</li>
+                                <p><li> {{a.0}}{% trans "Bought" %}：{{a.1}} </li><li> {{a.0}}{% trans "Prices"%}：￥{{a.2}}</li>
                                     <li>
                                     <a href="http://www.baidu.com">
                                     {% if a.1 > 0 %}
