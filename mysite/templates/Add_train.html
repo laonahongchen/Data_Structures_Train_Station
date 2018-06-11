@@ -7,7 +7,6 @@
 {% block body %}
 
 <div class="container" style="margin-top:3.5rem;">
-    {{trainid}}
     <div class="card">
     <div class="card-header">
     <h1>{% trans "You have complete"%}：0%</h1>
@@ -15,8 +14,7 @@
       <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%"></div>
     </div></div>
     <div class="card-body">
-    <form class="form-signin" method="post" action="/trains/">
-      {% csrf_token %}
+    <form class="form-signin">
         <label for="trainid" class="sr-only">Train id</label>
         <input type="text" name="trainid" class="form-control" placeholder="Train Id" required autofocus>
         <label for="trainname" class="sr-only">{% trans "Train name" %}</label>
@@ -27,6 +25,7 @@
         <input type="number" name="num_station" class="form-control" placeholder="{% trans 'Number of Station' %}" required>
         <label for="num_price" class="sr-only">{% trans "Number of classes" %}</label>
         <input type="number" name="num_price" class="form-control" placeholder="{% trans 'Number of classes' %}" required>
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">{% trans "Continue filling in name of classes"%}</button>
     </form></div>
 
@@ -38,5 +37,19 @@
     </form>
 -->
 </div>
+
+
+<script type="text/javascript">
+    var count = 0;
+    function addText(){
+        var div = document.getElementById("div");
+        div.innerHTML += "<div><input type='text' class=""name=\"Station[" + count.toString() + "]\"/><input type='text' name=\"Money[" + count.toString() + "]\"/> <input type='button' value='删除' onclick='deleteText(this)'/></div>";
+        count = count + 1;
+    }
+    function deleteText(This){
+        //获取删除按钮的父元素 的 父元素 利用 爷爷元素 删除
+        This.parentNode.parentNode.removeChild(This.parentNode);
+    }
+</script>
 
 {% endblock %}

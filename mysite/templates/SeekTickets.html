@@ -124,7 +124,13 @@
                                              </div>
                                              <div class="modal-footer">
                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Cancel" %}</button>
-                                               <button type="submit" class="btn btn-success">{% trans "Submit!" %}</button>
+                                               <form class="" action="index.html" method="post">
+                                                   <input type="hidden" name="trainid" value="{{x.0}}">
+                                                   <input type="hidden" name="date" value="{{date}}">
+                                                   <input type="hidden" name="class_name" value="{{a.0}}">
+                                                   <button type="submit" class="btn btn-success">{% trans "Submit!" %}</button>
+                                               </form>
+
                                              </div>
                                            </div>
                                          </div>
