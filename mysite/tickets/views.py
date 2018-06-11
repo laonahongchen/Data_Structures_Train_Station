@@ -34,7 +34,33 @@ def index(request):
     context['authority'] = userpv
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
+    if request.method == 'POST':
+        fs = request.POST.get('from')
+        ts = request.POST.get('to')
+        date = request.POST.get('date')
+        context['fs'] = fs
+        context['ts'] = ts
+        context['date'] = date
+        return render(request, 'SeekTickets.html', context)
 
+    return render(request, 'SeekTickets.html', context)
+'''
+        lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
+        dataInput = ctypes.create_string_buffer(' '.join((userid, password)).encode('UTF-8'), 1000)
+        dataOutput = ctypes.create_string_buffer(1000)
+        inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
+        outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
+        lib.userLogin(inputPointer, outputPointer)
+        info = dataOutput.value.decode('UTF-8')
+
+        if info == '1':
+            request.session['userid'] = userid
+            # I should query its privilege, but set to superroot for now
+            request.session['userpv'] = '2'
+            return HttpResponseRedirect(reverse('index'))
+'''
+
+'''
     if request.method == 'GET':
         #asked = request.COOKIES.get('asked')
         asked = False
@@ -49,7 +75,7 @@ def index(request):
         des = request.POST.get('destination')
         dat = request.POST.get('dateoftrain')
         return render(request, "SeekTickets.html", context)
-
+'''
 def buy_history(request):
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')

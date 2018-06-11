@@ -9,6 +9,7 @@
       <div class="card-body">
       <form method="post">
           {% csrf_token %}
+      {{fs}} {{ts}} {{date}}
       <div class="row">
         <div class="container">
             <div class="card">
@@ -20,11 +21,11 @@
                     </div>
                     <div class="col">
                       <label for="destination" class="sr-only"> {% trans "Destination" %}</label>
-                      <input type="text" placeholder="{% trans 'Destination' %}" class="form-control" name="destination" required>
+                      <input type="text" placeholder="{% trans 'Destination' %}" class="form-control" name="to" required>
                     </div>
                     <div class="col">
                       <label for="dateoftrain" class="sr-only">{% trans "Departure Date" %}</label>
-                      <input name="dateoftrain" type="date" class="form-control" placeholder="{% trans 'Departure Date' %}" required>
+                      <input name="date" type="date" class="form-control" placeholder="{% trans 'Departure Date' %}" required>
                     </div>
                     </div>
                     <div class="row">

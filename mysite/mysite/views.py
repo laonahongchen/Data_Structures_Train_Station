@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render_to_response
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 
@@ -89,7 +89,7 @@ def login(request):
         password = request.POST.get('password')
 
         lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
-        dataInput = ctypes.create_string_buffer(' '.join((userid, password)).encode('UTF-8'), 1000)
+        dataInput = ctypes.create_string_buffer(' '.join((userid, password)).encode('UTF-8'))
         dataOutput = ctypes.create_string_buffer(1000)
         inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
         outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
@@ -122,7 +122,7 @@ def signup(request):
         password = request.POST.get('password')
 
         lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
-        dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'), 1000)
+        dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'))
         dataOutput = ctypes.create_string_buffer(1000)
         inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
         outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
@@ -170,7 +170,7 @@ def signupadmin(request):
             #print(tmpip)
             if tmpip == '127.0.0.1' or Country_code == 'CN':
                 lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
-                dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'), 1000)
+                dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'))
                 dataOutput = ctypes.create_string_buffer(1000)
                 inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
                 outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
@@ -196,6 +196,35 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 def cinfo(request):
+    userid = getServerSideCookie(request, 'userid', '0')
+    userpv = getServerSideCookie(request, 'userpv', '0')
+
+    if userid != '0':
+        return HttpResponseRedirect(reverse('index'))
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        emailaddress = request.POST.get('emailaddress')
+        phonenumber = request.POST.get('phonenumber')
+        password = request.POST.get('password')
+
+        lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
+        dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'))
+        dataOutput = ctypes.create_string_buffer(1000)
+        inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
+        outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
+        lib.userRegister(inputPointer, outputPointer)
+        info = dataOutput.value.decode('UTF-8')
+
+        if info != '-1':
+            return HttpResponseRedirect(reverse('index'))
+
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
+
+    return render(request, 'Signup.html', context)
+
     return render_to_response('ChangeInfo.html', context)
 
 def page_not_found(request):

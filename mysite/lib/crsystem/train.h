@@ -108,21 +108,25 @@ struct train {
 	}
 
 	string query() {
+		/*
 		if (!besaled) {
 			return "0";
 		}
+		*/
 		string ans;
 		string blank = " ";
 		ans += train_id.value() + blank + name.value() + blank + catalog + blank + to_string(num_station) + blank + to_string(num_price) + blank;
 		for (int i = 0; i < num_price; ++i)
 			ans += name_price[i].value() + blank;
-		ans += "|";
 
 		for (int i = 0; i < num_station; ++i) {
 			ans += sta[i].name.value() + blank + sta[i].arrive.value() + blank + sta[i].start.value() + blank + sta[i].stopover.value() + blank;
 			for (int j = 0; j < num_price; ++j)
-				ans += "￥" + to_string(sta[i].price[j]) + blank;
-			ans += "|";
+			{
+				ans += to_string(sta[i].price[j]);
+				if (j < num_price - 1) 
+					ans += blank;
+			}
 		}
 		return ans;
 	}

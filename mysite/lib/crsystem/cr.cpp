@@ -30,50 +30,66 @@ void output(char *info, std::string s)
 		*info++ = i;
 }
 
-void init()
+void openFile()
 {
 	fout.open("UserShelf", ios::binary | ios::in | ios::out);
 	if (!fout)
 	{
-		cout << "InitFile" << endl;
+		cout << "DEBUG: init user file" << endl;
 		fout.open("UserShelf", ios::binary | ios::out);
 		fout.close();
 		fout.open("UserShelf", ios::binary | ios::in | ios::out);
 	}
+	else
+		cout << "DEBUG: user file existed" << endl;
 	fout.seekg(0, ios::end);
 	user_number = fout.tellg() / user_block;
 	fout.seekg(0, ios::beg);
 }
 
+void closeFile()
+{
+	fout.close();
+	theticket.close_file();
+	thetrain.close_file();
+	theRestTicket.close_file();
+	find_ticket.close_file();
+	find_train.close_file();
+	location.close_file();
+}
+
 void userRegister(char *it, char *info)
 {
-	init();
+	openFile();
 	mystring<40> name(readUSER_NAME(it));
 	mystring<20> password(readUSER_PASSWORD(it));
 	mystring<20> email(readUSER_EMAIL(it));
 	mystring<20> phone(readUSER_PHONE(it));
 	User user(name, password, email, phone);
 	output(info, file_register(user));
+	cout << "DEBUG: new user id: " << user.id.value() << endl;
+	closeFile();
 }
 
 void userLogin(char *it, char *info)
 {
-	init();
+	openFile();
 	int intid = readUSER_INTID(it);
 	mystring<20> password(readUSER_PASSWORD(it));
 	output(info, file_login(intid, password));
+	closeFile();
 }
 
 void userQueryProfile(char *it, char *info)
 {
-	init();
+	openFile();
 	int intid = readUSER_INTID(it);
 	output(info, file_query_profile(intid));
 }
 
 void userModifyProfile(char *it, char *info)
 {
-	init();
+	openFile();
 	int intid = readUSER_INTID(it);
 	mystring<40> name(readUSER_NAME(it));
 	mystring<20> password(readUSER_PASSWORD(it));
@@ -84,7 +100,7 @@ void userModifyProfile(char *it, char *info)
 
 void userModifyPrivilege(char *it, char *info)
 {
-	init();
+	openFile();
 	int id1 = readUSER_INTID(it);
 	int id2 = readUSER_INTID(it);
 	int privilege = readUSER_PRIVILEGE(it);
@@ -93,7 +109,7 @@ void userModifyPrivilege(char *it, char *info)
 
 void queryTicket(char *it, char *info)
 {
-	init();
+	openFile();
 	mystring<20> loc1 = readLOC(it);
 	mystring<20> loc2 = readLOC(it);
 	mystring<10> date = readDATE(it);
@@ -103,7 +119,7 @@ void queryTicket(char *it, char *info)
 
 void queryTransfer(char *it, char *info)
 {
-	init();
+	openFile();
 	mystring<20> loc1 = readLOC(it);
 	mystring<20> loc2 = readLOC(it);
 	mystring<10> date = readDATE(it);
@@ -113,7 +129,7 @@ void queryTransfer(char *it, char *info)
 
 void buyTicket(char *it, char *info)
 {
-	init();
+	openFile();
 	mystring<20> id = readUSER_ID(it);
 	int intid = readuser_id(id);
 	int num = readNUM(it);
@@ -128,7 +144,7 @@ void buyTicket(char *it, char *info)
 
 void queryOrder(char *it, char *info)
 {
-	init();
+	openFile();
 	mystring<20> id = readUSER_ID(it);
 	int intid = readuser_id(id);
 	mystring<10> date = readDATE(it);
@@ -138,7 +154,7 @@ void queryOrder(char *it, char *info)
 
 void refundTicket(char *it, char *info)
 {
-	init();
+	openFile();
 	mystring<20> id = readUSER_ID(it);
 	int intid = readuser_id(id);
 	int num = readNUM(it);
@@ -153,57 +169,64 @@ void refundTicket(char *it, char *info)
 
 void addTrain(char *it, char *info)
 {
-	init();
+	openFile();
+	cout << "DEBUG: addTrain" << endl;
 	mystring<20> id = readTRAIN_ID(it);
 	mystring<40> train_name = readTRAIN_NAME(it);
 	mystring<10> catalog = readCATALOG(it);
 	char truecatalog = catalog[0];
 	int num_station = readNUM(it);
 	int num_price = readNUM(it);
+
+	cout << "DEBUG: " << id << " " << train_name << " " << catalog << " " << num_station << " " << num_price << endl;
+
 	mystring<20> name_price[5];
 	for (int i = 0; i < num_price; ++i)
 		name_price[i] = readLOC(it);
 	train_station train_sta[60];
 	for (int i = 0; i < num_station; ++i)
 	{
-		char station_inf[maxlen], *st = station_inf;
-		cin.getline(station_inf, maxlen);
-		train_sta[i].name = readLOC(st);
+		train_sta[i].name = readLOC(it);
 		train_sta[i].num_price = num_price;
-		train_sta[i].arrive = readTIME(st);
-		train_sta[i].start = readTIME(st);
-		train_sta[i].stopover = readTIME(st);
+		train_sta[i].arrive = readTIME(it);
+		train_sta[i].start = readTIME(it);
+		train_sta[i].stopover = readTIME(it);
 		for (int j = 0; j < num_price; ++j)
-			train_sta[i].price[j] = readPRICE(st);
+		{
+			train_sta[i].price[j] = readPRICE(it);
+		}
 	}
 	train new_train(id, train_name, truecatalog, num_station, num_price, name_price, train_sta);
 	output(info, add_train(id, new_train, thetrain));
+	closeFile();
 }
 
 void saleTrain(char *it, char *info)
 {
-	init();
+	openFile();
 	mystring<20> id = readTRAIN_ID(it);
 	output(info, sale_train(id, thetrain, find_train, location));
 }
 
 void queryTrain(char *it, char *info)
 {
-	init();
+	openFile();
 	mystring<20> id = readTRAIN_ID(it);
+	cout << "DEBUG: queryTrain " << id << endl;
 	output(info, query_train(id, thetrain));
+	closeFile();
 }
 
 void deleteTrain(char *it, char *info)
 {
-	init();
+	openFile();
 	mystring<20> id = readTRAIN_ID(it);
 	output(info, delete_train(id, thetrain));
 }
 
 void modifyTrain(char *it, char *info)
 {
-	init();
+	openFile();
 	mystring<20> id = readTRAIN_ID(it);
 	mystring<40> train_name = readTRAIN_NAME(it);
 	mystring<10> catalog = readCATALOG(it);
@@ -265,7 +288,7 @@ extern "C"
 {
 	void initCRSystem()
 	{
-		CR::init();
+		CR::openFile();
 	}
 
 	void userRegister(char *it, char *info)

@@ -35,11 +35,11 @@
                     <table class="table tablesorter">
                         <thead>
                             <th>{% trans "Number of Station" %}</th><th>{% trans "Arriving time"%}</th><th>{% trans "Departure time"%}</th><th>{% trans "Staying time" %}</th>
-                        </thead>
-                        <tbody>
                             {% for x in class_train %}
                                 <th>{{x}}{% trans "Prices"%}(￥)</th>
                             {% endfor %}
+                        </thead>
+                        <tbody>
                             {% for x in station %}
                                 <tr>
                                     <td>{{x.0}}</td><td>{{x.1}}</td><td>{{x.2}}</td><td>{{x.3}}</td>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="row">
                     <!-- 需要看如何开放、删除、修改 -->
-                    <a href="#"><button type="button" class="btn btn-success">{% trans "Public this train"%}</button></a>
+                    <a href="#"><button type="button" class="btn btn-success" href="trains/public_train/">{% trans "Public this train"%}</button></a>
                     <!--<a href="#"><button type="button" class="btn btn-warning">修改车次</button></a>-->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#check_delete">
                       {% trans "Delete this train" %}
