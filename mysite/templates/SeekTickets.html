@@ -103,7 +103,7 @@
                                         {{a.0}}{% trans "Prices" %}：￥{{a.2}}
                                     </div>
                                     <div class="col">
-                                    {% if a.1 > 0 %}
+                                    {% if a.1 > '0' %}
                                         <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#buyn">
                                     {% else %}
                                         <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#buyn" disabled>
@@ -124,7 +124,7 @@
                                              </div>
                                              <div class="modal-footer">
                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Cancel" %}</button>
-                                               <button type="submit" class="btn btn-success">{% trans "Submit!"}</button>
+                                               <button type="submit" class="btn btn-success">{% trans "Submit!" %}</button>
                                              </div>
                                            </div>
                                          </div>
