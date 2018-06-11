@@ -53,6 +53,7 @@
                 </div>
                 <div class="row">
                     <!-- 需要看如何开放、删除、修改 -->
+                    <input type="hidden" name="trainid" value="{{train_id}}">
                     <a href="#"><button type="button" class="btn btn-success" href="trains/public_train/">{% trans "Public this train"%}</button></a>
                     <!--<a href="#"><button type="button" class="btn btn-warning">修改车次</button></a>-->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#check_delete">
