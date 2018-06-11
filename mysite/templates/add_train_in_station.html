@@ -12,18 +12,18 @@
     </div>
 
     <div class="card-body">
-        <form method="post" action="/trains/t/">
-      {% csrf_token %}
+        <form>
             <table class="table">
-                <th>{% trans "Name of stations"%}</th><th>{% trans "Arriving time"%}</th><th>{% trans "Departure time"%}</th>
+                <th>{% trans "Name of stations"%}</th><th>{% trans "Arriving time"%}</th><th>{% trans "Departure time"%}</th><th>{% trans "Staying time" %}</th>
                 {% for x in class_train %}
                     <th>{{x}}{% trans "Prices"%}(￥)</th>
                 {% endfor %}
                 {% for x in num_station %}
                     <tr>
                         <td><input type="text" name="name_station[{{x}}]" class="form-control" required></td>
-                        <td><input type="time" name="time_arriv[{{x}}]" class="form-control"></td>
+                        <td><input type="time" name="time_arriv[{{x}}]" class="form-control" required></td>
                         <td><input type="time" name="time_start[{{x}}]" class="form-control" required></td>
+                        <td><input type="time" name="time_stopover[{{x}}]" class="form-control" required></td>
                         {% for y in num_price %}
                             <td><input type="number" name="price[{{x}}][{{y}}]" class="form-control" required></td>
                         {% endfor %}
