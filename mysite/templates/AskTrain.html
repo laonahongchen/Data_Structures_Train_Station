@@ -52,10 +52,14 @@
                     </table>
                 </div>
                 <div class="row">
+                    {% csrf_token %}
                     <!-- 需要看如何开放、删除、修改 -->
+                    <form class="" action="index.html" method="post">
+                    {% csrf_token %}
                     <input type="hidden" name="trainid" value="{{train_id}}">
-                    <a href="#"><button type="button" class="btn btn-success" href="trains/public_train/">{% trans "Public this train"%}</button></a>
-                    <!--<a href="#"><button type="button" class="btn btn-warning">修改车次</button></a>-->
+                    <a href="#"><button type="submit" class="btn btn-success" href="trains/public_train/">{% trans "Public this train"%}</button></a>
+
+                    </form>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#check_delete">
                       {% trans "Delete this train" %}
                     </button>
@@ -75,7 +79,11 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Cancel"%}</button>
-                            <button type="button" class="btn btn-danger">{% trans "Delete" %}</button>
+                            <form class="" action="index.html" method="post">
+                                <input type="hidden" name="trainid" value="{{train_id}}">
+                                <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+                            </form>
+
                           </div>
                         </div>
                       </div>
