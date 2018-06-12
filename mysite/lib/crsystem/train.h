@@ -123,9 +123,7 @@ struct train {
 			ans += sta[i].name.value() + blank + sta[i].arrive.value() + blank + sta[i].start.value() + blank + sta[i].stopover.value() + blank;
 			for (int j = 0; j < num_price; ++j)
 			{
-				ans += to_string(sta[i].price[j]);
-				if (j < num_price - 1) 
-					ans += blank;
+				ans += to_string(sta[i].price[j]) + blank;
 			}
 		}
 		return ans;
@@ -282,7 +280,7 @@ struct train {
 			if (sta[loc2_pos].name == loc2)
 				break;
 		}
-		ans += train_id.value() + blank;
+		ans += train_id.value() + blank + catalog + blank;
 		int intdate = readdate(date);
 		int date_from = intdate + sta[loc1_pos].day_out_offset;
 		int date_to = intdate + sta[loc2_pos].day_in_offset;

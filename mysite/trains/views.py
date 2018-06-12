@@ -8,20 +8,6 @@ from django.template import loader
 import os
 import ctypes
 
-context = {'login_name':'test', 'authority':2}
-context1 = {'login_name':'test', 'authority':2, 'num_price':range(1)}
-
-trains = ['商务座']
-
-station_info = [
-    ["北京", "xx:xx" ,"08:00","00:00", [0.0]],
-    ["夏威夷", "08:02", "xx:xx", "00:00" , [1.5]],
-]
-
-context2 = {'login_name':'test', 'authority':2, 'style':1, 'num_price':range(1), 'num_station':range(2), 'class_train':trains}
-
-context3 = {'login_name':'test', 'authority':2, 'style':1, 'num_price':range(1), 'class_train':trains, 'station': station_info, 'asked':True, 'has_train':True}
-
 def getServerSideCookie(request, cookie, default_val=None):
     val = request.session.get(cookie)
     if not val:
@@ -29,6 +15,7 @@ def getServerSideCookie(request, cookie, default_val=None):
     return val
 
 def index(request):
+    context = {}
     context['login_name'] = getServerSideCookie(request, 'userid', '0')
     context['authority'] = getServerSideCookie(request, 'userpv', '0')
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
@@ -51,6 +38,7 @@ def index(request):
     return render(request, 'Add_train.html', context)
 
 def index1(request):
+    context = {}
     context['login_name'] = getServerSideCookie(request, 'userid', '0')
     context['authority'] = getServerSideCookie(request, 'userpv', '0')
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
@@ -84,6 +72,7 @@ def getGapTime(s, t):
     return timeFormat(str(h)) + ':' + timeFormat(str(m))
 
 def index2(request):
+    context = {}
     context['login_name'] = getServerSideCookie(request, 'userid', '0')
     context['authority'] = getServerSideCookie(request, 'userpv', '0')
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
@@ -111,10 +100,8 @@ def index2(request):
             time_start.append(x)
             if i in range(1, num_station - 1):
                 x = getGapTime(time_arriv[i], time_start[i])
-                print(x)
                 time_stop.append(x)
             else:
-                time_arriv[i] = 'xx:xx'
                 time_stop.append('xx:xx')
 
             price = []
@@ -122,6 +109,8 @@ def index2(request):
                 y = '￥' + request.POST.get('price[' + str(i) + '][' + str(j) + ']')
                 price.append(y)
             sta_price.append(price)
+        
+        time_arriv[0] = 'xx:xx'
 
         trainid = getServerSideCookie(request, 'trainid')
         trainname = getServerSideCookie(request, 'trainname')
@@ -133,6 +122,8 @@ def index2(request):
         request.session['num_station'] = None
         request.session['num_price'] = None
         request.session['class_train'] = None
+
+        print(num_station)
 
         cmd = ' '.join((trainid, trainname, catalogs, str(num_station), str(num_price), ' '.join(class_train)))
         for i in range(num_station):
@@ -153,14 +144,38 @@ def index2(request):
     return render(request, "Add_train_in_station.html", context)
 
 def query_train(request):
+    context = {}
     context['login_name'] = getServerSideCookie(request, 'userid', '0')
     context['authority'] = getServerSideCookie(request, 'userpv', '0')
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
-    print(context)
+    #print(context)
 
     if request.method == 'POST':
         trainid = request.POST.get('trainid')
+
+        pubtrainid = request.POST.get('pubtrainid')
+        if pubtrainid != None:
+            lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
+            dataInput = ctypes.create_string_buffer(pubtrainid.encode('UTF-8'))
+            dataOutput = ctypes.create_string_buffer(10)
+            inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
+            outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
+            lib.saleTrain(inputPointer, outputPointer)
+            info = dataOutput.value.decode('UTF-8') 
+            return HttpResponseRedirect(reverse('qt'))
+
+        deltrainid = request.POST.get('deltrainid')
+        if deltrainid != None:
+            lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
+            dataInput = ctypes.create_string_buffer(deltrainid.encode('UTF-8'))
+            dataOutput = ctypes.create_string_buffer(10)
+            inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
+            outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
+            lib.deleteTrain(inputPointer, outputPointer)
+            info = dataOutput.value.decode('UTF-8') 
+            return HttpResponseRedirect(reverse('qt'))
+
         print(trainid)
 
         lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
@@ -170,7 +185,7 @@ def query_train(request):
         outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
         lib.queryTrain(inputPointer, outputPointer)
         info = dataOutput.value.decode('UTF-8') 
-        print(info)
+        #print(info)
 
         context['asked'] = True
 
@@ -209,7 +224,7 @@ def query_train(request):
             context['class_train'] = class_train
             context['station'] = station
 
-            print(station)
+            #print(station)
 
         return render(request, 'AskTrain.html', context) 
 

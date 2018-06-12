@@ -15,7 +15,7 @@ import os
 import ctypes
 import requests
 
-context = {'login_name':'test', 'authority':0, 'style':'1'}
+#context = {'login_name':'test', 'authority':0, 'style':'1'}
 #need to fix context which send login_name and authority to html
 #authority 0: not login 1: normal user 2:admin
 
@@ -34,21 +34,17 @@ def cstyle1(request):
     return HttpResponseRedirect(reverse('index'))
 
 def index(request):
-    userid = getServerSideCookie(request, 'userid', '0')
-    userpv = getServerSideCookie(request, 'userpv', '0')
-
-    context['login_name'] = userid
-    context['authority'] = userpv
+    context = {}
+    context['login_name'] = getServerSideCookie(request, 'userid', '0')
+    context['authority'] = getServerSideCookie(request, 'userpv', '0')
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
     return render(request, 'index.html', context)
 
 def about(request):
-    userid = getServerSideCookie(request, 'userid', '0')
-    userpv = getServerSideCookie(request, 'userpv', '0')
-
-    context['login_name'] = userid
-    context['authority'] = userpv
+    context = {}
+    context['login_name'] = getServerSideCookie(request, 'userid', '0')
+    context['authority'] = getServerSideCookie(request, 'userpv', '0')
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
     return render(request, 'About.html', context)
@@ -69,18 +65,18 @@ def getCountry(ipAddress):
     return responseJson.get("country_code")
 
 def uploading(request):
-    userid = getServerSideCookie(request, 'userid', '0')
-    userpv = getServerSideCookie(request, 'userpv', '0')
-
-    context['login_name'] = userid
-    context['authority'] = userpv
+    context = {}
+    context['login_name'] = getServerSideCookie(request, 'userid', '0')
+    context['authority'] = getServerSideCookie(request, 'userpv', '0')
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
     return render(request, 'Uploading.html', context)
 
 def login(request):
+    context = {}
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
+
     if userid != '0':
         return HttpResponseRedirect(reverse('index'))
 
@@ -90,7 +86,7 @@ def login(request):
 
         lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
         dataInput = ctypes.create_string_buffer(' '.join((userid, password)).encode('UTF-8'))
-        dataOutput = ctypes.create_string_buffer(1000)
+        dataOutput = ctypes.create_string_buffer(10)
         inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
         outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
         lib.userLogin(inputPointer, outputPointer)
@@ -109,6 +105,7 @@ def login(request):
     return render(request, 'Login.html', context)
 
 def signup(request):
+    context = {}
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
 
@@ -123,7 +120,7 @@ def signup(request):
 
         lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
         dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'))
-        dataOutput = ctypes.create_string_buffer(1000)
+        dataOutput = ctypes.create_string_buffer(10)
         inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
         outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
         lib.userRegister(inputPointer, outputPointer)
@@ -139,8 +136,9 @@ def signup(request):
     return render(request, 'Signup.html', context)
 
 def signupadmin(request):
-#    print(getip(request))
-#    print(getCountry('203.78.6.5'))
+    #print(getip(request))
+    #print(getCountry('203.78.6.5'))
+    context = {}
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
 
@@ -196,11 +194,16 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 def cinfo(request):
+    context = {}
     userid = getServerSideCookie(request, 'userid', '0')
     userpv = getServerSideCookie(request, 'userpv', '0')
 
-    if userid != '0':
+    if userid == None:
         return HttpResponseRedirect(reverse('index'))
+
+    context['login_name'] = userid
+    context['authority'] = userpv
+    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -209,40 +212,30 @@ def cinfo(request):
         password = request.POST.get('password')
 
         lib = ctypes.cdll.LoadLibrary('./lib/crsystem/libcr.so')
-        dataInput = ctypes.create_string_buffer(' '.join((username, password, emailaddress, phonenumber)).encode('UTF-8'))
-        dataOutput = ctypes.create_string_buffer(1000)
+        dataInput = ctypes.create_string_buffer(' '.join((userid, username, password, emailaddress, phonenumber)).encode('UTF-8'))
+        dataOutput = ctypes.create_string_buffer(10)
         inputPointer = (ctypes.c_char_p)(ctypes.addressof(dataInput))
         outputPointer = (ctypes.c_char_p)(ctypes.addressof(dataOutput))
-        lib.userRegister(inputPointer, outputPointer)
+        lib.userModifyProfile(inputPointer, outputPointer)
         info = dataOutput.value.decode('UTF-8')
 
         if info != '-1':
             return HttpResponseRedirect(reverse('index'))
 
-    context['login_name'] = userid
-    context['authority'] = userpv
-    context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
-
-    return render(request, 'Signup.html', context)
-
-    return render_to_response('ChangeInfo.html', context)
+    return render(request, 'ChangeInfo.html', context)
 
 def page_not_found(request):
-    userid = getServerSideCookie(request, 'userid', '0')
-    userpv = getServerSideCookie(request, 'userpv', '0')
-
-    context['login_name'] = userid
-    context['authority'] = userpv
+    context = {}
+    context['login_name'] = getServerSideCookie(request, 'userid', '0')
+    context['authority'] = getServerSideCookie(request, 'userpv', '0')
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
     return render(request, 'Error.html', context)
 
 def page_error(request):
-    userid = getServerSideCookie(request, 'userid', '0')
-    userpv = getServerSideCookie(request, 'userpv', '0')
-
-    context['login_name'] = userid
-    context['authority'] = userpv
+    context = {}
+    context['login_name'] = getServerSideCookie(request, 'userid', '0')
+    context['authority'] = getServerSideCookie(request, 'userpv', '0')
     context['style'] = getServerSideCookie(request, 'tmpstyle', '1')
 
     return render(request, 'Error.html', context)

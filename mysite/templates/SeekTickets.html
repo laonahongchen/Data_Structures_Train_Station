@@ -109,7 +109,6 @@
                                         <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#buyn" disabled>
                                     {%endif %}
                                        {% trans "Buy now" %} </button>
-                                       <form>
                                        <div class="modal fade" id="buyn" tabindex="-1" role="dialog" aria-labelledby="buyn" aria-hidden="true">
                                          <div class="modal-dialog modal-dialog-centered" role="document">
                                            <div class="modal-content">
@@ -119,23 +118,24 @@
                                                  <span aria-hidden="true">&times;</span>
                                                </button>
                                              </div>
+                                            <form method="post">
+                                                {%csrf_token%}
                                              <div class="modal-body">
                                                <input type="number" name="num_buy" class="form-control" min="1" max="100" autofocus required>
                                              </div>
                                              <div class="modal-footer">
                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Cancel" %}</button>
-                                               <form class="" action="index.html" method="post">
                                                    <input type="hidden" name="trainid" value="{{x.0}}">
+                                                   <input type="hidden" name="trainfr" value="{{x.2}}">
+                                                   <input type="hidden" name="trainto" value="{{x.4}}">
                                                    <input type="hidden" name="date" value="{{date}}">
                                                    <input type="hidden" name="class_name" value="{{a.0}}">
                                                    <button type="submit" class="btn btn-success">{% trans "Submit!" %}</button>
-                                               </form>
-
                                              </div>
+                                            </form>
                                            </div>
                                          </div>
                                      </div>
-                                     </form>
                                     </div>
                                 </div>
                                 </p>

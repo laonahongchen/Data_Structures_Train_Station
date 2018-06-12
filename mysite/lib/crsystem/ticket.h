@@ -30,7 +30,7 @@ struct ticket {
 
 	string display() {
 		string str, blank = " ";
-		str = train_id.value() + blank + loc1.value() + loc1date.value() + blank + loc1time.value() + blank + loc2.value() + blank + loc2date.value() + blank + loc2time.value() + blank;
+		str = train_id.value() + blank + catalog + blank + loc1.value() + blank + loc1date.value() + blank + loc1time.value() + blank + loc2.value() + blank + loc2date.value() + blank + loc2time.value() + blank;
 		for (int i = 0; i < num_kind; ++i) 
 			str += ticket_kind[i].value() + blank + to_string(num_ticket_kind[i]) + blank + to_string(price_ticket_kind[i]) + blank;
 		return str;

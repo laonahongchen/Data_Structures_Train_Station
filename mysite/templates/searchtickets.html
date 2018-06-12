@@ -10,10 +10,10 @@
           <div class="container">
               <form method="post">
               <div class="row">
-
+                  {% csrf_token %}
                      <div class="col">
                        <label for="dateoftrain" class="sr-only">{% trans "Departure Date" %}</label>
-                       <input name="dateoftrain" type="date" class="form-control" placeholder="{% trans 'Departure Date' %}" required>
+                       <input name="date" type="date" class="form-control" placeholder="{% trans 'Departure Date' %}" required>
                      </div>
                      <div class="col">
                        <button type="submit" class="btn btn-warning">{% trans "Search Now" %}</button>
