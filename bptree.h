@@ -1,25 +1,25 @@
 #pragma once
-#define _CRT_SECURE_NO_WARNINGS  
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
 #include <cstdio>
 #include <cmath>
 #include <cstring>
 #include <cstddef>
-#include "predifined.h"
+#include "predefined.h"
 #include <assert.h>
 #include "string.h"
 #include "vector.h"
 
-#define OFFSET_META 0
-#define OFFSET_BLOCK OFFSET_META + sizeof(meta_t)
-#define SIZE_NO_CHILDREN sizeof(leaf_node_t) - TREE_ORDER * sizeof(record_t)
+#define OFFSET_BPT 0
+#define OFFSET_BLOCK OFFSET_BPT + sizeof(bpt_t)
 
 template <class value_t>
 class bplus_tree {
 
 public:
-	//bplustree's characters 
-	struct meta_t {
+	//bplustree's characters
+	struct bpt_t {
 		size_t order;
 		size_t value_size;
 		size_t key_size;
@@ -29,11 +29,12 @@ public:
 		off_t slot;
 		off_t root_offset;
 		off_t first_leaf_offset;
+		char ap[1024 - (3 *sizeof(off_t) + 6 * sizeof(size_t)) % 1024];
 	};
 
 	//index:key and children_slot_in_file
 	struct index_t {
-		key_t key;
+		key_type key;
 		off_t child;
 	};
 
@@ -44,6 +45,7 @@ public:
 		off_t next;
 		off_t prev;
 		size_t num;
+		char ap[1024 - (3 *sizeof(off_t) + sizeof(size_t) + TREE_ORDER * sizeof(index_t)) % 1024];
 		index_t children[TREE_ORDER];
 
 		//children[i].max < children[i].key <= children[i+1].min
@@ -51,7 +53,7 @@ public:
 
 	//terminate record
 	struct record_t {
-		key_t key;
+		key_type key;
 		value_t value;
 	};
 
@@ -62,6 +64,7 @@ public:
 		off_t next;
 		off_t prev;
 		size_t num;
+		char ch[1024 - (3 * sizeof(off_t) + sizeof(size_t) + TREE_ORDER * sizeof(record_t)) % 1024]; 
 		record_t children[TREE_ORDER];
 
 	};
@@ -84,7 +87,7 @@ public:
 	}
 
 	//upper_bound
-	inline index_t *find(internal_node_t &node, const key_t &key) const {
+	inline index_t *find(internal_node_t &node, const key_type &key) const {
 		index_t *st = begin(node);
 		index_t *ed = end(node) - 1;
 		size_t low = 0, high = node.num - 2, mid;
@@ -102,7 +105,7 @@ public:
 		else return st + high;
 	}
 
-	inline index_t *lower_find(internal_node_t &node, const key_t &key) const {
+	inline index_t *lower_find(internal_node_t &node, const key_type &key) const {
 		index_t *st = begin(node);
 		index_t *ed = end(node) - 1;
 		size_t low = 0, high = node.num - 2, mid;
@@ -121,7 +124,7 @@ public:
 	}
 
 	//lower_bound
-	inline record_t *find(leaf_node_t &node, const key_t &key) const {
+	inline record_t *find(leaf_node_t &node, const key_type &key) const {
 		record_t *st = begin(node);
 		record_t *ed = end(node);
 		size_t low = 0, high = node.num - 1, mid;
@@ -141,7 +144,7 @@ public:
 		else return st + high;
 	}
 
-	inline record_t *upper_find(leaf_node_t &node, const key_t &key) const {
+	inline record_t *upper_find(leaf_node_t &node, const key_type &key) const {
 		record_t *st = begin(node);
 		record_t *ed = end(node);
 		size_t low = 0, high = node.num - 1, mid;
@@ -191,33 +194,41 @@ public:
 	//private:
 public:
 	char path[512];//file_path
-	meta_t meta;
+	bpt_t bpt;
 	mutable FILE *fp;
-	mutable int fp_level;//open_or_close
+	mutable int level;//open_or_close
 
 public:
-	bplus_tree(const char *pa, bool force_empty = false) : fp(nullptr), fp_level(0) {
+	bplus_tree(const char *pa, bool force_empty = false) : fp(nullptr), level(0) {
 		memset(path, 0, sizeof(path));
 		strcpy(path, pa);
 
+		if (!force_empty) {
+			fp = fopen(path, "rb+");
+			if (fp == NULL){
+				force_empty = true;
+				--level;
+			}
+		}
+
 		if (!force_empty)
-			if (map(&meta, OFFSET_META) != 0)//find_meta
+			if (read_F(&bpt, OFFSET_BPT) != 0)
 				force_empty = true;
 
 		if (force_empty) { //init_the_file
 			open_file("w+");
-			init_from_empty();
+			init();
 			close_file();
 		}
 
 	}
 	//search the record and put the value into the point
-	int search(const key_t& key, value_t *value) const {
+	int search(const key_type& key, value_t *value) const {
 		leaf_node_t leaf;
-		map(&leaf, search_leaf(key));
+		read_F(&leaf, search_leaf(key));
 
 		record_t *record = find(leaf, key);
-		if (record != leaf.children + leaf.num) {
+		if (record != end(leaf)) {
 			*value = record->value;
 			return keycmp(record->key, key); //0:success
 
@@ -226,7 +237,7 @@ public:
 			return -1;
 	}
 
-	int search_range(const key_t &left, const key_t &right, sjtu::vector<record_t> &trainid_sequence) const {
+	int search_range(const key_type &left, const key_type &right, sjtu::vector<record_t> &trainid_sequence) const {
 		if (keycmp(left, right) > 0)
 			return 0;
 		off_t off_left = search_leaf(left);
@@ -236,7 +247,7 @@ public:
 
 		leaf_node_t leaf;
 		while (off != off_right && off != 0) {
-			map(&leaf, off);
+			read_F(&leaf, off);
 
 			if (off_left == off)
 				bg = find(leaf, left);
@@ -251,7 +262,7 @@ public:
 		}
 
 		if (off != 0) {
-			map(&leaf, off_right);
+			read_F(&leaf, off_right);
 			bg = find(leaf, left);
 			ed = upper_find(leaf, right);
 			for (; bg != ed; ++bg)
@@ -262,19 +273,19 @@ public:
 
 
 	//remove the record
-	int remove(const key_t & key) {
+	int remove(const key_type & key) {
 
 		internal_node_t parent;
 		leaf_node_t leaf;
 
 		off_t parent_offset = search_index(key); //find parent(index)
-		map(&parent, parent_offset);
+		read_F(&parent, parent_offset);
 
 		index_t *pos = find(parent, key);  //find leaf in parent
 		off_t offset = pos->child;
-		map(&leaf, offset);
+		read_F(&leaf, offset);
 
-		size_t min_num = meta.leaf_node_num == 1 ? 0 : meta.order / 2;
+		size_t min_num = bpt.leaf_node_num == 1 ? 0 : bpt.order / 2;
 
 		record_t *to_delete = find(leaf, key);
 
@@ -296,59 +307,57 @@ public:
 
 			//finally merge
 			if (!borrowed) {
-				key_t index_key;
+				key_type index_key;
 
 				if (pos == end(parent) - 1) {
 
 					//merge leaf to left
 					leaf_node_t prev;
-					map(&prev, leaf.prev);
+					read_F(&prev, leaf.prev);
 					index_key = begin(prev)->key; //new_key of merged leaves
 
 					merge_leaf(&prev, &leaf);
-					node_remove(&prev, &leaf);
-					unmap(&prev, leaf.prev);
+					write_F(&prev, leaf.prev);
 				}
 				else {
 
 					//merge right to leaf
 					leaf_node_t nxt;
-					map(&nxt, leaf.next);
+					read_F(&nxt, leaf.next);
 					index_key = begin(leaf)->key;
 
 					merge_leaf(&leaf, &nxt);
-					node_remove(&leaf, &nxt);
-					unmap(&leaf, offset);
+					write_F(&leaf, offset);
 
 				}
 
-				remove_from_index(parent_offset, parent, index_key); //merge_index_recursively
+				remove_adjust(parent_offset, parent, index_key); //merge_index_recursively
 
 			}
 			else
-				unmap(&leaf, offset);
+				write_F(&leaf, offset);
 		}
 		else
-			unmap(&leaf, offset);
+			write_F(&leaf, offset);
 
 		return 0;
 	}
 
-	int insert(const key_t& key, const value_t& value) {
+	int insert(const key_type& key, const value_t& value) {
 
 		off_t parent = search_index(key);
 		off_t offset = search_leaf(parent, key);
 		leaf_node_t leaf;
-		map(&leaf, offset);
+		read_F(&leaf, offset);
 
 		record_t* haskey = find(leaf, key);
 
-		if (*haskey == key) //record_exist
+		if (haskey != end(leaf) && *haskey == key) //record_exist
 			return 1;
 
-		if (leaf.num < meta.order) {  //insert_directly
+		if (leaf.num < bpt.order) {  //insert_directly
 			insert_record_without_split(&leaf, key, value);
-			unmap(&leaf, offset);
+			write_F(&leaf, offset);
 			return 0;
 		}
 
@@ -369,26 +378,26 @@ public:
 		else
 			insert_record_without_split(&leaf, key, value);
 
-		unmap(&leaf, offset);
-		unmap(&new_leaf, leaf.next);
+		write_F(&leaf, offset);
+		write_F(&new_leaf, leaf.next);
 
-		insert_key_to_index(parent, new_leaf.children[0].key, offset, leaf.next);  //split_index_recursively
+		insert_adjust(parent, new_leaf.children[0].key, offset, leaf.next);  //split_index_recursively
 
 		return 0;
 	}
 
 	//change value
-	int update(const key_t& key, const value_t &value) {
+	int update(const key_type& key, const value_t &value) {
 
 		off_t offset = search_leaf(key);
 		leaf_node_t leaf;
-		map(&leaf, offset);
+		read_F(&leaf, offset);
 
 		record_t *record = find(leaf, key);
 		if (record != leaf.children + leaf.num) {
 			if (keycmp(key, record->key) == 0) { //record_exist
 				record->value = value;
-				unmap(&leaf, offset);
+				write_F(&leaf, offset);
 				return 0;
 			}
 			else
@@ -398,41 +407,41 @@ public:
 
 	}
 
-	meta_t get_meta() const {
-		return meta;
+	bpt_t get_bpt() const {
+		return bpt;
 	}
 
 	//private:
 public:
-	void init_from_empty() {
-		memset(&meta, 0, sizeof(meta_t));
-		meta.order = TREE_ORDER;
-		meta.value_size = sizeof(value_t);
-		meta.key_size = sizeof(key_t);
-		meta.height = 1;
-		meta.slot = OFFSET_BLOCK;
+	void init() {
+		memset(&bpt, 0, sizeof(bpt_t));
+		bpt.order = TREE_ORDER;
+		bpt.value_size = sizeof(value_t);
+		bpt.key_size = sizeof(key_type);
+		bpt.height = 1;
+		bpt.slot = OFFSET_BLOCK;
 
 		internal_node_t root;
 		root.next = root.prev = root.parent = 0;
-		meta.root_offset = alloc(&root);
+		bpt.root_offset = alloc(&root);
 
 		leaf_node_t leaf;
 		leaf.next = leaf.prev = 0;
-		leaf.parent = meta.root_offset;
-		meta.first_leaf_offset = root.children[0].child = alloc(&leaf);
+		leaf.parent = bpt.root_offset;
+		bpt.first_leaf_offset = root.children[0].child = alloc(&leaf);
 
-		unmap(&meta, OFFSET_META);
-		unmap(&root, meta.root_offset);
-		unmap(&leaf, root.children[0].child);
+		write_F(&bpt, OFFSET_BPT);
+		write_F(&root, bpt.root_offset);
+		write_F(&leaf, root.children[0].child);
 	}
 
-	off_t search_index(const key_t &key) const {
+	off_t search_index(const key_type &key) const {
 
-		off_t now = meta.root_offset;
-		size_t h = meta.height;
+		off_t now = bpt.root_offset;
+		size_t h = bpt.height;
 		while (h > 1) {
 			internal_node_t node;
-			map(&node, now);
+			read_F(&node, now);
 			index_t *i = find(node, key);
 			now = i->child;
 			--h;
@@ -440,23 +449,23 @@ public:
 		return now;
 	}
 
-	off_t search_leaf(off_t index, const key_t &key) const {
+	off_t search_leaf(off_t index, const key_type &key) const {
 
 		internal_node_t node;
-		map(&node, index);
+		read_F(&node, index);
 		index_t *i = find(node, key);
 		return i->child;
 	}
 
-	off_t search_leaf(const key_t &key) const {
+	off_t search_leaf(const key_type &key) const {
 		return search_leaf(search_index(key), key);
 	}
 
-	void remove_from_index(off_t offset, internal_node_t &node, const key_t &key) {
+	void remove_adjust(off_t offset, internal_node_t &node, const key_type &key) {
 
-		size_t min_num = (meta.root_offset == offset) ? 1 : meta.order / 2;
+		size_t min_num = (bpt.root_offset == offset) ? 1 : bpt.order / 2;
 
-		key_t index_key = begin(node)->key;
+		key_type index_key = begin(node)->key;
 		index_t *to_delete = find(node, key); //find next key(need delete)
 		if (to_delete != end(node)) {
 			(to_delete + 1)->child = to_delete->child;  //change offset
@@ -465,22 +474,22 @@ public:
 		node.num--;
 
 		//root_need_delete
-		if (node.num == 1 && meta.root_offset == offset && meta.internal_node_num != 1) {
-			unalloc(&node, meta.root_offset);
-			meta.height--;
-			meta.root_offset = node.children[0].child;
-			unmap(&meta, OFFSET_META);
+		if (node.num == 1 && bpt.root_offset == offset && bpt.internal_node_num != 1) {
+			--bpt.internal_node_num;
+			bpt.height--;
+			bpt.root_offset = node.children[0].child;
+			write_F(&bpt, OFFSET_BPT);
 			return;
 		}
 
 		//recursion_end
 		if (node.num >= min_num) {
-			unmap(&node, offset);
+			write_F(&node, offset);
 			return;
 		}
 
 		internal_node_t parent;
-		map(&parent, node.parent);
+		read_F(&parent, node.parent);
 
 		//first borrow
 		bool borrowed = false;
@@ -497,30 +506,30 @@ public:
 			if (offset == (end(parent) - 1)->child) {
 
 				internal_node_t prev;
-				map(&prev, node.prev);
+				read_F(&prev, node.prev);
 
 				index_t *pos = find(parent, begin(prev)->key); //new key of merged index
 				change_children_parent(begin(node), end(node), node.prev);
-				merge_index(pos, prev, node);
-				unmap(&prev, node.prev);
+				merge_index(prev, node);
+				write_F(&prev, node.prev);
 			}
 			else {
 
 				//merge right to node;
 				internal_node_t nxt;
-				map(&nxt, node.next);
+				read_F(&nxt, node.next);
 
 				index_t *pos = find(parent, index_key);
 				change_children_parent(begin(nxt), end(nxt), offset);
-				merge_index(pos, node, nxt);
-				unmap(&node, offset);
+				merge_index(node, nxt);
+				write_F(&node, offset);
 
 			}
-			remove_from_index(node.parent, parent, index_key); //up
+			remove_adjust(node.parent, parent, index_key); //up
 
 		}
 		else
-			unmap(&node, offset);
+			write_F(&node, offset);
 	}
 
 	bool borrow_key(bool from_right, internal_node_t &to, off_t offset) {
@@ -528,28 +537,21 @@ public:
 
 		off_t from_offset = from_right ? to.next : to.prev;
 		internal_node_t from;
-		map(&from, from_offset);
+		read_F(&from, from_offset);
 
-		if (from.num != meta.order / 2) {
+		if (from.num != bpt.order / 2) {
 			child_t lend_pos, put_pos;
 			internal_node_t parent;
 
 			if (from_right) {
 				lend_pos = begin(from);
 				put_pos = end(to);
-				map(&parent, to.parent);
-				child_t pos = lower_find(parent, (end(to) - 1)->key);
-				pos->key = lend_pos->key;
-				unmap(&parent, to.parent);
+				change_parent_key(to.parent, begin(to)->key, lend_pos->key);
 			}
 			else {
 				lend_pos = end(from) - 1;
 				put_pos = begin(to);
-				map(&parent, from.parent);
-				child_t pos = find(parent, begin(from)->key);
-				put_pos->key = pos->key;
-				pos->key = (lend_pos - 1)->key;
-				unmap(&parent, from.parent);
+				change_parent_key(from.parent, begin(from)->key, (lend_pos-1)->key);
 			}
 
 			copy_back(put_pos, end(to), end(to) + 1);
@@ -559,7 +561,7 @@ public:
 			change_children_parent(lend_pos, lend_pos + 1, offset);
 			copy(lend_pos + 1, end(from), lend_pos);
 			--from.num;
-			unmap(&from, from_offset);
+			write_F(&from, from_offset);
 			return true;
 		}
 
@@ -570,9 +572,9 @@ public:
 
 		off_t from_offset = from_right ? to.next : to.prev; //borrow from where
 		leaf_node_t from;
-		map(&from, from_offset);
+		read_F(&from, from_offset);
 
-		if (from.num != meta.order / 2) {
+		if (from.num != bpt.order / 2) {
 			typename leaf_node_t::child_t lend_pos, put_pos;
 
 			if (from_right) {
@@ -592,20 +594,20 @@ public:
 
 			copy(lend_pos + 1, end(from), lend_pos); //move lender
 			--from.num;
-			unmap(&from, from_offset);
+			write_F(&from, from_offset);
 			return true;
 		}
 		return false;
 
 	}
 
-	void change_parent_key(off_t parent, const key_t &o, const key_t &n) {
+	void change_parent_key(off_t parent, const key_type &o, const key_type &n) {
 		internal_node_t node;
-		map(&node, parent);
-		index_t *w = find(node, o);  //find next key(bigger than o) 
+		read_F(&node, parent);
+		index_t *w = find(node, o);  //find next key(bigger than o)
 
 		w->key = n;   //change key
-		unmap(&node, parent);
+		write_F(&node, parent);
 		if (w == node.children + node.num - 1)  //borrower and lender have different parent
 			change_parent_key(node.parent, o, n);  //change key recursively
 	}
@@ -613,15 +615,16 @@ public:
 	void merge_leaf(leaf_node_t *left, leaf_node_t *right) {
 		copy(begin(*right), end(*right), end(*left));
 		left->num += right->num;
+		node_remove(left, right);
 	}
 
-	void merge_index(index_t *where, internal_node_t &left, internal_node_t &right) {
+	void merge_index(internal_node_t &left, internal_node_t &right) {
 		copy(begin(right), end(right), end(left));
 		left.num += right.num;
 		node_remove(&left, &right);
 	}
 
-	void insert_record_without_split(leaf_node_t *leaf, const key_t &key,
+	void insert_record_without_split(leaf_node_t *leaf, const key_type &key,
 		const value_t &value) {
 
 		record_t *pos = upper_find(*leaf, key);
@@ -631,34 +634,34 @@ public:
 		++leaf->num;
 	}
 
-	void insert_key_to_index(off_t offset, const key_t &key, off_t oldchild, off_t newchild) {
+	void insert_adjust(off_t offset, const key_type &key, off_t oldchild, off_t newchild) {
 
 		//root_need_split
 		if (offset == 0) {
 			internal_node_t root;
 			root.next = root.prev = root.parent = 0;
-			meta.root_offset = alloc(&root);
+			bpt.root_offset = alloc(&root);
 			root.num = 2;
 			root.children[0].key = key;
 			root.children[0].child = oldchild;
 			root.children[1].child = newchild;
-			++meta.height;
+			++bpt.height;
 
-			unmap(&meta, OFFSET_META);
-			unmap(&root, meta.root_offset);
+			write_F(&bpt, OFFSET_BPT);
+			write_F(&root, bpt.root_offset);
 
 			//update parent
-			change_children_parent(begin(root), end(root), meta.root_offset);
+			change_children_parent(begin(root), end(root), bpt.root_offset);
 			return;
 		}
 
 		internal_node_t node;
-		map(&node, offset);
+		read_F(&node, offset);
 
 		//recursion_end
-		if (node.num < meta.order) {
+		if (node.num < bpt.order) {
 			insert_key_to_index_without_split(node, key, newchild);
-			unmap(&node, offset);
+			write_F(&node, offset);
 			return;
 		}
 
@@ -677,7 +680,7 @@ public:
 			--point;
 
 		//middle key is left's max
-		key_t middle_key = node.children[point].key;
+		key_type middle_key = node.children[point].key;
 
 		copy(begin(node) + point + 1, end(node), begin(new_node));
 		new_node.num = node.num - point - 1;
@@ -688,15 +691,15 @@ public:
 		else
 			insert_key_to_index_without_split(node, key, newchild);
 
-		unmap(&node, offset);
-		unmap(&new_node, node.next);
+		write_F(&node, offset);
+		write_F(&new_node, node.next);
 		change_children_parent(begin(new_node), end(new_node), node.next);
 
 		//give middle to parent
-		insert_key_to_index(node.parent, middle_key, offset, node.next);
+		insert_adjust(node.parent, middle_key, offset, node.next);
 	}
 
-	void insert_key_to_index_without_split(internal_node_t &node, const key_t &key,
+	void insert_key_to_index_without_split(internal_node_t &node, const key_type &key,
 		off_t newchild) {
 
 		index_t *pos = find(node, key);
@@ -713,9 +716,9 @@ public:
 		//because_children_array_write_in_the_end
 		internal_node_t node;
 		while (beg != end) {
-			map(&node, beg->child);
+			read_F(&node, beg->child);
 			node.parent = parent;
-			unmap(&node, beg->child, SIZE_NO_CHILDREN);
+			write_F(&node, beg->child);
 			++beg;
 		}
 	}
@@ -729,11 +732,11 @@ public:
 		node->next = alloc(next);
 		if (next->next != 0) {
 			node_t old_next;
-			map(&old_next, next->next, SIZE_NO_CHILDREN);
+			read_F(&old_next, next->next);
 			old_next.prev = node->next;
-			unmap(&old_next, next->next, SIZE_NO_CHILDREN);
+			write_F(&old_next, next->next);
 		}
-		unmap(&meta, OFFSET_META);
+		write_F(&bpt, OFFSET_BPT);
 	}
 
 	template<class node_t>
@@ -742,81 +745,93 @@ public:
 		prev->next = node->next;
 		if (node->next != 0) {
 			node_t next;
-			map(&next, node->next, SIZE_NO_CHILDREN);
+			read_F(&next, node->next);
 			next.prev = node->prev;
-			unmap(&next, node->next, SIZE_NO_CHILDREN);
+			write_F(&next, node->next);
 		}
-		unmap(&meta, OFFSET_META);
+		write_F(&bpt, OFFSET_BPT);
 	}
 
 	void open_file(const char *mode = "rb+") const {
-
-		fp = fopen(path, mode);
+		if (level == 0) {
+			fp = fopen(path, mode);
+			++level;
+		}
 	}
 
 	void close_file() const {
-		fclose(fp);
+		if (level == 1) {
+			fclose(fp);
+			--level;
+		}
 	}
 
 	off_t alloc(size_t size) {
 
-		off_t slot = meta.slot;
-		meta.slot += size;
+		off_t slot = bpt.slot;
+		bpt.slot += size;
 		return slot;
 	}
 
 	off_t alloc(leaf_node_t *leaf) {
 
 		leaf->num = 0;
-		meta.leaf_node_num++;
+		bpt.leaf_node_num++;
 		return alloc(sizeof(leaf_node_t));
 	}
 
 	off_t alloc(internal_node_t *node) {
 
 		node->num = 1;
-		meta.internal_node_num++;
+		bpt.internal_node_num++;
 		return alloc(sizeof(internal_node_t));
 	}
 
 	void unalloc(leaf_node_t *leaf, off_t offset) {
 
-		--meta.leaf_node_num;
+		--bpt.leaf_node_num;
 	}
 
 	void unalloc(internal_node_t *node, off_t offset) {
 
-		--meta.internal_node_num;
+		--bpt.internal_node_num;
 	}
 
-	int map(void *block, off_t offset, size_t size) const {
-
+	int read_F(void *block, off_t offset, size_t size) const {
 		open_file();
 		fseek(fp, offset, SEEK_SET);
 		size_t rd = fread(block, size, 1, fp);
-		close_file();
+		fflush(fp);
 
 		return rd - 1;
 	}
 
 	template<class T>
-	int map(T *block, off_t offset) const {
-		return map(block, offset, sizeof(T));
+	int read_F(T *block, off_t offset) const {
+		return read_F(block, offset, sizeof(T));
 	}
 
-	int unmap(void *block, off_t offset, size_t size) const {
-
+	int write_F(void *block, off_t offset, size_t size) const {
 		open_file();
 		fseek(fp, offset, SEEK_SET);
 		size_t wt = fwrite(block, size, 1, fp);
-		close_file();
+		fflush(fp);
 
 		return wt - 1;
 	}
 
 	template<class T>
-	int unmap(T *block, off_t offset) const {
-		return unmap(block, offset, sizeof(T));
+	int write_F(T *block, off_t offset) const {
+		return write_F(block, offset, sizeof(T));
 	}
 
+
+
+
+
+
 };
+
+
+
+
