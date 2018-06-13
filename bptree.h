@@ -205,16 +205,15 @@ public:
 
 		if (!force_empty) {
 			fp = fopen(path, "rb+");
-			if (fp == NULL){
+			if (fp == NULL)
 				force_empty = true;
-				--level;
-			}
 		}
 
 		if (!force_empty)
-			if (read_F(&bpt, OFFSET_BPT) != 0)
+			if (read_F(&bpt, OFFSET_BPT) != 0){
 				force_empty = true;
-
+				--level;
+			}
 		if (force_empty) { //init_the_file
 			open_file("w+");
 			init();
